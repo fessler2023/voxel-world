@@ -13,14 +13,15 @@ INTERVAL_SECONDS = 3600                                           # 1 hour betwe
 
 os.makedirs(CHUNKS_DIR, exist_ok=True)
 
-SYSTEM_PROMPT = """You are a procedural world generator for an outdoor voxel game featuring 'Little Doug'. 
-You generate strict JSON data for map chunks (16x16 grids). 
+SYSTEM_PROMPT = """You are a procedural world generator for an outdoor voxel game featuring 'Little Doug'.
+You generate strict JSON data for map chunks (16x16 grids).
 Outdoor biomes include: lush_riverbank, pine_forest, mountain_ridge, wetland, desert, alpine_lake.
 Rules:
 1. Ensure elevation values (0 to 5) match neighboring chunks smoothly.
 2. Include a 16x16 elevation_grid.
 3. Include 2-4 collectible voxel specimen items or wildlife (like macroinvertebrates, dragonflies, solar nodes) with coordinates (x, y, z) and points.
 Output ONLY raw, valid JSON. No conversational filler, no markdown outside of code blocks."""
+
 
 def load_state():
     if not os.path.exists(STATE_FILE):
@@ -54,7 +55,7 @@ def ask_workstation_for_chunk(coord):
     for attempt in range(3):
         try:
             print(f"[Pi Agent] Contacting workstation (Attempt {attempt+1}/3)...")
-            response = requests.post(WORKSTATION_URL, json=payload, timeout=120)
+            response = requests.post(WORKSTATION_URL, json=payload, timeout=240)
             response.raise_for_status()
             content = response.json()["choices"][0]["message"]["content"]
             
