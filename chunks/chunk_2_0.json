@@ -1,5 +1,7 @@
 {
-  "biome": "lush_riverbank",
+  "chunk_x": 2,
+  "chunk_y": 0,
+  "biome_type": "rolling_meadow",
   "elevation_grid": [
     [
       1,
@@ -291,33 +293,14 @@
     ]
   ],
   "specimens": [
-    {
-      "type": "solar_node",
-      "coordinates": {
-        "x": 7,
-        "y": 3,
-        "z": 12
-      },
-      "points": 50
-    },
-    {
-      "type": "macroinvertebrate",
-      "coordinates": {
-        "x": 2,
-        "y": 1,
-        "z": 5
-      },
-      "points": 20
-    },
-    {
-      "type": "dragonfly",
-      "coordinates": {
-        "x": 13,
-        "y": 2,
-        "z": 8
-      },
-      "points": 30
-    }
+    "wild_thyme_blossom",
+    "dandelion_flyer",
+    "meadow_fern_heart",
+    "ladybird_egg_case",
+    "bluebottle_hive",
+    "goldenrod_pod",
+    "mossy_stone_fragment",
+    "foxglove_aura"
   ],
   "coordinate": [
     2,
