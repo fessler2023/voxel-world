@@ -1,0 +1,13 @@
+{
+  "coordinate": [0, 0],
+  "biome": "Lush Riverbank",
+  "description": "The starting base camp along the voxel river.",
+  "elevation_grid": [
+    [1,1,1,1, 1,1,1,1, 1,1,1,1, 1,1,1,1],
+    [1,0,0,0, 0,0,1,1, 1,1,1,1, 1,1,1,1]
+  ],
+  "specimens": [
+    {"name": "Voxel Caddisfly Larva", "x": 4, "y": 2, "points": 100},
+    {"name": "Solar Sensor Node", "x": 12, "y": 10, "points": 250}
+  ]
+}

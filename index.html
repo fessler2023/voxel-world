@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Little Doug Voxel Adventure</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #0b0f19;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+        }
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+            outline: none;
+        }
+        /* HUD UI Overlay */
+        #hud {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(13, 20, 32, 0.85);
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(76, 175, 80, 0.4);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            pointer-events: none;
+            max-width: 300px;
+            backdrop-filter: blur(8px);
+            z-index: 10;
+        }
+        h1 {
+            font-size: 15px;
+            margin: 0 0 8px 0;
+            color: #4caf50;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin: 4px 0;
+            color: #cbd5e1;
+        }
+        .stat-val {
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        /* Autonomous Telemetry Panel */
+        #telemetry {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(13, 20, 32, 0.85);
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            font-size: 11px;
+            max-width: 260px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            pointer-events: none;
+        }
+        .pulse {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: #22c55e;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #22c55e;
+            animation: blink 1.5s infinite;
+        }
+        @keyframes blink { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+        /* Mobile D-Pad Controls */
+        #dpad {
+            position: absolute;
+            bottom: 25px;
+            left: 25px;
+            width: 140px;
+            height: 140px;
+            z-index: 20;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 5px;
+        }
+        .dbtn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: white;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            transition: background 0.1s;
+        }
+        .dbtn:active {
+            background: rgba(76, 175, 80, 0.6);
+        }
+        #btn-up { grid-column: 2; grid-row: 1; }
+        #btn-left { grid-column: 1; grid-row: 2; }
+        #btn-right { grid-column: 3; grid-row: 2; }
+        #btn-down { grid-column: 2; grid-row: 3; }
+
+        #controls-hint {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 11px;
+            color: #94a3b8;
+            pointer-events: none;
+            z-index: 10;
+        }
+        
+        /* Message Banner */
+        #toast {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(16, 185, 129, 0.9);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 30;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+    </style>
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+
+    <div id="canvas-container" tabindex="0"></div>
+
+    <!-- HUD -->
+    <div id="hud">
+        <h1>Voxel Little Doug</h1>
+        <div class="stat-row"><span>Chunk Coordinate:</span><span id="chunk-coord" class="stat-val">[0, 0]</span></div>
+        <div class="stat-row"><span>Current Biome:</span><span id="biome-name" class="stat-val">Shamokin Creek Basin</span></div>
+        <div class="stat-row"><span>Specimens Collected:</span><span id="score" class="stat-val">0 / 5</span></div>
+    </div>
+
+    <!-- Telemetry -->
+    <div id="telemetry">
+        <div style="margin-bottom: 6px;"><span class="pulse"></span> <strong style="color: #4ade80;">Pipeline Active</strong></div>
+        <div class="stat-row"><span>Raspberry Pi Node:</span><span style="color:#22c55e;">Polling [OK]</span></div>
+        <div class="stat-row"><span>Workstation Llama:</span><span style="color:#38bdf8;">Standby</span></div>
+        <div class="stat-row"><span>Chunk Engine:</span><span style="color:#f59e0b;">Ready</span></div>
+    </div>
+
+    <!-- On-screen Controls -->
+    <div id="dpad">
+        <div class="dbtn" id="btn-up">▲</div>
+        <div class="dbtn" id="btn-left">◀</div>
+        <div class="dbtn" id="btn-right">▶</div>
+        <div class="dbtn" id="btn-down">▼</div>
+    </div>
+
+    <div id="controls-hint">
+        Use <strong>WASD / Arrows</strong> or <strong>D-Pad</strong> to move Little Doug
+    </div>
+
+    <div id="toast">Specimen Collected!</div>
+
+    <script>
+        // Set focus automatically
+        const container = document.getElementById('canvas-container');
+        window.addEventListener('load', () => { container.focus(); });
+        window.addEventListener('click', () => { container.focus(); });
+
+        // --- 3D SCENE SETUP ---
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0f172a);
+        scene.fog = new THREE.FogExp2(0x0f172a, 0.03);
+
+        const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 10, 10);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        container.appendChild(renderer.domElement);
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0xfff5ea, 0.9);
+        dirLight.position.set(15, 25, 15);
+        dirLight.castShadow = true;
+        dirLight.shadow.mapSize.width = 1024;
+        dirLight.shadow.mapSize.height = 1024;
+        scene.add(dirLight);
+
+        // --- VOXEL TERRAIN BUILDER ---
+        const terrainGroup = new THREE.Group();
+        scene.add(terrainGroup);
+
+        const boxGeo = new THREE.BoxGeometry(1, 1, 1);
+        const grassMat = new THREE.MeshLambertMaterial({ color: 0x38a169 });
+        const dirtMat = new THREE.MeshLambertMaterial({ color: 0x78350f });
+        const waterMat = new THREE.MeshLambertMaterial({ color: 0x0284c7, transparent: true, opacity: 0.8 });
+        const stoneMat = new THREE.MeshLambertMaterial({ color: 0x64748b });
+
+        function buildVoxelTerrain() {
+            const size = 16;
+            for (let x = -size; x <= size; x++) {
+                for (let z = -size; z <= size; z++) {
+                    let h = 0;
+                    let mat = grassMat;
+
+                    // Stream bed generation
+                    if (Math.abs(x - Math.sin(z * 0.3) * 3) < 2) {
+                        h = -0.5;
+                        mat = waterMat;
+                    } else if (Math.random() > 0.85) {
+                        h = 0.5;
+                        mat = stoneMat;
+                    }
+
+                    const cube = new THREE.Mesh(boxGeo, mat);
+                    cube.position.set(x, h, z);
+                    cube.receiveShadow = true;
+                    if (h > 0) cube.castShadow = true;
+                    terrainGroup.add(cube);
+
+                    // Add dirt under grass
+                    if (mat === grassMat) {
+                        const dirt = new THREE.Mesh(boxGeo, dirtMat);
+                        dirt.position.set(x, h - 1, z);
+                        terrainGroup.add(dirt);
+                    }
+                }
+            }
+        }
+        buildVoxelTerrain();
+
+        // --- SPECIMEN PICKUPS ---
+        const specimens = [];
+        const specimenGeo = new THREE.OctahedronGeometry(0.3);
+        const specimenMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x0284c7, roughness: 0.2 });
+
+        function spawnSpecimens() {
+            const locs = [
+                {x: -4, z: -3, name: "Caddisfly Larva"},
+                {x: 5, z: 2, name: "Mayfly Nymph"},
+                {x: -2, z: 6, name: "Stonefly Specimen"},
+                {x: 6, z: -6, name: "Water Penny"},
+                {x: 0, z: -8, name: "Dobsonfly Specimen"}
+            ];
+
+            locs.forEach(loc => {
+                const spec = new THREE.Mesh(specimenGeo, specimenMat);
+                spec.position.set(loc.x, 0.8, loc.z);
+                spec.castShadow = true;
+                spec.userData = { name: loc.name, collected: false };
+                scene.add(spec);
+                specimens.push(spec);
+            });
+        }
+        spawnSpecimens();
+
+        // --- VOXEL LITTLE DOUG ---
+        const dougGroup = new THREE.Group();
+
+        // Body
+        const body = new THREE.Mesh(boxGeo, new THREE.MeshLambertMaterial({ color: 0x15803d }));
+        body.scale.set(0.7, 0.8, 0.5);
+        body.position.y = 0.6;
+        body.castShadow = true;
+        dougGroup.add(body);
+
+        // Head
+        const head = new THREE.Mesh(boxGeo, new THREE.MeshLambertMaterial({ color: 0xfde047 }));
+        head.scale.set(0.5, 0.5, 0.5);
+        head.position.y = 1.25;
+        head.castShadow = true;
+        dougGroup.add(head);
+
+        // Hat
+        const hat = new THREE.Mesh(boxGeo, new THREE.MeshLambertMaterial({ color: 0x166534 }));
+        hat.scale.set(0.6, 0.15, 0.6);
+        hat.position.y = 1.55;
+        hat.castShadow = true;
+        dougGroup.add(hat);
+
+        scene.add(dougGroup);
+
+        // Player State
+        const moveState = { up: false, down: false, left: false, right: false };
+        let score = 0;
+        let currentChunk = [0, 0];
+
+        // --- KEYBOARD CONTROLS ---
+        const handleKey = (code, isDown) => {
+            switch(code) {
+                case 'KeyW': case 'ArrowUp': moveState.up = isDown; break;
+                case 'KeyS': case 'ArrowDown': moveState.down = isDown; break;
+                case 'KeyA': case 'ArrowLeft': moveState.left = isDown; break;
+                case 'KeyD': case 'ArrowRight': moveState.right = isDown; break;
+            }
+        };
+
+        window.addEventListener('keydown', (e) => handleKey(e.code, true));
+        window.addEventListener('keyup', (e) => handleKey(e.code, false));
+
+        // --- ON-SCREEN TOUCH / MOUSE CONTROLS ---
+        const bindDPad = (id, key) => {
+            const btn = document.getElementById(id);
+            const start = (e) => { e.preventDefault(); moveState[key] = true; container.focus(); };
+            const end = (e) => { e.preventDefault(); moveState[key] = false; };
+            btn.addEventListener('touchstart', start);
+            btn.addEventListener('touchend', end);
+            btn.addEventListener('mousedown', start);
+            btn.addEventListener('mouseup', end);
+            btn.addEventListener('mouseleave', end);
+        };
+        bindDPad('btn-up', 'up');
+        bindDPad('btn-down', 'down');
+        bindDPad('btn-left', 'left');
+        bindDPad('btn-right', 'right');
+
+        // Toast Notification
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.innerText = msg;
+            toast.style.opacity = '1';
+            setTimeout(() => { toast.style.opacity = '0'; }, 2000);
+        }
+
+        // --- GAME LOOP ---
+        function updatePlayer() {
+            const speed = 0.08;
+            let moveX = 0;
+            let moveZ = 0;
+
+            if (moveState.up) moveZ -= speed;
+            if (moveState.down) moveZ += speed;
+            if (moveState.left) moveX -= speed;
+            if (moveState.right) moveX += speed;
+
+            if (moveX !== 0 || moveZ !== 0) {
+                dougGroup.position.x += moveX;
+                dougGroup.position.z += moveZ;
+
+                // Little bounce walk animation
+                dougGroup.position.y = Math.abs(Math.sin(Date.now() * 0.01)) * 0.15;
+                dougGroup.rotation.y = Math.atan2(moveX, moveZ);
+            }
+
+            // Smooth camera tracking
+            camera.position.x += (dougGroup.position.x - camera.position.x) * 0.05;
+            camera.position.z += (dougGroup.position.z + 8 - camera.position.z) * 0.05;
+            camera.lookAt(dougGroup.position.x, 0.5, dougGroup.position.z);
+
+            // Chunk calculation
+            const cx = Math.floor((dougGroup.position.x + 8) / 16);
+            const cz = Math.floor((dougGroup.position.z + 8) / 16);
+            if (cx !== currentChunk[0] || cz !== currentChunk[1]) {
+                currentChunk = [cx, cz];
+                document.getElementById('chunk-coord').innerText = `[${cx}, ${cz}]`;
+            }
+
+            // Specimen collection check
+            specimens.forEach(spec => {
+                if (!spec.userData.collected) {
+                    spec.rotation.y += 0.03;
+                    const dist = dougGroup.position.distanceTo(spec.position);
+                    if (dist < 0.8) {
+                        spec.userData.collected = true;
+                        scene.remove(spec);
+                        score++;
+                        document.getElementById('score').innerText = `${score} / 5`;
+                        showToast(`Collected: ${spec.userData.name}`);
+                    }
+                }
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            updatePlayer();
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        // Responsive Resizing
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
+</body>
+</html>
