@@ -134,7 +134,7 @@
             pointer-events: none;
             z-index: 10;
         }
-        
+
         /* Message Banner */
         #toast {
             position: absolute;
@@ -165,8 +165,8 @@
     <div id="hud">
         <h1>Voxel Little Doug</h1>
         <div class="stat-row"><span>Chunk Coordinate:</span><span id="chunk-coord" class="stat-val">[0, 0]</span></div>
-        <div class="stat-row"><span>Current Biome:</span><span id="biome-name" class="stat-val">Shamokin Creek Basin</span></div>
-        <div class="stat-row"><span>Specimens Collected:</span><span id="score" class="stat-val">0 / 5</span></div>
+        <div class="stat-row"><span>Current Biome:</span><span id="biome-name" class="stat-val">Loading...</span></div>
+        <div class="stat-row"><span>Specimens Collected:</span><span id="score" class="stat-val">0 / 8</span></div>
     </div>
 
     <!-- Telemetry -->
@@ -174,7 +174,7 @@
         <div style="margin-bottom: 6px;"><span class="pulse"></span> <strong style="color: #4ade80;">Pipeline Active</strong></div>
         <div class="stat-row"><span>Raspberry Pi Node:</span><span style="color:#22c55e;">Polling [OK]</span></div>
         <div class="stat-row"><span>Workstation Llama:</span><span style="color:#38bdf8;">Standby</span></div>
-        <div class="stat-row"><span>Chunk Engine:</span><span style="color:#f59e0b;">Ready</span></div>
+        <div class="stat-row"><span>Chunk Engine:</span><span style="color:#f59e0b;">Streaming</span></div>
     </div>
 
     <!-- On-screen Controls -->
@@ -192,7 +192,6 @@
     <div id="toast">Specimen Collected!</div>
 
     <script>
-        // Set focus automatically
         const container = document.getElementById('canvas-container');
         window.addEventListener('load', () => { container.focus(); });
         window.addEventListener('click', () => { container.focus(); });
@@ -222,92 +221,122 @@
         dirLight.shadow.mapSize.height = 1024;
         scene.add(dirLight);
 
-        // --- VOXEL TERRAIN BUILDER ---
-        const terrainGroup = new THREE.Group();
-        scene.add(terrainGroup);
-
+        // Materials
         const boxGeo = new THREE.BoxGeometry(1, 1, 1);
         const grassMat = new THREE.MeshLambertMaterial({ color: 0x38a169 });
         const dirtMat = new THREE.MeshLambertMaterial({ color: 0x78350f });
         const waterMat = new THREE.MeshLambertMaterial({ color: 0x0284c7, transparent: true, opacity: 0.8 });
         const stoneMat = new THREE.MeshLambertMaterial({ color: 0x64748b });
 
-        function buildVoxelTerrain() {
-            const size = 16;
-            for (let x = -size; x <= size; x++) {
-                for (let z = -size; z <= size; z++) {
-                    let h = 0;
-                    let mat = grassMat;
+        // --- WORLD & CHUNK STREAMING STATE ---
+        const worldGroup = new THREE.Group();
+        scene.add(worldGroup);
 
-                    // Stream bed generation
-                    if (Math.abs(x - Math.sin(z * 0.3) * 3) < 2) {
-                        h = -0.5;
-                        mat = waterMat;
-                    } else if (Math.random() > 0.85) {
-                        h = 0.5;
-                        mat = stoneMat;
-                    }
+        const loadedChunks = new Map();
+        const activeChunkMeshes = new Map();
+        const activeSpecimens = [];
+        let score = 0;
+        let currentChunkKey = "";
+
+        async function fetchChunk(cx, cz) {
+            const key = `${cx},${cz}`;
+            if (loadedChunks.has(key)) return loadedChunks.get(key);
+
+            try {
+                const response = await fetch(`chunks/chunk_${cx}_${cz}.json`);
+                if (!response.ok) throw new Error("Chunk not found");
+                const data = await response.json();
+                loadedChunks.set(key, data);
+                return data;
+            } catch (err) {
+                // Fallback procedural mock chunk if file hasn't synced yet
+                const fallback = {
+                    biome_type: "lush_riverbank",
+                    elevation_grid: Array(16).fill().map(() => Array(16).fill(0)),
+                    specimens: [
+                        {x: 2, y: 2, z: 0, name: "Caddisfly Larva", points: 1},
+                        {x: -2, y: -2, z: 0, name: "Mayfly Nymph", points: 1}
+                    ]
+                };
+                return fallback;
+            }
+        }
+
+        function renderChunk(cx, cz, chunkData) {
+            const key = `${cx},${cz}`;
+            if (activeChunkMeshes.has(key)) return; // Already rendered
+
+            const chunkGroup = new THREE.Group();
+            chunkGroup.position.set(cx * 16, 0, cz * 16);
+
+            const grid = chunkData.elevation_grid || Array(16).fill().map(() => Array(16).fill(0));
+
+            for (let x = 0; x < 16; x++) {
+                for (let z = 0; z < 16; z++) {
+                    const h = grid[z] && grid[z][x] !== undefined ? grid[z][x] : 0;
+                    let mat = grassMat;
+                    if (h < 0) mat = waterMat;
+                    else if (h >= 3) mat = stoneMat;
 
                     const cube = new THREE.Mesh(boxGeo, mat);
-                    cube.position.set(x, h, z);
+                    // Center the 16x16 grid around chunk origin
+                    cube.position.set(x - 7.5, h, z - 7.5);
                     cube.receiveShadow = true;
                     if (h > 0) cube.castShadow = true;
-                    terrainGroup.add(cube);
+                    chunkGroup.add(cube);
 
                     // Add dirt under grass
                     if (mat === grassMat) {
                         const dirt = new THREE.Mesh(boxGeo, dirtMat);
-                        dirt.position.set(x, h - 1, z);
-                        terrainGroup.add(dirt);
+                        dirt.position.set(x - 7.5, h - 1, z - 7.5);
+                        chunkGroup.add(dirt);
                     }
                 }
             }
+
+            // Spawn Specimens for this chunk
+            if (chunkData.specimens && Array.isArray(chunkData.specimens)) {
+                const specimenGeo = new THREE.OctahedronGeometry(0.3);
+                const specimenMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x0284c7, roughness: 0.2 });
+
+                chunkData.specimens.forEach(spec => {
+                    const specimenMesh = new THREE.Mesh(specimenGeo, specimenMat);
+                    // Map local chunk coordinates (0-15) to world position relative to chunk group
+                    const sx = (spec.x !== undefined ? spec.x : Math.random() * 12 - 6);
+                    const sz = (spec.y !== undefined ? spec.y : Math.random() * 12 - 6);
+                    const sy = (spec.z !== undefined ? spec.z : 0.8) + 0.5;
+
+                    specimenMesh.position.set(sx, sy, sz);
+                    specimenMesh.castShadow = true;
+                    specimenMesh.userData = { 
+                        name: spec.name || "Wild Specimen", 
+                        collected: false,
+                        chunkKey: key
+                    };
+                    chunkGroup.add(specimenMesh);
+                    activeSpecimens.push(specimenMesh);
+                });
+            }
+
+            worldGroup.add(chunkGroup);
+            activeChunkMeshes.set(key, chunkGroup);
         }
-        buildVoxelTerrain();
-
-        // --- SPECIMEN PICKUPS ---
-        const specimens = [];
-        const specimenGeo = new THREE.OctahedronGeometry(0.3);
-        const specimenMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x0284c7, roughness: 0.2 });
-
-        function spawnSpecimens() {
-            const locs = [
-                {x: -4, z: -3, name: "Caddisfly Larva"},
-                {x: 5, z: 2, name: "Mayfly Nymph"},
-                {x: -2, z: 6, name: "Stonefly Specimen"},
-                {x: 6, z: -6, name: "Water Penny"},
-                {x: 0, z: -8, name: "Dobsonfly Specimen"}
-            ];
-
-            locs.forEach(loc => {
-                const spec = new THREE.Mesh(specimenGeo, specimenMat);
-                spec.position.set(loc.x, 0.8, loc.z);
-                spec.castShadow = true;
-                spec.userData = { name: loc.name, collected: false };
-                scene.add(spec);
-                specimens.push(spec);
-            });
-        }
-        spawnSpecimens();
 
         // --- VOXEL LITTLE DOUG ---
         const dougGroup = new THREE.Group();
 
-        // Body
         const body = new THREE.Mesh(boxGeo, new THREE.MeshLambertMaterial({ color: 0x15803d }));
         body.scale.set(0.7, 0.8, 0.5);
         body.position.y = 0.6;
         body.castShadow = true;
         dougGroup.add(body);
 
-        // Head
         const head = new THREE.Mesh(boxGeo, new THREE.MeshLambertMaterial({ color: 0xfde047 }));
         head.scale.set(0.5, 0.5, 0.5);
         head.position.y = 1.25;
         head.castShadow = true;
         dougGroup.add(head);
 
-        // Hat
         const hat = new THREE.Mesh(boxGeo, new THREE.MeshLambertMaterial({ color: 0x166534 }));
         hat.scale.set(0.6, 0.15, 0.6);
         hat.position.y = 1.55;
@@ -318,10 +347,9 @@
 
         // Player State
         const moveState = { up: false, down: false, left: false, right: false };
-        let score = 0;
-        let currentChunk = [0, 0];
+        let currentChunk = [999, 999]; // Force initial load
 
-        // --- KEYBOARD CONTROLS ---
+        // Controls
         const handleKey = (code, isDown) => {
             switch(code) {
                 case 'KeyW': case 'ArrowUp': moveState.up = isDown; break;
@@ -334,9 +362,9 @@
         window.addEventListener('keydown', (e) => handleKey(e.code, true));
         window.addEventListener('keyup', (e) => handleKey(e.code, false));
 
-        // --- ON-SCREEN TOUCH / MOUSE CONTROLS ---
         const bindDPad = (id, key) => {
             const btn = document.getElementById(id);
+            if (!btn) return;
             const start = (e) => { e.preventDefault(); moveState[key] = true; container.focus(); };
             const end = (e) => { e.preventDefault(); moveState[key] = false; };
             btn.addEventListener('touchstart', start);
@@ -350,7 +378,6 @@
         bindDPad('btn-left', 'left');
         bindDPad('btn-right', 'right');
 
-        // Toast Notification
         function showToast(msg) {
             const toast = document.getElementById('toast');
             toast.innerText = msg;
@@ -359,7 +386,7 @@
         }
 
         // --- GAME LOOP ---
-        function updatePlayer() {
+        async function updatePlayer() {
             const speed = 0.08;
             let moveX = 0;
             let moveZ = 0;
@@ -373,7 +400,6 @@
                 dougGroup.position.x += moveX;
                 dougGroup.position.z += moveZ;
 
-                // Little bounce walk animation
                 dougGroup.position.y = Math.abs(Math.sin(Date.now() * 0.01)) * 0.15;
                 dougGroup.rotation.y = Math.atan2(moveX, moveZ);
             }
@@ -383,24 +409,47 @@
             camera.position.z += (dougGroup.position.z + 8 - camera.position.z) * 0.05;
             camera.lookAt(dougGroup.position.x, 0.5, dougGroup.position.z);
 
-            // Chunk calculation
+            // Calculate current chunk coordinate based on 16x16 grid spacing
             const cx = Math.floor((dougGroup.position.x + 8) / 16);
             const cz = Math.floor((dougGroup.position.z + 8) / 16);
+
             if (cx !== currentChunk[0] || cz !== currentChunk[1]) {
                 currentChunk = [cx, cz];
                 document.getElementById('chunk-coord').innerText = `[${cx}, ${cz}]`;
+
+                // Fetch and render the chunk and its immediate neighbors
+                for (let dx = -1; dx <= 1; dx++) {
+                    for (let dz = -1; dz <= 1; dz++) {
+                        const targetCx = cx + dx;
+                        const targetCz = cz + dz;
+                        const chunkData = await fetchChunk(targetCx, targetCz);
+                        renderChunk(targetCx, targetCz, chunkData);
+
+                        if (dx === 0 && dz === 0 && chunkData) {
+                            // Update HUD biome info
+                            const formattedBiome = chunkData.biome_type 
+                                ? chunkData.biome_type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
+                                : "Outdoor Biome";
+                            document.getElementById('biome-name').innerText = formattedBiome;
+                        }
+                    }
+                }
             }
 
             // Specimen collection check
-            specimens.forEach(spec => {
+            activeSpecimens.forEach(spec => {
                 if (!spec.userData.collected) {
                     spec.rotation.y += 0.03;
-                    const dist = dougGroup.position.distanceTo(spec.position);
-                    if (dist < 0.8) {
+                    // Convert spec position relative to world
+                    const worldPos = new THREE.Vector3();
+                    spec.getWorldPosition(worldPos);
+
+                    const dist = dougGroup.position.distanceTo(worldPos);
+                    if (dist < 0.9) {
                         spec.userData.collected = true;
-                        scene.remove(spec);
+                        spec.parent.remove(spec);
                         score++;
-                        document.getElementById('score').innerText = `${score} / 5`;
+                        document.getElementById('score').innerText = `${score} / 8`;
                         showToast(`Collected: ${spec.userData.name}`);
                     }
                 }
@@ -414,7 +463,6 @@
         }
         animate();
 
-        // Responsive Resizing
         window.addEventListener('resize', () => {
             camera.aspect = window.innerWidth / window.innerHeight;
             camera.updateProjectionMatrix();
