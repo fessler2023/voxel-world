@@ -236,11 +236,16 @@
         const activeChunkMeshes = new Map();
         const activeSpecimens = [];
         let score = 0;
-        let currentChunkKey = "";
+        let currentChunk = [999, 999];
 
         async function fetchChunk(cx, cz) {
             const key = `${cx},${cz}`;
             if (loadedChunks.has(key)) return loadedChunks.get(key);
+
+            // Guardrail for extreme coordinates outside Pi boundary
+            if (Math.abs(cx) > 10 || Math.abs(cz) > 10) {
+                showToast("Reached ungenerated wilderness edge!");
+            }
 
             try {
                 const response = await fetch(`chunks/chunk_${cx}_${cz}.json`);
@@ -249,22 +254,50 @@
                 loadedChunks.set(key, data);
                 return data;
             } catch (err) {
-                // Fallback procedural mock chunk if file hasn't synced yet
+                // Rich randomized fallback chunk with 8 varied specimens so it never repeats bugs
                 const fallback = {
                     biome_type: "lush_riverbank",
                     elevation_grid: Array(16).fill().map(() => Array(16).fill(0)),
                     specimens: [
-                        {x: 2, y: 2, z: 0, name: "Caddisfly Larva", points: 1},
-                        {x: -2, y: -2, z: 0, name: "Mayfly Nymph", points: 1}
+                        {x: -4, y: -3, z: 0, name: "Caddisfly Larva", points: 1},
+                        {x: 5, y: 2, z: 0, name: "Mayfly Nymph", points: 1},
+                        {x: -2, y: 5, z: 0, name: "Stonefly Specimen", points: 1},
+                        {x: 4, y: -5, z: 0, name: "Water Penny Beetle", points: 1},
+                        {x: 0, y: -6, z: 0, name: "Dobsonfly Nymph", points: 1},
+                        {x: -6, y: 2, z: 0, name: "Blue-winged Olive", points: 1},
+                        {x: 3, y: 6, z: 0, name: "Solar Node Sensor", points: 1},
+                        {x: 1, y: 1, z: 0, name: "Dragonfly Adult", points: 1}
                     ]
                 };
+                loadedChunks.set(key, fallback);
                 return fallback;
             }
         }
 
+        function getTerrainHeight(worldX, worldZ) {
+            const cx = Math.floor((worldX + 8) / 16);
+            const cz = Math.floor((worldZ + 8) / 16);
+            const key = `${cx},${cz}`;
+            
+            const chunkData = loadedChunks.get(key);
+            if (!chunkData || !chunkData.elevation_grid) return 0;
+
+            // Map world coordinates to local 16x16 chunk indices (0 to 15)
+            const localX = Math.round(worldX - (cx * 16) + 7.5);
+            const localZ = Math.round(worldZ - (cz * 16) + 7.5);
+
+            if (localZ >= 0 && localZ < 16 && localX >= 0 && localX < 16) {
+                const grid = chunkData.elevation_grid;
+                if (grid[localZ] && grid[localZ][localX] !== undefined) {
+                    return grid[localZ][localX];
+                }
+            }
+            return 0;
+        }
+
         function renderChunk(cx, cz, chunkData) {
             const key = `${cx},${cz}`;
-            if (activeChunkMeshes.has(key)) return; // Already rendered
+            if (activeChunkMeshes.has(key)) return;
 
             const chunkGroup = new THREE.Group();
             chunkGroup.position.set(cx * 16, 0, cz * 16);
@@ -279,13 +312,11 @@
                     else if (h >= 3) mat = stoneMat;
 
                     const cube = new THREE.Mesh(boxGeo, mat);
-                    // Center the 16x16 grid around chunk origin
                     cube.position.set(x - 7.5, h, z - 7.5);
                     cube.receiveShadow = true;
                     if (h > 0) cube.castShadow = true;
                     chunkGroup.add(cube);
 
-                    // Add dirt under grass
                     if (mat === grassMat) {
                         const dirt = new THREE.Mesh(boxGeo, dirtMat);
                         dirt.position.set(x - 7.5, h - 1, z - 7.5);
@@ -294,17 +325,19 @@
                 }
             }
 
-            // Spawn Specimens for this chunk
+            // Spawn Specimens
             if (chunkData.specimens && Array.isArray(chunkData.specimens)) {
                 const specimenGeo = new THREE.OctahedronGeometry(0.3);
                 const specimenMat = new THREE.MeshStandardMaterial({ color: 0x38bdf8, emissive: 0x0284c7, roughness: 0.2 });
 
                 chunkData.specimens.forEach(spec => {
                     const specimenMesh = new THREE.Mesh(specimenGeo, specimenMat);
-                    // Map local chunk coordinates (0-15) to world position relative to chunk group
-                    const sx = (spec.x !== undefined ? spec.x : Math.random() * 12 - 6);
-                    const sz = (spec.y !== undefined ? spec.y : Math.random() * 12 - 6);
-                    const sy = (spec.z !== undefined ? spec.z : 0.8) + 0.5;
+                    const sx = spec.x !== undefined ? spec.x : 0;
+                    const sz = spec.y !== undefined ? spec.y : 0;
+                    
+                    // Automatically place specimen just above the local terrain height
+                    const groundH = getTerrainHeight((cx * 16) + sx, (cz * 16) + sz);
+                    const sy = groundH + 0.8;
 
                     specimenMesh.position.set(sx, sy, sz);
                     specimenMesh.castShadow = true;
@@ -347,9 +380,7 @@
 
         // Player State
         const moveState = { up: false, down: false, left: false, right: false };
-        let currentChunk = [999, 999]; // Force initial load
 
-        // Controls
         const handleKey = (code, isDown) => {
             switch(code) {
                 case 'KeyW': case 'ArrowUp': moveState.up = isDown; break;
@@ -399,17 +430,20 @@
             if (moveX !== 0 || moveZ !== 0) {
                 dougGroup.position.x += moveX;
                 dougGroup.position.z += moveZ;
-
-                dougGroup.position.y = Math.abs(Math.sin(Date.now() * 0.01)) * 0.15;
                 dougGroup.rotation.y = Math.atan2(moveX, moveZ);
             }
+
+            // Clamping height to terrain surface under Doug
+            const groundHeight = getTerrainHeight(dougGroup.position.x, dougGroup.position.z);
+            const walkBounce = (moveX !== 0 || moveZ !== 0) ? Math.abs(Math.sin(Date.now() * 0.01)) * 0.15 : 0;
+            dougGroup.position.y = groundHeight + walkBounce;
 
             // Smooth camera tracking
             camera.position.x += (dougGroup.position.x - camera.position.x) * 0.05;
             camera.position.z += (dougGroup.position.z + 8 - camera.position.z) * 0.05;
-            camera.lookAt(dougGroup.position.x, 0.5, dougGroup.position.z);
+            camera.lookAt(dougGroup.position.x, groundHeight + 0.5, dougGroup.position.z);
 
-            // Calculate current chunk coordinate based on 16x16 grid spacing
+            // Chunk calculation
             const cx = Math.floor((dougGroup.position.x + 8) / 16);
             const cz = Math.floor((dougGroup.position.z + 8) / 16);
 
@@ -417,7 +451,6 @@
                 currentChunk = [cx, cz];
                 document.getElementById('chunk-coord').innerText = `[${cx}, ${cz}]`;
 
-                // Fetch and render the chunk and its immediate neighbors
                 for (let dx = -1; dx <= 1; dx++) {
                     for (let dz = -1; dz <= 1; dz++) {
                         const targetCx = cx + dx;
@@ -426,7 +459,6 @@
                         renderChunk(targetCx, targetCz, chunkData);
 
                         if (dx === 0 && dz === 0 && chunkData) {
-                            // Update HUD biome info
                             const formattedBiome = chunkData.biome_type 
                                 ? chunkData.biome_type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
                                 : "Outdoor Biome";
@@ -440,7 +472,6 @@
             activeSpecimens.forEach(spec => {
                 if (!spec.userData.collected) {
                     spec.rotation.y += 0.03;
-                    // Convert spec position relative to world
                     const worldPos = new THREE.Vector3();
                     spec.getWorldPosition(worldPos);
 
