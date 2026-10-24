@@ -18,11 +18,52 @@ You generate strict JSON data for map chunks (16x16 grids).
 
 Valid Biome Types (Choose ONE based on terrain variety):
 - lush_riverbank
-- pine_forest
-- mountain_ridge
+- river
+- stream
 - wetland
-- desert
 - alpine_lake
+- estuary
+- mangrove_swamp
+- bog
+- fen
+- tidal_pool
+- deep_ocean
+- coral_reef
+- pine_forest
+- ancient_forest
+- deciduous_forest
+- old_growth_forest
+- temperate_rainforest
+- boreal_forest
+- autumn_woods
+- bamboo_grove
+- woodland_edge
+- mossy_grove
+- mountain_ridge
+- rocky_outcrop
+- alpine_tundra
+- canyon
+- steep_cliff
+- highland_plateau
+- foothills
+- misty_valley
+- desert
+- badlands
+- salt_flat
+- oasis
+- savanna
+- shrubland
+- mesa
+- rolling_meadow
+- snow
+- glacier
+- frozen_tundra
+- frozen_lake
+- ice_sheet
+- volcanic_field
+- overgrown_ruins
+- cave_mouth
+- cairn_field
 
 Rules:
 1. Ensure elevation values (0 to 5) match neighboring chunks smoothly.
