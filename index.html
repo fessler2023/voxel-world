@@ -500,28 +500,106 @@
             activeChunkMeshes.set(key, chunkGroup);
         }
 
-        // --- VOXEL LITTLE DOUG ---
+                // --- VOXEL LITTLE DOUG (hiker version) ---
         const dougGroup = new THREE.Group();
+        dougGroup.scale.setScalar(0.75);
 
-        const body = new THREE.Mesh(boxGeo, new THREE.MeshLambertMaterial({ color: 0x15803d }));
-        body.scale.set(0.7, 0.8, 0.5);
-        body.position.y = 0.6;
-        body.castShadow = true;
-        dougGroup.add(body);
+        const SKIN = 0xd9a77a, HAIR = 0x1a1a1a, SHIRT = 0x6b7a3a, SHORTS = 0x9c8455;
+        const BOOT = 0x7a2e2e, PACK = 0x6b4a2b, PACK_DARK = 0x4f3520, BLUE = 0x3b5a9a;
 
-        const head = new THREE.Mesh(boxGeo, new THREE.MeshLambertMaterial({ color: 0xfde047 }));
-        head.scale.set(0.5, 0.5, 0.5);
-        head.position.y = 1.25;
-        head.castShadow = true;
+        const matCache = {};
+        const mat = c => matCache[c] || (matCache[c] = new THREE.MeshLambertMaterial({ color: c }));
+        function part(parent, w, h, d, color, x, y, z) {
+            const m = new THREE.Mesh(boxGeo, mat(color));
+            m.scale.set(w, h, d);
+            m.position.set(x, y, z);
+            m.castShadow = true;
+            parent.add(m);
+            return m;
+        }
+
+        // Legs (pivot at the hip so they can swing)
+        function makeLeg(x) {
+            const g = new THREE.Group();
+            g.position.set(x, 0.85, 0);
+            part(g, 0.34, 0.35, 0.36, SHORTS, 0, -0.175, 0);
+            part(g, 0.2, 0.2, 0.2, SKIN, 0, -0.45, 0);
+            part(g, 0.32, 0.3, 0.42, BOOT, 0, -0.7, 0.05);
+            part(g, 0.34, 0.06, 0.44, 0x4a1c1c, 0, -0.56, 0.05);
+            dougGroup.add(g);
+            return g;
+        }
+        const legR = makeLeg(-0.18);
+        const legL = makeLeg(0.18);
+
+        // Torso + backpack
+        part(dougGroup, 0.8, 0.65, 0.45, SHIRT, 0, 1.175, 0);
+        part(dougGroup, 0.62, 0.6, 0.25, PACK, 0, 1.2, -0.35);
+        part(dougGroup, 0.16, 0.28, 0.2, BLUE, -0.38, 1.05, -0.35);
+        part(dougGroup, 0.12, 0.6, 0.05, PACK_DARK, -0.25, 1.2, 0.24); // straps
+        part(dougGroup, 0.12, 0.6, 0.05, PACK_DARK, 0.25, 1.2, 0.24);
+
+        // Arms (pivot at the shoulder)
+        function makeArm(x) {
+            const g = new THREE.Group();
+            g.position.set(x, 1.45, 0);
+            part(g, 0.26, 0.25, 0.26, SHIRT, 0, -0.1, 0);
+            part(g, 0.2, 0.35, 0.2, SKIN, 0, -0.4, 0);
+            dougGroup.add(g);
+            return g;
+        }
+        const armR = makeArm(-0.52);
+        const armL = makeArm(0.52); // the waving arm
+
+        // Head
+        const head = new THREE.Group();
+        head.position.set(0, 0, 0);
         dougGroup.add(head);
+        part(head, 0.7, 0.7, 0.66, SKIN, 0, 1.85, 0);
+        part(head, 0.08, 0.18, 0.12, SKIN, -0.39, 1.82, 0); // ears
+        part(head, 0.08, 0.18, 0.12, SKIN, 0.39, 1.82, 0);
+        part(head, 0.1, 0.12, 0.02, 0x222222, -0.17, 1.88, 0.34); // eyes
+        part(head, 0.1, 0.12, 0.02, 0x222222, 0.17, 1.88, 0.34);
+        part(head, 0.16, 0.04, 0.02, HAIR, -0.17, 2.02, 0.34); // brows
+        part(head, 0.16, 0.04, 0.02, HAIR, 0.17, 2.02, 0.34);
+        part(head, 0.08, 0.06, 0.03, 0xb98660, 0, 1.78, 0.34); // nose
+        part(head, 0.22, 0.05, 0.02, 0x6b1f1f, 0, 1.66, 0.34); // smile
+        part(head, 0.05, 0.05, 0.02, 0x6b1f1f, -0.13, 1.70, 0.34);
+        part(head, 0.05, 0.05, 0.02, 0x6b1f1f, 0.13, 1.70, 0.34);
 
-        const hat = new THREE.Mesh(boxGeo, new THREE.MeshLambertMaterial({ color: 0x166534 }));
-        hat.scale.set(0.6, 0.15, 0.6);
-        hat.position.y = 1.55;
-        hat.castShadow = true;
-        dougGroup.add(hat);
+        // Spiky black hair
+        part(head, 0.76, 0.2, 0.72, HAIR, 0, 2.3, 0);
+        part(head, 0.76, 0.55, 0.16, HAIR, 0, 2.0, -0.3);   // back
+        part(head, 0.1, 0.3, 0.5, HAIR, -0.4, 2.1, -0.05);  // sideburns
+        part(head, 0.1, 0.3, 0.5, HAIR, 0.4, 2.1, -0.05);
+        part(head, 0.76, 0.1, 0.1, HAIR, 0, 2.2, 0.33);     // fringe
+        [[-0.3, 0.2], [-0.15, 0.32], [0, 0.26], [0.15, 0.34], [0.3, 0.2]].forEach(([sx, sh]) => {
+            part(head, 0.14, sh, 0.5, HAIR, sx, 2.4 + sh / 2, 0);
+        });
 
         scene.add(dougGroup);
+
+        // Limb animation: swing when walking, wave when standing still
+        (function animateDoug() {
+            requestAnimationFrame(animateDoug);
+            const t = performance.now() / 1000;
+            const moving = moveState.up || moveState.down || moveState.left || moveState.right;
+
+            if (moving) {
+                const swing = Math.sin(t * 10) * 0.7;
+                legR.rotation.x = swing;
+                legL.rotation.x = -swing;
+                armR.rotation.x = -swing;
+                armL.rotation.x = swing;
+                armL.rotation.z = 0;
+            } else {
+                legR.rotation.x = 0;
+                legL.rotation.x = 0;
+                armR.rotation.x = 0;
+                armL.rotation.x = 0;
+                armL.rotation.z = 2.6 + Math.sin(t * 7) * 0.3; // wave
+            }
+        })();
 
         // Player Movement State
         const moveState = { up: false, down: false, left: false, right: false };
