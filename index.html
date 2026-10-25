@@ -534,6 +534,22 @@
                         }
                     }
                 }
+
+                // --- UNLOAD FARAWAY CHUNKS (Prevents Memory & FPS Lag) ---
+                for (const [key, chunkGroup] of activeChunkMeshes.entries()) {
+                    const [ccx, ccz] = key.split(',').map(Number);
+                    if (Math.abs(ccx - cx) > 3 || Math.abs(ccz - cz) > 3) {
+                        worldGroup.remove(chunkGroup);
+                        chunkGroup.traverse((child) => {
+                            if (child.geometry) child.geometry.dispose();
+                            if (child.material) {
+                                if (Array.isArray(child.material)) child.material.forEach(m => m.dispose());
+                                else child.material.dispose();
+                            }
+                        });
+                        activeChunkMeshes.delete(key);
+                    }
+                }
             }
 
             // Specimen collection check
