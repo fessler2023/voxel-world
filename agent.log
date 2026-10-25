@@ -988,3 +988,10 @@ error: Please commit or stash them.
  3 files changed, 145 insertions(+), 120 deletions(-)
 To https://github.com/fessler2023/voxel-world.git
    cf0ddb8..9f0bd16  main -> main
+[main 68f09c7] Auto-expanded world chunk [-4, -3]
+ 3 files changed, 323 insertions(+), 4 deletions(-)
+ create mode 100644 chunks/chunk_-4_-3.json
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+To https://github.com/fessler2023/voxel-world.git
+   9f0bd16..68f09c7  main -> main
