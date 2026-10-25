@@ -221,17 +221,17 @@
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         container.appendChild(renderer.domElement);
 
-        // --- ORBIT CONTROLS ---
+        // --- ORBIT CONTROLS (Mouse Look Around Little Doug) ---
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
-        controls.maxPolarAngle = Math.PI / 2 - 0.05;
+        controls.maxPolarAngle = Math.PI / 2 - 0.05; // Keep camera above ground level
 
         // Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
         scene.add(ambientLight);
 
-        const dirLight = new THREE.DirectionalLight(0xfff5ea, 0.85);
+        const dirLight = new THREE.DirectionalLight(0xfff5ea, 0.9);
         dirLight.position.set(15, 25, 15);
         dirLight.castShadow = true;
         dirLight.shadow.mapSize.width = 1024;
@@ -240,92 +240,6 @@
 
         // Base Geometry
         const boxGeo = new THREE.BoxGeometry(1, 1, 1);
-
-        // --- PROCEDURAL 16x16 PIXEL TEXTURES (Early Minecraft Style) ---
-        function createPixelTexture(drawFn) {
-            const canvas = document.createElement('canvas');
-            canvas.width = 16;
-            canvas.height = 16;
-            const ctx = canvas.getContext('2d');
-            drawFn(ctx);
-            const tex = new THREE.CanvasTexture(canvas);
-            tex.magFilter = THREE.NearestFilter;
-            tex.minFilter = THREE.NearestFilter;
-            return tex;
-        }
-
-        const textures = {
-            stone: createPixelTexture(ctx => {
-                ctx.fillStyle = '#7f7f7f';
-                ctx.fillRect(0, 0, 16, 16);
-                for (let i = 0; i < 45; i++) {
-                    ctx.fillStyle = Math.random() > 0.5 ? '#555555' : '#999999';
-                    ctx.fillRect(Math.floor(Math.random()*16), Math.floor(Math.random()*16), 1, 1);
-                }
-            }),
-            grass: createPixelTexture(ctx => {
-                ctx.fillStyle = '#55a033';
-                ctx.fillRect(0, 0, 16, 16);
-                for (let i = 0; i < 40; i++) {
-                    ctx.fillStyle = Math.random() > 0.5 ? '#458528' : '#63b53f';
-                    ctx.fillRect(Math.floor(Math.random()*16), Math.floor(Math.random()*16), 1, 1);
-                }
-            }),
-            dirt: createPixelTexture(ctx => {
-                ctx.fillStyle = '#866043';
-                ctx.fillRect(0, 0, 16, 16);
-                for (let i = 0; i < 45; i++) {
-                    ctx.fillStyle = Math.random() > 0.5 ? '#6b4c33' : '#9e7350';
-                    ctx.fillRect(Math.floor(Math.random()*16), Math.floor(Math.random()*16), 1, 1);
-                }
-            }),
-            water: createPixelTexture(ctx => {
-                ctx.fillStyle = '#2686d4';
-                ctx.fillRect(0, 0, 16, 16);
-                for (let i = 0; i < 35; i++) {
-                    ctx.fillStyle = '#1c6cae';
-                    ctx.fillRect(Math.floor(Math.random()*16), Math.floor(Math.random()*16), 1, 1);
-                }
-            }),
-            sand: createPixelTexture(ctx => {
-                ctx.fillStyle = '#d4b15d';
-                ctx.fillRect(0, 0, 16, 16);
-                for (let i = 0; i < 40; i++) {
-                    ctx.fillStyle = '#c2a152';
-                    ctx.fillRect(Math.floor(Math.random()*16), Math.floor(Math.random()*16), 1, 1);
-                }
-            }),
-            snow: createPixelTexture(ctx => {
-                ctx.fillStyle = '#eef2f5';
-                ctx.fillRect(0, 0, 16, 16);
-                for (let i = 0; i < 30; i++) {
-                    ctx.fillStyle = '#d8e1e8';
-                    ctx.fillRect(Math.floor(Math.random()*16), Math.floor(Math.random()*16), 1, 1);
-                }
-            })
-        };
-
-        // Biome Material Mapping Function
-        function getBlockMaterial(biomeType, h) {
-            const biome = (biomeType || "").toLowerCase();
-
-            if (biome.includes('river') || biome.includes('lake') || biome.includes('ocean') || biome.includes('wetland')) {
-                if (h <= 1) return new THREE.MeshLambertMaterial({ map: textures.water });
-            }
-            if (biome.includes('desert') || biome.includes('dune') || biome.includes('salt')) {
-                return new THREE.MeshLambertMaterial({ map: textures.sand });
-            }
-            if (biome.includes('snow') || biome.includes('glacier') || biome.includes('tundra')) {
-                return new THREE.MeshLambertMaterial({ map: textures.snow });
-            }
-            if (h >= 3) {
-                return new THREE.MeshLambertMaterial({ map: textures.stone });
-            }
-            if (h === 0 || h === 1) {
-                return new THREE.MeshLambertMaterial({ map: textures.dirt });
-            }
-            return new THREE.MeshLambertMaterial({ map: textures.grass });
-        }
 
         // --- VOXEL CLOUD SYSTEM ---
         const cloudGroup = new THREE.Group();
@@ -340,7 +254,7 @@
         for (let i = 0; i < 15; i++) {
             const cluster = new THREE.Group();
             const clusterSize = Math.floor(Math.random() * 4) + 3;
-
+            
             for (let j = 0; j < clusterSize; j++) {
                 const cloudCube = new THREE.Mesh(boxGeo, cloudMat);
                 cloudCube.position.set(
@@ -372,6 +286,25 @@
                     cloud.position.z = dougGroup.position.z + (Math.random() - 0.5) * 200;
                 }
             });
+        }
+
+        // Dynamic Biome Color Mapping Function
+        function getBlockColor(biomeType, h) {
+            const biome = (biomeType || "").toLowerCase();
+
+            if (biome.includes('river') || biome.includes('lake') || biome.includes('ocean') || biome.includes('wetland')) {
+                if (h <= 1) return 0x0284c7; // Blue water
+            }
+            if (biome.includes('desert') || biome.includes('dune') || biome.includes('salt')) {
+                return 0xeab308; // Sandy yellow
+            }
+            if (biome.includes('snow') || biome.includes('glacier') || biome.includes('tundra')) {
+                return 0xf8fafc; // Crisp white snow
+            }
+            if (h >= 3) {
+                return 0x64748b; // Slate gray rock
+            }
+            return 0x38a169; // Default lush forest green
         }
 
         // --- WORLD & CHUNK STREAMING STATE ---
@@ -451,22 +384,16 @@
             for (let x = 0; x < 16; x++) {
                 for (let z = 0; z < 16; z++) {
                     const h = grid[z] && grid[z][x] !== undefined ? grid[z][x] : 1;
-                    const mat = getBlockMaterial(biomeType, h);
+                    const colorHex = getBlockColor(biomeType, h);
+                    const mat = new THREE.MeshLambertMaterial({ color: colorHex });
 
-                    if (h < 0) {
+                    // Solid column loop (y=0 down to h) closes mountain gaps
+                    for (let y = 0; y <= h; y++) {
                         const cube = new THREE.Mesh(boxGeo, mat);
-                        cube.position.set(x - 7.5, h, z - 7.5);
+                        cube.position.set(x - 7.5, y, z - 7.5);
                         cube.receiveShadow = true;
+                        if (y === h) cube.castShadow = true;
                         chunkGroup.add(cube);
-                    } else {
-                        // Solid column loop (y=0 down to h) closes mountain gaps
-                        for (let y = 0; y <= h; y++) {
-                            const cube = new THREE.Mesh(boxGeo, mat);
-                            cube.position.set(x - 7.5, y, z - 7.5);
-                            cube.receiveShadow = true;
-                            if (y === h) cube.castShadow = true;
-                            chunkGroup.add(cube);
-                        }
                     }
                 }
             }
@@ -500,106 +427,28 @@
             activeChunkMeshes.set(key, chunkGroup);
         }
 
-                // --- VOXEL LITTLE DOUG (hiker version) ---
+        // --- VOXEL LITTLE DOUG ---
         const dougGroup = new THREE.Group();
-        dougGroup.scale.setScalar(0.75);
 
-        const SKIN = 0xd9a77a, HAIR = 0x1a1a1a, SHIRT = 0x6b7a3a, SHORTS = 0x9c8455;
-        const BOOT = 0x7a2e2e, PACK = 0x6b4a2b, PACK_DARK = 0x4f3520, BLUE = 0x3b5a9a;
+        const body = new THREE.Mesh(boxGeo, new THREE.MeshLambertMaterial({ color: 0x15803d }));
+        body.scale.set(0.7, 0.8, 0.5);
+        body.position.y = 0.6;
+        body.castShadow = true;
+        dougGroup.add(body);
 
-        const matCache = {};
-        const mat = c => matCache[c] || (matCache[c] = new THREE.MeshLambertMaterial({ color: c }));
-        function part(parent, w, h, d, color, x, y, z) {
-            const m = new THREE.Mesh(boxGeo, mat(color));
-            m.scale.set(w, h, d);
-            m.position.set(x, y, z);
-            m.castShadow = true;
-            parent.add(m);
-            return m;
-        }
-
-        // Legs (pivot at the hip so they can swing)
-        function makeLeg(x) {
-            const g = new THREE.Group();
-            g.position.set(x, 0.85, 0);
-            part(g, 0.34, 0.35, 0.36, SHORTS, 0, -0.175, 0);
-            part(g, 0.2, 0.2, 0.2, SKIN, 0, -0.45, 0);
-            part(g, 0.32, 0.3, 0.42, BOOT, 0, -0.7, 0.05);
-            part(g, 0.34, 0.06, 0.44, 0x4a1c1c, 0, -0.56, 0.05);
-            dougGroup.add(g);
-            return g;
-        }
-        const legR = makeLeg(-0.18);
-        const legL = makeLeg(0.18);
-
-        // Torso + backpack
-        part(dougGroup, 0.8, 0.65, 0.45, SHIRT, 0, 1.175, 0);
-        part(dougGroup, 0.62, 0.6, 0.25, PACK, 0, 1.2, -0.35);
-        part(dougGroup, 0.16, 0.28, 0.2, BLUE, -0.38, 1.05, -0.35);
-        part(dougGroup, 0.12, 0.6, 0.05, PACK_DARK, -0.25, 1.2, 0.24); // straps
-        part(dougGroup, 0.12, 0.6, 0.05, PACK_DARK, 0.25, 1.2, 0.24);
-
-        // Arms (pivot at the shoulder)
-        function makeArm(x) {
-            const g = new THREE.Group();
-            g.position.set(x, 1.45, 0);
-            part(g, 0.26, 0.25, 0.26, SHIRT, 0, -0.1, 0);
-            part(g, 0.2, 0.35, 0.2, SKIN, 0, -0.4, 0);
-            dougGroup.add(g);
-            return g;
-        }
-        const armR = makeArm(-0.52);
-        const armL = makeArm(0.52); // the waving arm
-
-        // Head
-        const head = new THREE.Group();
-        head.position.set(0, 0, 0);
+        const head = new THREE.Mesh(boxGeo, new THREE.MeshLambertMaterial({ color: 0xfde047 }));
+        head.scale.set(0.5, 0.5, 0.5);
+        head.position.y = 1.25;
+        head.castShadow = true;
         dougGroup.add(head);
-        part(head, 0.7, 0.7, 0.66, SKIN, 0, 1.85, 0);
-        part(head, 0.08, 0.18, 0.12, SKIN, -0.39, 1.82, 0); // ears
-        part(head, 0.08, 0.18, 0.12, SKIN, 0.39, 1.82, 0);
-        part(head, 0.1, 0.12, 0.02, 0x222222, -0.17, 1.88, 0.34); // eyes
-        part(head, 0.1, 0.12, 0.02, 0x222222, 0.17, 1.88, 0.34);
-        part(head, 0.16, 0.04, 0.02, HAIR, -0.17, 2.02, 0.34); // brows
-        part(head, 0.16, 0.04, 0.02, HAIR, 0.17, 2.02, 0.34);
-        part(head, 0.08, 0.06, 0.03, 0xb98660, 0, 1.78, 0.34); // nose
-        part(head, 0.22, 0.05, 0.02, 0x6b1f1f, 0, 1.66, 0.34); // smile
-        part(head, 0.05, 0.05, 0.02, 0x6b1f1f, -0.13, 1.70, 0.34);
-        part(head, 0.05, 0.05, 0.02, 0x6b1f1f, 0.13, 1.70, 0.34);
 
-        // Spiky black hair
-        part(head, 0.76, 0.2, 0.72, HAIR, 0, 2.3, 0);
-        part(head, 0.76, 0.55, 0.16, HAIR, 0, 2.0, -0.3);   // back
-        part(head, 0.1, 0.3, 0.5, HAIR, -0.4, 2.1, -0.05);  // sideburns
-        part(head, 0.1, 0.3, 0.5, HAIR, 0.4, 2.1, -0.05);
-        part(head, 0.76, 0.1, 0.1, HAIR, 0, 2.2, 0.33);     // fringe
-        [[-0.3, 0.2], [-0.15, 0.32], [0, 0.26], [0.15, 0.34], [0.3, 0.2]].forEach(([sx, sh]) => {
-            part(head, 0.14, sh, 0.5, HAIR, sx, 2.4 + sh / 2, 0);
-        });
+        const hat = new THREE.Mesh(boxGeo, new THREE.MeshLambertMaterial({ color: 0x166534 }));
+        hat.scale.set(0.6, 0.15, 0.6);
+        hat.position.y = 1.55;
+        hat.castShadow = true;
+        dougGroup.add(hat);
 
         scene.add(dougGroup);
-
-        // Limb animation: swing when walking, wave when standing still
-        (function animateDoug() {
-            requestAnimationFrame(animateDoug);
-            const t = performance.now() / 1000;
-            const moving = moveState.up || moveState.down || moveState.left || moveState.right;
-
-            if (moving) {
-                const swing = Math.sin(t * 10) * 0.7;
-                legR.rotation.x = swing;
-                legL.rotation.x = -swing;
-                armR.rotation.x = -swing;
-                armL.rotation.x = swing;
-                armL.rotation.z = 0;
-            } else {
-                legR.rotation.x = 0;
-                legL.rotation.x = 0;
-                armR.rotation.x = 0;
-                armL.rotation.x = 0;
-                armL.rotation.z = 2.6 + Math.sin(t * 7) * 0.3; // wave
-            }
-        })();
 
         // Player Movement State
         const moveState = { up: false, down: false, left: false, right: false };
@@ -641,7 +490,7 @@
 
         // --- GAME LOOP ---
         async function updatePlayer() {
-            const speed = 0.12;
+            const speed = 0.12; // Increased movement speed
             let moveX = 0;
             let moveZ = 0;
 
@@ -660,11 +509,8 @@
             const walkBounce = (moveX !== 0 || moveZ !== 0) ? Math.abs(Math.sin(Date.now() * 0.01)) * 0.15 : 0;
             dougGroup.position.y = groundHeight + walkBounce;
 
-            // --- CAMERA FOLLOW FIX ---
-            // Move the camera by the same amount as the target so it keeps its orbit offset around Doug
-            const prevTarget = controls.target.clone();
+            // Camera focal point update for OrbitControls
             controls.target.set(dougGroup.position.x, groundHeight + 0.5, dougGroup.position.z);
-            camera.position.add(controls.target.clone().sub(prevTarget));
 
             const cx = Math.floor((dougGroup.position.x + 8) / 16);
             const cz = Math.floor((dougGroup.position.z + 8) / 16);
@@ -686,22 +532,6 @@
                                 : "Outdoor Biome";
                             document.getElementById('biome-name').innerText = formattedBiome;
                         }
-                    }
-                }
-
-                // --- UNLOAD FARAWAY CHUNKS (Prevents Memory Lag) ---
-                for (const [key, chunkGroup] of activeChunkMeshes.entries()) {
-                    const [ccx, ccz] = key.split(',').map(Number);
-                    if (Math.abs(ccx - cx) > 3 || Math.abs(ccz - cz) > 3) {
-                        worldGroup.remove(chunkGroup);
-                        chunkGroup.traverse((child) => {
-                            if (child.geometry) child.geometry.dispose();
-                            if (child.material) {
-                                if (Array.isArray(child.material)) child.material.forEach(m => m.dispose());
-                                else child.material.dispose();
-                            }
-                        });
-                        activeChunkMeshes.delete(key);
                     }
                 }
             }
