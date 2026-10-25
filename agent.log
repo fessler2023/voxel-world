@@ -691,3 +691,10 @@ Sleeping for 60.0 minutes before next world-building cycle...
 [Warning] Generation attempt failed: HTTPConnectionPool(host='192.168.12.253', port=11434): Read timed out. (read timeout=120)
 [Pi Agent] Chunk generation failed after retries. Putting coordinate back in queue.
 Sleeping for 60.0 minutes before next world-building cycle...
+[main c7aa192] Auto-expanded world chunk [-4, -1]
+ 3 files changed, 440 insertions(+), 6 deletions(-)
+ create mode 100644 chunks/chunk_-4_-1.json
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
+To https://github.com/fessler2023/voxel-world.git
+   569b49b..c7aa192  main -> main
