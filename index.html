@@ -154,8 +154,16 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.4);
         }
     </style>
-    <!-- Three.js CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Import Map for Modern Three.js & OrbitControls -->
+    <script type="importmap">
+        {
+          "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+          }
+        }
+    </script>
 </head>
 <body>
 
@@ -172,8 +180,8 @@
     <!-- Telemetry -->
     <div id="telemetry">
         <div style="margin-bottom: 6px;"><span class="pulse"></span> <strong style="color: #4ade80;">Pipeline Active</strong></div>
-        <div class="stat-row"><span>Raspberry Pi Node:</span><span style="color:#22c55e;">Polling [OK]</span></div>
-        <div class="stat-row"><span>Workstation Llama:</span><span style="color:#38bdf8;">Standby</span></div>
+        <div class="stat-row"><span>Raspberry Pi Node:</span><span style="color: #22c55e;">Polling [OK]</span></div>
+        <div class="stat-row"><span>Workstation Llama:</span><span style="color: #38bdf8;">Standby</span></div>
         <div class="stat-row"><span>Chunk Engine:</span><span style="color:#f59e0b;">Streaming</span></div>
     </div>
 
@@ -186,12 +194,15 @@
     </div>
 
     <div id="controls-hint">
-        Use <strong>WASD / Arrows</strong> or <strong>D-Pad</strong> to move Little Doug
+        Use <strong>WASD / Arrows</strong> to move | <strong>Click & Drag</strong> to look around
     </div>
 
     <div id="toast">Specimen Collected!</div>
 
-    <script>
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
         const container = document.getElementById('canvas-container');
         window.addEventListener('load', () => { container.focus(); });
         window.addEventListener('click', () => { container.focus(); });
@@ -199,16 +210,22 @@
         // --- 3D SCENE SETUP ---
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x0f172a);
-        scene.fog = new THREE.FogExp2(0x0f172a, 0.03);
+        scene.fog = new THREE.FogExp2(0x0f172a, 0.025);
 
         const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 10, 10);
+        camera.position.set(0, 12, 16);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         container.appendChild(renderer.domElement);
+
+        // --- ORBIT CONTROLS (Mouse Look Around Little Doug) ---
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.maxPolarAngle = Math.PI / 2 - 0.05; // Keep camera above ground level
 
         // Lighting
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
@@ -221,12 +238,33 @@
         dirLight.shadow.mapSize.height = 1024;
         scene.add(dirLight);
 
-        // Materials
+        // Base Geometry
         const boxGeo = new THREE.BoxGeometry(1, 1, 1);
-        const grassMat = new THREE.MeshLambertMaterial({ color: 0x38a169 });
-        const dirtMat = new THREE.MeshLambertMaterial({ color: 0x78350f });
-        const waterMat = new THREE.MeshLambertMaterial({ color: 0x0284c7, transparent: true, opacity: 0.8 });
-        const stoneMat = new THREE.MeshLambertMaterial({ color: 0x64748b });
+
+        // Dynamic Biome Color Mapping Function
+        function getBlockColor(biomeType, h) {
+            const biome = (biomeType || "").toLowerCase();
+
+            // Water Biomes
+            if (biome.includes('river') || biome.includes('lake') || biome.includes('ocean') || biome.includes('wetland')) {
+                if (h <= 1) return 0x0284c7; // Blue water
+            }
+            // Desert / Sand / Dunes
+            if (biome.includes('desert') || biome.includes('dune') || biome.includes('salt')) {
+                return 0xeab308; // Sandy yellow
+            }
+            // Snow / Tundra / Glacier
+            if (biome.includes('snow') || biome.includes('glacier') || biome.includes('tundra')) {
+                return 0xf8fafc; // Crisp white snow
+            }
+            // High Elevation Mountain Rock
+            if (h >= 3) {
+                return 0x64748b; // Slate gray rock
+            }
+
+            // Default Lush Forest / Grass Green
+            return 0x38a169;
+        }
 
         // --- WORLD & CHUNK STREAMING STATE ---
         const worldGroup = new THREE.Group();
@@ -242,7 +280,6 @@
             const key = `${cx},${cz}`;
             if (loadedChunks.has(key)) return loadedChunks.get(key);
 
-            // Guardrail for extreme coordinates outside Pi boundary
             if (Math.abs(cx) > 10 || Math.abs(cz) > 10) {
                 showToast("Reached ungenerated wilderness edge!");
             }
@@ -254,19 +291,19 @@
                 loadedChunks.set(key, data);
                 return data;
             } catch (err) {
-                // Rich randomized fallback chunk with 8 varied specimens so it never repeats bugs
+                // Fallback demo chunk if file isn't generated yet
                 const fallback = {
                     biome_type: "lush_riverbank",
-                    elevation_grid: Array(16).fill().map(() => Array(16).fill(0)),
+                    elevation_grid: Array(16).fill().map(() => Array(16).fill(1)),
                     specimens: [
-                        {x: -4, y: -3, z: 0, name: "Caddisfly Larva", points: 1},
-                        {x: 5, y: 2, z: 0, name: "Mayfly Nymph", points: 1},
-                        {x: -2, y: 5, z: 0, name: "Stonefly Specimen", points: 1},
-                        {x: 4, y: -5, z: 0, name: "Water Penny Beetle", points: 1},
-                        {x: 0, y: -6, z: 0, name: "Dobsonfly Nymph", points: 1},
-                        {x: -6, y: 2, z: 0, name: "Blue-winged Olive", points: 1},
-                        {x: 3, y: 6, z: 0, name: "Solar Node Sensor", points: 1},
-                        {x: 1, y: 1, z: 0, name: "Dragonfly Adult", points: 1}
+                        {x: -4, y: -3, name: "Caddisfly Larva", points: 1},
+                        {x: 5, y: 2, name: "Mayfly Nymph", points: 1},
+                        {x: -2, y: 5, name: "Stonefly Specimen", points: 1},
+                        {x: 4, y: -5, name: "Water Penny Beetle", points: 1},
+                        {x: 0, y: -6, name: "Dobsonfly Nymph", points: 1},
+                        {x: -6, y: 2, name: "Blue-winged Olive", points: 1},
+                        {x: 3, y: 6, name: "Solar Node Sensor", points: 1},
+                        {x: 1, y: 1, name: "Dragonfly Adult", points: 1}
                     ]
                 };
                 loadedChunks.set(key, fallback);
@@ -278,11 +315,10 @@
             const cx = Math.floor((worldX + 8) / 16);
             const cz = Math.floor((worldZ + 8) / 16);
             const key = `${cx},${cz}`;
-            
+
             const chunkData = loadedChunks.get(key);
             if (!chunkData || !chunkData.elevation_grid) return 0;
 
-            // Map world coordinates to local 16x16 chunk indices (0 to 15)
             const localX = Math.round(worldX - (cx * 16) + 7.5);
             const localZ = Math.round(worldZ - (cz * 16) + 7.5);
 
@@ -302,25 +338,22 @@
             const chunkGroup = new THREE.Group();
             chunkGroup.position.set(cx * 16, 0, cz * 16);
 
-            const grid = chunkData.elevation_grid || Array(16).fill().map(() => Array(16).fill(0));
+            const grid = chunkData.elevation_grid || Array(16).fill().map(() => Array(16).fill(1));
+            const biomeType = chunkData.biome_type || "forest";
 
             for (let x = 0; x < 16; x++) {
                 for (let z = 0; z < 16; z++) {
-                    const h = grid[z] && grid[z][x] !== undefined ? grid[z][x] : 0;
-                    let mat = grassMat;
-                    if (h < 0) mat = waterMat;
-                    else if (h >= 3) mat = stoneMat;
+                    const h = grid[z] && grid[z][x] !== undefined ? grid[z][x] : 1;
+                    const colorHex = getBlockColor(biomeType, h);
+                    const mat = new THREE.MeshLambertMaterial({ color: colorHex });
 
-                    const cube = new THREE.Mesh(boxGeo, mat);
-                    cube.position.set(x - 7.5, h, z - 7.5);
-                    cube.receiveShadow = true;
-                    if (h > 0) cube.castShadow = true;
-                    chunkGroup.add(cube);
-
-                    if (mat === grassMat) {
-                        const dirt = new THREE.Mesh(boxGeo, dirtMat);
-                        dirt.position.set(x - 7.5, h - 1, z - 7.5);
-                        chunkGroup.add(dirt);
+                    // FIXED: Solid column loop (y=0 down to h) closes mountain gaps so you never see under the map
+                    for (let y = 0; y <= h; y++) {
+                        const cube = new THREE.Mesh(boxGeo, mat);
+                        cube.position.set(x - 7.5, y, z - 7.5);
+                        cube.receiveShadow = true;
+                        if (y === h) cube.castShadow = true;
+                        chunkGroup.add(cube);
                     }
                 }
             }
@@ -334,15 +367,14 @@
                     const specimenMesh = new THREE.Mesh(specimenGeo, specimenMat);
                     const sx = spec.x !== undefined ? spec.x : 0;
                     const sz = spec.y !== undefined ? spec.y : 0;
-                    
-                    // Automatically place specimen just above the local terrain height
+
                     const groundH = getTerrainHeight((cx * 16) + sx, (cz * 16) + sz);
                     const sy = groundH + 0.8;
 
                     specimenMesh.position.set(sx, sy, sz);
                     specimenMesh.castShadow = true;
-                    specimenMesh.userData = { 
-                        name: spec.name || "Wild Specimen", 
+                    specimenMesh.userData = {
+                        name: spec.name || "Wild Specimen",
                         collected: false,
                         chunkKey: key
                     };
@@ -378,7 +410,7 @@
 
         scene.add(dougGroup);
 
-        // Player State
+        // Player Movement State
         const moveState = { up: false, down: false, left: false, right: false };
 
         const handleKey = (code, isDown) => {
@@ -438,12 +470,10 @@
             const walkBounce = (moveX !== 0 || moveZ !== 0) ? Math.abs(Math.sin(Date.now() * 0.01)) * 0.15 : 0;
             dougGroup.position.y = groundHeight + walkBounce;
 
-            // Smooth camera tracking
-            camera.position.x += (dougGroup.position.x - camera.position.x) * 0.05;
-            camera.position.z += (dougGroup.position.z + 8 - camera.position.z) * 0.05;
-            camera.lookAt(dougGroup.position.x, groundHeight + 0.5, dougGroup.position.z);
+            // Camera target update for OrbitControls focal point
+            controls.target.set(dougGroup.position.x, groundHeight + 0.5, dougGroup.position.z);
 
-            // Chunk calculation
+            // Chunk calculation & streaming
             const cx = Math.floor((dougGroup.position.x + 8) / 16);
             const cz = Math.floor((dougGroup.position.z + 8) / 16);
 
@@ -459,7 +489,7 @@
                         renderChunk(targetCx, targetCz, chunkData);
 
                         if (dx === 0 && dz === 0 && chunkData) {
-                            const formattedBiome = chunkData.biome_type 
+                            const formattedBiome = chunkData.biome_type
                                 ? chunkData.biome_type.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
                                 : "Outdoor Biome";
                             document.getElementById('biome-name').innerText = formattedBiome;
@@ -490,6 +520,7 @@
         function animate() {
             requestAnimationFrame(animate);
             updatePlayer();
+            controls.update(); // Keep orbit damping smooth
             renderer.render(scene, camera);
         }
         animate();
