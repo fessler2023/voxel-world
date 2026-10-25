@@ -263,3 +263,5 @@ error: Please commit or stash them.
  create mode 100644 chunks/chunk_2_3.json
 To https://github.com/fessler2023/voxel-world.git
    b146093..7586de7  main -> main
+error: cannot pull with rebase: You have unstaged changes.
+error: Please commit or stash them.
