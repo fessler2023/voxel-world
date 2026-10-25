@@ -340,7 +340,7 @@
         for (let i = 0; i < 15; i++) {
             const cluster = new THREE.Group();
             const clusterSize = Math.floor(Math.random() * 4) + 3;
-            
+
             for (let j = 0; j < clusterSize; j++) {
                 const cloudCube = new THREE.Mesh(boxGeo, cloudMat);
                 cloudCube.position.set(
@@ -563,7 +563,7 @@
 
         // --- GAME LOOP ---
         async function updatePlayer() {
-            const speed = 0.12; 
+            const speed = 0.12;
             let moveX = 0;
             let moveZ = 0;
 
@@ -582,7 +582,11 @@
             const walkBounce = (moveX !== 0 || moveZ !== 0) ? Math.abs(Math.sin(Date.now() * 0.01)) * 0.15 : 0;
             dougGroup.position.y = groundHeight + walkBounce;
 
+            // --- CAMERA FOLLOW FIX ---
+            // Move the camera by the same amount as the target so it keeps its orbit offset around Doug
+            const prevTarget = controls.target.clone();
             controls.target.set(dougGroup.position.x, groundHeight + 0.5, dougGroup.position.z);
+            camera.position.add(controls.target.clone().sub(prevTarget));
 
             const cx = Math.floor((dougGroup.position.x + 8) / 16);
             const cz = Math.floor((dougGroup.position.z + 8) / 16);
