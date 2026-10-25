@@ -1,45 +1,41 @@
 {
-  "chunk_coords": {
-    "x": -6,
-    "y": -1
-  },
   "biome_type": "wetland",
   "elevation_grid": [
     [
-      3,
       2,
       2,
       2,
-      3,
-      3,
-      3,
       2,
       2,
       2,
-      3,
       2,
       2,
       2,
-      3,
-      3
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
     ],
     [
-      3,
       2,
       2,
       2,
-      3,
-      3,
-      3,
       2,
       2,
       2,
-      3,
       2,
       2,
       2,
-      3,
-      3
+      2,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
     ],
     [
       2,
@@ -295,14 +291,14 @@
     ]
   ],
   "specimens": [
-    "Cattail",
-    "Water Lily",
-    "Bullfrog",
-    "Crayfish",
-    "Marsh Grass",
-    "Dragonfly",
-    "Snail",
-    "Turtle"
+    "reed",
+    "lily_petal",
+    "dragonfly_exoskeleton",
+    "mud_snail_shell",
+    "water_lily_seed",
+    "wetland_moss",
+    "frog_skin",
+    "turtle_shell"
   ],
   "coordinate": [
     -6,
