@@ -1,0 +1,34 @@
+{
+  "timestamp": "2026-10-27T21:22:02.405Z",
+  "fps": 60,
+  "activeChunks": 17,
+  "loadedChunksCache": 18,
+  "activeSpecimens": 80,
+  "memoryHeapMB": 37,
+  "playerCoords": [
+    -1,
+    0
+  ],
+  "recentLogs": [
+    "[2026-10-27T21:19:47.537Z] [INFO] [ChunkEngine] Rendered chunk with explicit flora [-1, 0]",
+    "[2026-10-27T21:19:47.546Z] [INFO] [ChunkEngine] Rendered chunk with explicit flora [-1, 1]",
+    "[2026-10-27T21:19:47.575Z] [INFO] [ChunkEngine] Rendered chunk with explicit flora [-1, 2]",
+    "[2026-10-27T21:19:47.584Z] [INFO] [ChunkEngine] Rendered chunk with explicit flora [0, -2]",
+    "[2026-10-27T21:19:47.595Z] [INFO] [ChunkEngine] Rendered chunk with explicit flora [0, -1]",
+    "[2026-10-27T21:21:55.039Z] [INFO] [ChunkEngine] Rendered chunk with explicit flora [-3, -2]",
+    "[2026-10-27T21:21:55.064Z] [INFO] [ChunkEngine] Rendered chunk with explicit flora [-3, -1]",
+    "[2026-10-27T21:21:55.077Z] [INFO] [ChunkEngine] Rendered chunk with explicit flora [-3, 0]",
+    "[2026-10-27T21:21:55.101Z] [INFO] [ChunkEngine] Rendered chunk with explicit flora [-3, 1]",
+    "[2026-10-27T21:21:55.108Z] [INFO] [ChunkEngine] Rendered chunk with explicit flora [-3, 2]",
+    "[2026-10-27T21:21:55.711Z] [INFO] [MemoryManager] Culled chunk [-3, -2]",
+    "[2026-10-27T21:21:55.711Z] [INFO] [MemoryManager] Culled chunk [-3, -1]",
+    "[2026-10-27T21:21:55.711Z] [INFO] [MemoryManager] Culled chunk [-3, 0]",
+    "[2026-10-27T21:21:55.711Z] [INFO] [MemoryManager] Culled chunk [-3, 1]",
+    "[2026-10-27T21:21:55.711Z] [INFO] [MemoryManager] Culled chunk [-3, 2]",
+    "[2026-10-27T21:22:01.775Z] [INFO] [ChunkEngine] Rendered chunk with explicit flora [-3, -2]",
+    "[2026-10-27T21:22:01.801Z] [INFO] [ChunkEngine] Rendered chunk with explicit flora [-3, -1]",
+    "[2026-10-27T21:22:01.815Z] [INFO] [ChunkEngine] Rendered chunk with explicit flora [-3, 0]",
+    "[2026-10-27T21:22:01.825Z] [INFO] [ChunkEngine] Rendered chunk with explicit flora [-3, 1]",
+    "[2026-10-27T21:22:01.830Z] [INFO] [ChunkEngine] Rendered chunk with explicit flora [-3, 2]"
+  ]
+}
