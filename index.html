@@ -205,7 +205,7 @@
     </div>
 
     <div id="controls-hint">
-        Use <strong>WASD / Arrows</strong> to move | <strong>Spacebar</strong> to Jump | <strong>Click & Drag</strong> camera
+        Use <strong>WASD / Arrows</strong> to navigate | <strong>Click & Drag</strong> camera
     </div>
 
     <div id="toast">Specimen Collected!</div>
@@ -301,16 +301,37 @@
             let baseHex = '#78350f';
             let noiseIntensity = 0.15;
 
-            if (type === 'grass') { baseHex = '#22c55e'; noiseIntensity = 0.2; }
-            else if (type === 'dirt') { baseHex = '#78350f'; noiseIntensity = 0.18; }
-            else if (type === 'stone') { baseHex = '#64748b'; noiseIntensity = 0.14; }
-            else if (type === 'sand') { baseHex = '#eab308'; noiseIntensity = 0.12; }
-            else if (type === 'snow') { baseHex = '#f8fafc'; noiseIntensity = 0.06; }
-            else if (type === 'water') { baseHex = '#0284c7'; noiseIntensity = 0.1; }
-            else if (type === 'wood') { baseHex = '#5c4033'; noiseIntensity = 0.12; }
-            else if (type === 'leaves_green') { baseHex = '#15803d'; noiseIntensity = 0.18; }
-            else if (type === 'leaves_snow') { baseHex = '#cbd5e1'; noiseIntensity = 0.12; }
-            else if (type === 'cactus') { baseHex = '#166534'; noiseIntensity = 0.1; }
+            if (type === 'grass') {
+                baseHex = '#22c55e';
+                noiseIntensity = 0.2;
+            } else if (type === 'dirt') {
+                baseHex = '#78350f';
+                noiseIntensity = 0.18;
+            } else if (type === 'stone') {
+                baseHex = '#64748b';
+                noiseIntensity = 0.14;
+            } else if (type === 'sand') {
+                baseHex = '#eab308';
+                noiseIntensity = 0.12;
+            } else if (type === 'snow') {
+                baseHex = '#f8fafc';
+                noiseIntensity = 0.06;
+            } else if (type === 'water') {
+                baseHex = '#0284c7';
+                noiseIntensity = 0.1;
+            } else if (type === 'wood') {
+                baseHex = '#5c4033';
+                noiseIntensity = 0.12;
+            } else if (type === 'leaves_green') {
+                baseHex = '#15803d';
+                noiseIntensity = 0.18;
+            } else if (type === 'leaves_snow') {
+                baseHex = '#cbd5e1';
+                noiseIntensity = 0.12;
+            } else if (type === 'cactus') {
+                baseHex = '#166534';
+                noiseIntensity = 0.1;
+            }
 
             const color = new THREE.Color(baseHex);
             const r = Math.floor(color.r * 255);
@@ -365,9 +386,9 @@
         });
 
         function pseudoNoise(x, z) {
-            return (Math.sin(x * 0.1) * Math.cos(z * 0.1) * 3.5 +
-                    Math.sin(x * 0.03 + z * 0.03) * 6.0 +
-                    Math.cos(x * 0.2) * 1.2);
+            return (Math.sin(x * 0.2) * Math.cos(z * 0.2) * 2.5 +
+                    Math.sin(x * 0.05 + z * 0.05) * 4.0 +
+                    Math.cos(x * 0.4) * 0.8);
         }
 
         // --- CLOUDS ---
@@ -396,7 +417,7 @@
                 return 'sand';
             }
             if (biome.includes('snow')) {
-                return h > 5 ? 'snow' : 'stone';
+                return h > 4 ? 'snow' : 'stone';
             }
             if (y === h) {
                 return 'grass';
@@ -427,23 +448,13 @@
 
             const biomeType = getProceduralBiome(cx, cz);
             const grid = [];
-            const flora = [];
-
             for (let z = 0; z < 16; z++) {
                 const row = [];
                 for (let x = 0; x < 16; x++) {
                     let n = pseudoNoise(cx * 16 + (x - 7.5), cz * 16 + (z - 7.5));
-                    let h = Math.max(1, Math.floor(n + 3.0));
-                    if (biomeType === "snowy_mountain") h += 3;
+                    let h = Math.max(1, Math.floor(n + 2.5));
+                    if (biomeType === "snowy_mountain") h += 2;
                     row.push(h);
-
-                    if (h >= 2 && Math.random() < 0.03) {
-                        const localX = x - 7.5;
-                        const localZ = z - 7.5;
-                        if (biomeType === "snowy_mountain") flora.append ? null : flora.push({ type: "pine_tree", x: localX, z: localZ, height: 4 });
-                        else if (biomeType === "desert_dunes") flora.push({ type: "cactus", x: localX, z: localZ, height: 2 });
-                        else flora.push({ type: "deciduous_tree", x: localX, z: localZ, height: 4 });
-                    }
                 }
                 grid.push(row);
             }
@@ -454,7 +465,7 @@
                 specimens.push({ x: Math.random() * 10 - 5, y: Math.random() * 10 - 5, name: specimenNames[Math.floor(Math.random() * specimenNames.length)] });
             }
 
-            const fallback = { biome_type: biomeType, elevation_grid: grid, flora: flora, specimens: specimens };
+            const fallback = { biome_type: biomeType, elevation_grid: grid, specimens: specimens };
             loadedChunks.set(key, fallback);
             return fallback;
         }
@@ -488,55 +499,63 @@
             return (chunkData.elevation_grid[lz] && chunkData.elevation_grid[lz][lx]) || 0;
         }
 
-        // --- RENDER EXPLICIT FLORA OBJECTS FROM CHUNK JSON ---
-        function renderExplicitFlora(item, groundH, geometriesByMaterial) {
-            const x = item.x;
-            const z = item.z;
-            const type = item.type || "deciduous_tree";
+        // --- BIOME-ALIGNED FLORA GENERATOR ---
+        function addBiomeFlora(x, z, h, biomeType, geometriesByMaterial) {
+            const biome = (biomeType || "").toLowerCase();
 
-            if (type === "cactus") {
-                const height = item.height || 2;
-                for (let cy = 1; cy <= height; cy++) {
+            // Cactus in Deserts
+            if (biome.includes('desert') && Math.random() < 0.04) {
+                const cactusHeight = Math.floor(Math.random() * 2) + 2;
+                for (let cy = 1; cy <= cactusHeight; cy++) {
                     const geom = boxGeo.clone();
-                    geom.translate(x, groundH + cy, z);
+                    geom.translate(x - 7.5, h + cy, z - 7.5);
                     if (!geometriesByMaterial['cactus']) geometriesByMaterial['cactus'] = [];
                     geometriesByMaterial['cactus'].push(geom);
                 }
-            } else if (type === "pine_tree") {
-                const trunkHeight = item.height || 3;
+                return;
+            }
+
+            // Pine Trees in Snowy Mountains
+            if (biome.includes('snow') && Math.random() < 0.035) {
+                const trunkHeight = 3;
                 for (let ty = 1; ty <= trunkHeight; ty++) {
                     const geom = boxGeo.clone();
-                    geom.translate(x, groundH + ty, z);
+                    geom.translate(x - 7.5, h + ty, z - 7.5);
                     if (!geometriesByMaterial['wood']) geometriesByMaterial['wood'] = [];
                     geometriesByMaterial['wood'].push(geom);
                 }
+                // Snowy pine foliage layers
                 for (let ly = trunkHeight; ly <= trunkHeight + 2; ly++) {
                     const radius = ly === trunkHeight + 2 ? 1 : 2;
                     for (let fx = -radius; fx <= radius; fx++) {
                         for (let fz = -radius; fz <= radius; fz++) {
                             if (Math.abs(fx) === radius && Math.abs(fz) === radius && ly === trunkHeight + 2) continue;
                             const geom = boxGeo.clone();
-                            geom.translate(x + fx, groundH + ly, z + fz);
+                            geom.translate(x - 7.5 + fx, h + ly, z - 7.5 + fz);
                             if (!geometriesByMaterial['leaves_snow']) geometriesByMaterial['leaves_snow'] = [];
                             geometriesByMaterial['leaves_snow'].push(geom);
                         }
                     }
                 }
-            } else {
-                // Deciduous / Cedar Tree default
-                const trunkHeight = item.height || 4;
+                return;
+            }
+
+            // Leafy Deciduous Trees in Lush / Meadows
+            if ((biome.includes('lush') || biome.includes('flower') || biome.includes('slate')) && Math.random() < 0.04) {
+                const trunkHeight = Math.floor(Math.random() * 2) + 3;
                 for (let ty = 1; ty <= trunkHeight; ty++) {
                     const geom = boxGeo.clone();
-                    geom.translate(x, groundH + ty, z);
+                    geom.translate(x - 7.5, h + ty, z - 7.5);
                     if (!geometriesByMaterial['wood']) geometriesByMaterial['wood'] = [];
                     geometriesByMaterial['wood'].push(geom);
                 }
+                // Deciduous canopy
                 for (let lx = -1; lx <= 1; lx++) {
                     for (let lz = -1; lz <= 1; lz++) {
                         for (let ly = 0; ly < 2; ly++) {
                             if (Math.abs(lx) === 1 && Math.abs(lz) === 1 && ly === 1) continue;
                             const geom = boxGeo.clone();
-                            geom.translate(x + lx, groundH + trunkHeight + ly, z + lz);
+                            geom.translate(x - 7.5 + lx, h + trunkHeight + ly, z - 7.5 + lz);
                             if (!geometriesByMaterial['leaves_green']) geometriesByMaterial['leaves_green'] = [];
                             geometriesByMaterial['leaves_green'].push(geom);
                         }
@@ -569,15 +588,12 @@
                         if (!geometriesByMaterial[matKey]) geometriesByMaterial[matKey] = [];
                         geometriesByMaterial[matKey].push(geom);
                     }
-                }
-            }
 
-            // Render flora directly from the chunk JSON array
-            if (chunkData.flora && Array.isArray(chunkData.flora)) {
-                chunkData.flora.forEach(item => {
-                    const groundH = getTerrainHeight((cx * 16) + item.x, (cz * 16) + item.z);
-                    renderExplicitFlora(item, groundH, geometriesByMaterial);
-                });
+                    // Add biome-aligned flora on top surface blocks
+                    if (h >= 2) {
+                        addBiomeFlora(x, z, h, biomeType, geometriesByMaterial);
+                    }
+                }
             }
 
             // Merge geometries per material type
@@ -604,7 +620,7 @@
 
             worldGroup.add(chunkGroup);
             activeChunkMeshes.set(key, chunkGroup);
-            Diagnostics.record("INFO", "ChunkEngine", `Rendered chunk with explicit flora [${cx}, ${cz}]`);
+            Diagnostics.record("INFO", "ChunkEngine", `Rendered textured chunk with flora [${cx}, ${cz}]`);
         }
 
         const RENDER_DISTANCE = 2;
@@ -731,24 +747,9 @@
         const dougGroup = createVoxelLittleDoug();
         scene.add(dougGroup);
 
-        // --- MOVEMENT & SPACEBAR JUMP PHYSICS ---
         const moveState = { up: false, down: false, left: false, right: false };
-        let velocityY = 0;
-        const gravity = 0.015;
-        const jumpStrength = 0.32;
-        let isJumping = false;
-
-        window.addEventListener('keydown', (e) => {
-            handleKey(e.code, true);
-            if (e.code === 'Space' && !isJumping) {
-                e.preventDefault();
-                velocityY = jumpStrength;
-                isJumping = true;
-            }
-        });
-
+        window.addEventListener('keydown', (e) => handleKey(e.code, true));
         window.addEventListener('keyup', (e) => handleKey(e.code, false));
-
         function handleKey(code, isDown) {
             if (code === 'KeyW' || code === 'ArrowUp') moveState.up = isDown;
             if (code === 'KeyS' || code === 'ArrowDown') moveState.down = isDown;
@@ -807,25 +808,11 @@
                 dougGroup.userData.armR.rotation.x = THREE.MathUtils.lerp(dougGroup.userData.armR.rotation.x, 0, 0.2);
             }
 
-            // Apply gravity and jumping physics
-            velocityY -= gravity;
-            dougGroup.position.y += velocityY;
-
             const groundHeight = getTerrainHeight(dougGroup.position.x, dougGroup.position.z);
-            const targetY = groundHeight + 0.45;
-
-            if (dougGroup.position.y <= targetY) {
-                dougGroup.position.y = targetY;
-                velocityY = 0;
-                isJumping = false;
-            }
-
-            const bounce = isMoving && !isJumping ? Math.abs(Math.sin(walkCycleTime)) * 0.08 : 0;
-            if (!isJumping) {
-                dougGroup.position.y += bounce;
-            }
-
-            controls.target.set(dougGroup.position.x, dougGroup.position.y + 0.6, dougGroup.position.z);
+            const bounce = isMoving ? Math.abs(Math.sin(walkCycleTime)) * 0.08 : 0;
+            
+            dougGroup.position.y = groundHeight + 0.45 + bounce;
+            controls.target.set(dougGroup.position.x, groundHeight + 1.1, dougGroup.position.z);
 
             const cx = Math.floor((dougGroup.position.x + 8) / 16);
             const cz = Math.floor((dougGroup.position.z + 8) / 16);
