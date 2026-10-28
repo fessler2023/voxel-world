@@ -109,7 +109,7 @@ def ask_workstation_for_chunk(coord):
     for attempt in range(3):
         try:
             print(f"[Pi Agent] Contacting workstation with neighbor context (Attempt {attempt+1}/3)...")
-            response = requests.post(WORKSTATION_URL, json=payload, timeout=240)
+            response = requests.post(WORKSTATION_URL, json=payload, timeout=600)
             response.raise_for_status()
             content = response.json()["choices"][0]["message"]["content"]
 
