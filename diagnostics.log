@@ -1,10 +1,10 @@
 {
-  "timestamp": "2026-10-29T09:16:22.513Z",
+  "timestamp": "2026-10-29T11:41:22.562Z",
   "fps": 60,
   "activeChunks": 25,
   "loadedChunksCache": 25,
   "activeSpecimens": 116,
-  "memoryHeapMB": 28,
+  "memoryHeapMB": 26,
   "playerCoords": [
     0,
     0
