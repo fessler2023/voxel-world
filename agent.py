@@ -26,8 +26,18 @@ Valid Biome Types (Choose ONE based on terrain continuity):
 Rules:
 1. CONTINUITY: Match elevation values smoothly along the borders shared with neighboring chunks described in the prompt.
 2. 16x16 Grid: Include an 'elevation_grid' (array of 16 rows, each with 16 integers).
-3. Flora: Include a 'flora' array containing native vegetation objects with 'type' (e.g., 'deciduous_tree', 'pine_tree', 'cactus'), local coordinates 'x' and 'z' (ranges between -7.5 and 7.5), and 'height'.
-4. Specimens: The 'specimens' array MUST contain ONLY 1 or 2 rare, well-spaced collectible items native to your chosen biome. Each item must include 'name' (string), 'x' (float between -6 and 6), 'y' (float between -6 and 6), 'points' (integer), and a short 'lore' (string, 1-2 sentences of educational or environmental background about the specimen).
+3. Flora: Include a 'flora' array containing native vegetation objects with 'type' (e.g., 'deciduous_tree', 'pine_tree', 'cactus'), local coordinates 'x' and 'z' (floats between -7.5 and 7.5), and 'height'.
+4. Specimens: The 'specimens' array MUST contain ONLY 1 or 2 rare, well-spaced collectible items native to your chosen biome. EVERY specimen object MUST strictly contain ALL FIVE keys: 'name' (string), 'x' (float between -6.0 and 6.0), 'y' (float between -6.0 and 6.0), 'points' (integer), and 'lore' (a rich 1-2 sentence Dungeon Master story description).
+
+Example specimen format:
+{
+  "name": "birch_bark",
+  "x": 3.2,
+  "y": -1.5,
+  "points": 10,
+  "lore": "A fragrant curl of paper birch bark, peeled away by the mountain wind. Local woodsmen once used these to kindle fires during severe downpours."
+}
+
 Output ONLY raw, valid JSON. No conversational filler, no markdown outside of code blocks."""
 
 
