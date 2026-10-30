@@ -147,22 +147,36 @@
             top: 15%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0.9);
-            background: rgba(16, 185, 129, 0.95);
+            background: rgba(13, 20, 32, 0.95);
+            border: 1px solid rgba(76, 175, 80, 0.6);
             color: white;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 14px;
+            padding: 14px 28px;
+            border-radius: 18px;
+            font-weight: normal;
+            font-size: 13px;
+            line-height: 1.4;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.3s ease, transform 0.3s ease;
             z-index: 30;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            letter-spacing: 0.5px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            max-width: 80vw;
+            text-align: center;
+            backdrop-filter: blur(8px);
         }
         #toast.show {
             opacity: 1;
             transform: translate(-50%, -50%) scale(1);
+        }
+        #toast-title {
+            color: #4ade80;
+            font-weight: bold;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+        #toast-lore {
+            color: #cbd5e1;
+            font-style: italic;
         }
     </style>
 
@@ -208,7 +222,10 @@
         Use <strong>WASD / Arrows</strong> to navigate | <strong>Click & Drag</strong> camera
     </div>
 
-    <div id="toast">Specimen Collected!</div>
+    <div id="toast">
+        <div id="toast-title">Specimen Collected!</div>
+        <div id="toast-lore"></div>
+    </div>
 
     <script type="module">
         import * as THREE from 'three';
@@ -436,6 +453,7 @@
         const activeSpecimens = [];
         let score = 0;
         let currentChunk = [999, 999];
+        let toastTimeout = null;
 
         function getProceduralBiome(cx, cz) {
             const biomes = ["lush_riverbank", "snowy_mountain", "desert_dunes", "slate_ridge", "flower_meadow"];
@@ -459,13 +477,7 @@
                 grid.push(row);
             }
 
-            const specimenNames = ["Caddisfly Larva", "Mayfly Nymph", "Stonefly Specimen", "Solar Sensor Node"];
-            const specimens = [];
-            for (let i = 0; i < 2; i++) {
-                specimens.push({ x: Math.random() * 10 - 5, y: Math.random() * 10 - 5, name: specimenNames[Math.floor(Math.random() * specimenNames.length)] });
-            }
-
-            const fallback = { biome_type: biomeType, elevation_grid: grid, specimens: specimens };
+            const fallback = { biome_type: biomeType, elevation_grid: grid, specimens: [] };
             loadedChunks.set(key, fallback);
             return fallback;
         }
@@ -612,7 +624,13 @@
                     const specimenMesh = new THREE.Mesh(specimenGeo, specimenMat);
                     const groundH = getTerrainHeight((cx * 16) + spec.x, (cz * 16) + spec.y);
                     specimenMesh.position.set(spec.x, groundH + 0.9, spec.y);
-                    specimenMesh.userData = { name: spec.name, collected: false, chunkKey: key, baseY: groundH + 0.9 };
+                    specimenMesh.userData = { 
+                        name: spec.name, 
+                        lore: spec.lore || "", 
+                        collected: false, 
+                        chunkKey: key, 
+                        baseY: groundH + 0.9 
+                    };
                     chunkGroup.add(specimenMesh);
                     activeSpecimens.push(specimenMesh);
                 });
@@ -767,11 +785,17 @@
             }
         });
 
-        function showToast(msg) {
+        function showToast(title, lore = "") {
             const toast = document.getElementById('toast');
-            toast.innerText = msg;
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-lore').innerText = lore ? `"${lore}"` : "";
+            
             toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2200);
+            
+            if (toastTimeout) clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 5000); // Popup stays up for 5 seconds
         }
 
         let walkCycleTime = 0;
@@ -820,6 +844,20 @@
             if (cx !== currentChunk[0] || cz !== currentChunk[1]) {
                 currentChunk = [cx, cz];
                 document.getElementById('chunk-coord').innerText = `[${cx}, ${cz}]`;
+                
+                // Update Biome HUD Name dynamically
+                const currentChunkKey = `${cx},${cz}`;
+                const activeChunkData = loadedChunks.get(currentChunkKey);
+                if (activeChunkData && activeChunkData.biome_type) {
+                    let formattedBiome = activeChunkData.biome_type
+                        .split('_')
+                        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                        .join(' ');
+                    document.getElementById('biome-name').innerText = formattedBiome;
+                } else {
+                    document.getElementById('biome-name').innerText = "Wilderness";
+                }
+
                 cullDistantChunks(cx, cz);
 
                 for (let dx = -RENDER_DISTANCE; dx <= RENDER_DISTANCE; dx++) {
@@ -844,7 +882,7 @@
                         spec.parent.remove(spec);
                         score++;
                         document.getElementById('score').innerText = score;
-                        showToast(`✨ Collected: ${spec.userData.name}`);
+                        showToast(`✨ Collected: ${spec.userData.name}`, spec.userData.lore);
                     }
                 }
             });

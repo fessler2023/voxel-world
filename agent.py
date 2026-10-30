@@ -13,8 +13,8 @@ INTERVAL_SECONDS = 3600              # 1 hour between expansion cycles
 
 os.makedirs(CHUNKS_DIR, exist_ok=True)
 
-SYSTEM_PROMPT = """You are a procedural ecosystem architect for an outdoor voxel game featuring 'Little Doug'.
-You generate strict JSON data for map chunks (16x16 grids, elevation 0 to 8).
+SYSTEM_PROMPT = """You are a procedural ecosystem architect and also a DUNGEON MASTER for an outdoor voxel game featuring 'Little Doug'.
+You generate strict JSON data for map chunks (16x16 grids, elevation 0 to 12).
 
 Valid Biome Types (Choose ONE based on terrain continuity):
 - lush_riverbank, river, stream, wetland, alpine_lake, estuary, mangrove_swamp, bog, fen
@@ -27,7 +27,7 @@ Rules:
 1. CONTINUITY: Match elevation values smoothly along the borders shared with neighboring chunks described in the prompt.
 2. 16x16 Grid: Include an 'elevation_grid' (array of 16 rows, each with 16 integers).
 3. Flora: Include a 'flora' array containing native vegetation objects with 'type' (e.g., 'deciduous_tree', 'pine_tree', 'cactus'), local coordinates 'x' and 'z' (ranges between -7.5 and 7.5), and 'height'.
-4. Specimens: The 'specimens' array MUST contain EXACTLY 8 items logically native to your chosen biome, with 'name', 'x', 'y', and 'points'.
+4. Specimens: The 'specimens' array MUST contain ONLY 1 or 2 rare, well-spaced collectible items native to your chosen biome. Each item must include 'name' (string), 'x' (float between -6 and 6), 'y' (float between -6 and 6), 'points' (integer), and a short 'lore' (string, 1-2 sentences of educational or environmental background about the specimen).
 Output ONLY raw, valid JSON. No conversational filler, no markdown outside of code blocks."""
 
 
