@@ -40,6 +40,61 @@ Example specimen format:
 
 Output ONLY raw, valid JSON. No conversational filler, no markdown outside of code blocks."""
 
+# --- STRUCTURED JSON SCHEMA ---
+CHUNK_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "biome_type": {
+            "type": "string",
+            "description": "Selected biome type matching the terrain continuity."
+        },
+        "elevation_grid": {
+            "type": "array",
+            "description": "16x16 grid of elevation heights (integers 0 to 12).",
+            "items": {
+                "type": "array",
+                "items": {"type": "integer"}
+            }
+        },
+        "flora": {
+            "type": "array",
+            "description": "Native vegetation instances placed across the chunk.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "type": {"type": "string"},
+                    "x": {"type": "number"},
+                    "z": {"type": "number"},
+                    "height": {"type": "number"}
+                },
+                "required": ["type", "x", "z", "height"],
+                "additionalProperties": False
+            }
+        },
+        "specimens": {
+            "type": "array",
+            "description": "Collectible items with rich Dungeon Master story lore.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {"type": "string"},
+                    "x": {"type": "number"},
+                    "y": {"type": "number"},
+                    "points": {"type": "integer"},
+                    "lore": {
+                        "type": "string",
+                        "description": "Rich 1-2 sentence Dungeon Master story description of the specimen."
+                    }
+                },
+                "required": ["name", "x", "y", "points", "lore"],
+                "additionalProperties": False
+            }
+        }
+    },
+    "required": ["biome_type", "elevation_grid", "flora", "specimens"],
+    "additionalProperties": False
+}
+
 
 def load_state():
     if not os.path.exists(STATE_FILE):
@@ -104,7 +159,7 @@ def ask_workstation_for_chunk(coord):
         f"{context_desc}\n\n"
         f"Select a biome_type that transitions logically from the neighbors above, "
         f"build a matching 16x16 elevation_grid, populate native flora objects in the 'flora' array, "
-        f"and provide EXACTLY 8 native collectible specimens."
+        f"and provide collectible native specimens with required 'name', 'x', 'y', 'points', and a rich Dungeon Master story 'lore' description."
     )
 
     payload = {
@@ -113,7 +168,16 @@ def ask_workstation_for_chunk(coord):
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": prompt}
         ],
-        "temperature": 0.8
+        "temperature": 0.8,
+        "format": CHUNK_SCHEMA,
+        "response_format": {
+            "type": "json_schema",
+            "json_schema": {
+                "name": "chunk_data_schema",
+                "strict": True,
+                "schema": CHUNK_SCHEMA
+            }
+        }
     }
 
     for attempt in range(3):
@@ -128,7 +192,20 @@ def ask_workstation_for_chunk(coord):
             elif "```" in content:
                 content = content.split("```")[1].split("```")[0].strip()
 
-            return json.loads(content)
+            chunk_dict = json.loads(content)
+
+            # Defensive schema enforcement
+            if not isinstance(chunk_dict, dict):
+                raise ValueError("Payload is not a valid JSON object")
+            if "specimens" not in chunk_dict or not isinstance(chunk_dict["specimens"], list):
+                raise ValueError("Chunk data missing required 'specimens' array")
+
+            for spec in chunk_dict["specimens"]:
+                lore = spec.get("lore")
+                if not lore or not isinstance(lore, str) or not lore.strip() or lore.strip().lower() in ("null", "none"):
+                    raise ValueError(f"Specimen '{spec.get('name')}' missing required 'lore' field")
+
+            return chunk_dict
         except Exception as e:
             print(f"[Warning] Generation attempt failed: {e}")
             time.sleep(5)
