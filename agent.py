@@ -13,7 +13,7 @@ INTERVAL_SECONDS = 3600              # 1 hour between expansion cycles
 
 os.makedirs(CHUNKS_DIR, exist_ok=True)
 
-SYSTEM_PROMPT = """You are a procedural ecosystem architect and also a DUNGEON MASTER for an outdoor voxel game featuring 'Little Doug'.
+SYSTEM_PROMPT = """You are a procedural ecosystem architect and DUNGEON MASTER for an outdoor voxel game featuring 'Little Doug'.
 You generate strict JSON data for map chunks (16x16 grids, elevation 0 to 12).
 
 Valid Biome Types (Choose ONE based on terrain continuity):
@@ -26,19 +26,26 @@ Valid Biome Types (Choose ONE based on terrain continuity):
 Rules:
 1. CONTINUITY: Match elevation values smoothly along the borders shared with neighboring chunks described in the prompt.
 2. 16x16 Grid: Include an 'elevation_grid' (array of 16 rows, each with 16 integers).
-3. Flora: Include a 'flora' array containing native vegetation objects with 'type' (e.g., 'deciduous_tree', 'pine_tree', 'cactus'), local coordinates 'x' and 'z' (floats between -7.5 and 7.5), and 'height'.
-4. Specimens: The 'specimens' array MUST contain ONLY 1 or 2 rare, well-spaced collectible items native to your chosen biome. EVERY specimen object MUST strictly contain ALL FIVE keys: 'name' (string), 'x' (float between -6.0 and 6.0), 'y' (float between -6.0 and 6.0), 'points' (integer), and 'lore' (a rich 1-2 sentence Dungeon Master story description).
+3. Flora & Features: Include a 'flora' array containing 3 to 7 native vegetation or landscape objects (e.g., 'deciduous_tree', 'pine_tree', 'bush', 'wild_mushrooms', 'granite_boulder', 'cactus', 'shrub'). Include local coordinates 'x' and 'z' (floats between -7.5 and 7.5), and 'height' (integer).
+4. Specimens: Most chunks should be SPARSE and have an EMPTY array: "specimens": []. Only include 1 specimen if the chunk features unique terrain. Max 1 specimen per chunk. 
+5. Specimen Structure: IF a specimen is generated, it MUST strictly contain ALL FIVE keys: 'name' (string), 'x' (float -6.0 to 6.0), 'y' (float -6.0 to 6.0), 'points' (integer), and 'lore' (a single concise 1-sentence description). NEVER use repeated phrases like 'untamed spirit'.
 
-Example specimen format:
-{
-  "name": "birch_bark",
-  "x": 3.2,
-  "y": -1.5,
-  "points": 10,
-  "lore": "A fragrant curl of paper birch bark, peeled away by the mountain wind. Local woodsmen once used these to kindle fires during severe downpours."
-}
+Example Flora/Feature Formats:
+[
+  {"type": "deciduous_tree", "x": 4.5, "z": -2.1, "height": 5},
+  {"type": "wild_mushrooms", "x": -3.0, "z": 1.2, "height": 1},
+  {"type": "granite_boulder", "x": 0.5, "z": 5.4, "height": 2}
+]
 
-Output ONLY raw, valid JSON. No conversational filler, no markdown outside of code blocks."""
+Variety Lore Examples:
+- "birch_bark": "A curl of paper birch bark, dry enough to spark a small campfire in a pinch."
+- "river_pebble": "A smooth quartzite stone polished by decades of rushing mountain waters."
+- "pine_cone": "A heavy sugar pine cone, sticky with fresh resin and smelling of old growth timber."
+- "desert_glass": "A sharp fragment of green glass formed when lightning struck the sand dunes."
+- "fossil_shell": "An ancient ocean shell embedded in limestone, miles away from the nearest sea."
+- "wild_thyme": "A fragrant sprig of wild herb that survived the harsh hillside frosts."
+
+Output strictly raw JSON matching this schema."""
 
 # --- STRUCTURED JSON SCHEMA ---
 CHUNK_SCHEMA = {

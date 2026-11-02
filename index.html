@@ -680,96 +680,226 @@
         function createVoxelLittleDoug() {
             const group = new THREE.Group();
 
-            const skinMat = new THREE.MeshStandardMaterial({ color: 0xffd1a4, roughness: 0.6 });
-            const hairMat = new THREE.MeshStandardMaterial({ color: 0x4a2e12, roughness: 0.8 });
-            const jacketMat = new THREE.MeshStandardMaterial({ color: 0x15803d, roughness: 0.5 });
-            const shirtMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.5 });
-            const shortsMat = new THREE.MeshStandardMaterial({ color: 0xd97706, roughness: 0.6 });
-            const bootMat = new THREE.MeshStandardMaterial({ color: 0x451a03, roughness: 0.9 });
-            const hatMat = new THREE.MeshStandardMaterial({ color: 0x0284c7, roughness: 0.5 });
-            const eyeMat = new THREE.MeshBasicMaterial({ color: 0x0f172a });
+            function makeVoxel(sx, sy, sz, px, py, pz, mat, castShadow = true, receiveShadow = true) {
+                const mesh = new THREE.Mesh(boxGeo, mat);
+                mesh.scale.set(sx, sy, sz);
+                mesh.position.set(px, py, pz);
+                mesh.castShadow = castShadow;
+                mesh.receiveShadow = receiveShadow;
+                return mesh;
+            }
 
-            const torso = new THREE.Mesh(boxGeo, jacketMat);
-            torso.scale.set(0.7, 0.75, 0.45);
-            torso.position.y = 0.725;
-            torso.castShadow = true;
+            // --- PALETTE MATCHING REFERENCE IMAGE ---
+            const skinMat = new THREE.MeshStandardMaterial({ color: 0xfed4b4, roughness: 0.65 });
+            const skinShadowMat = new THREE.MeshStandardMaterial({ color: 0xe5b596, roughness: 0.65 });
+            const hairMat = new THREE.MeshStandardMaterial({ color: 0x1e1f22, roughness: 0.85 }); // dark styled hair
+            const tshirtMat = new THREE.MeshStandardMaterial({ color: 0x708238, roughness: 0.6 }); // olive-green t-shirt
+            const tshirtTrimMat = new THREE.MeshStandardMaterial({ color: 0x5e6e2e, roughness: 0.6 });
+            const shortsMat = new THREE.MeshStandardMaterial({ color: 0xa48d68, roughness: 0.65 }); // khaki shorts
+            const shortsPocketMat = new THREE.MeshStandardMaterial({ color: 0x937c58, roughness: 0.65 });
+            const bootMat = new THREE.MeshStandardMaterial({ color: 0x732a28, roughness: 0.75 }); // reddish-brown boots
+            const bootSoleMat = new THREE.MeshStandardMaterial({ color: 0x3d1716, roughness: 0.9 });
+            const backpackMat = new THREE.MeshStandardMaterial({ color: 0x826242, roughness: 0.7 }); // structured backpack brown
+            const backpackStrapMat = new THREE.MeshStandardMaterial({ color: 0x63472c, roughness: 0.7 });
+            const packBedrollMat = new THREE.MeshStandardMaterial({ color: 0x3d5c80, roughness: 0.7 }); // blue side bedroll
+            const eyeMat = new THREE.MeshBasicMaterial({ color: 0x18181a });
+            const mouthMat = new THREE.MeshBasicMaterial({ color: 0x4a1818 });
+
+            // --- TORSO (Olive-green t-shirt & front backpack straps) ---
+            const torso = makeVoxel(0.66, 0.70, 0.40, 0, 0.70, 0, tshirtMat);
             group.add(torso);
 
-            const shirtInner = new THREE.Mesh(boxGeo, shirtMat);
-            shirtInner.scale.set(0.3, 0.7, 0.46);
-            shirtInner.position.set(0, 0.725, 0.01);
-            group.add(shirtInner);
+            // Scoop neckline exposing neck/chest
+            const scoopNeck = makeVoxel(0.24, 0.14, 0.02, 0, 0.98, 0.201, skinMat, false, true);
+            group.add(scoopNeck);
 
-            const head = new THREE.Mesh(boxGeo, skinMat);
-            head.scale.set(0.55, 0.55, 0.55);
-            head.position.y = 1.35;
-            head.castShadow = true;
+            // Collar trim below scoop neck
+            const collarTrim = makeVoxel(0.28, 0.035, 0.02, 0, 0.91, 0.202, tshirtTrimMat, false, true);
+            group.add(collarTrim);
+
+            // Front backpack straps wrapping over shoulders and chest
+            const strapL = makeVoxel(0.08, 0.52, 0.03, -0.19, 0.72, 0.203, backpackStrapMat);
+            group.add(strapL);
+            const strapR = makeVoxel(0.08, 0.52, 0.03, 0.19, 0.72, 0.203, backpackStrapMat);
+            group.add(strapR);
+
+            // --- STRUCTURED BACKPACK ---
+            // Main pack body
+            const packBody = makeVoxel(0.54, 0.58, 0.28, 0, 0.67, -0.32, backpackMat);
+            group.add(packBody);
+
+            // Top flap / lid
+            const packTop = makeVoxel(0.56, 0.12, 0.30, 0, 0.94, -0.32, backpackStrapMat);
+            group.add(packTop);
+
+            // Rear outer pouch (lower pocket)
+            const packPouch = makeVoxel(0.42, 0.24, 0.08, 0, 0.53, -0.48, backpackMat);
+            group.add(packPouch);
+            const pouchFlap = makeVoxel(0.44, 0.05, 0.09, 0, 0.65, -0.48, backpackStrapMat);
+            group.add(pouchFlap);
+
+            // Side accessory: Bedroll / canteen (on character's right side, viewer's left)
+            const bedroll = makeVoxel(0.12, 0.36, 0.16, -0.31, 0.65, -0.32, packBedrollMat);
+            group.add(bedroll);
+            const bedrollStrap1 = makeVoxel(0.13, 0.035, 0.17, -0.31, 0.75, -0.32, backpackStrapMat);
+            group.add(bedrollStrap1);
+            const bedrollStrap2 = makeVoxel(0.13, 0.035, 0.17, -0.31, 0.55, -0.32, backpackStrapMat);
+            group.add(bedrollStrap2);
+
+            // Side pouch (on character's left side)
+            const sidePouch = makeVoxel(0.07, 0.24, 0.16, 0.295, 0.58, -0.32, backpackMat);
+            group.add(sidePouch);
+
+            // --- HEAD & FACE ---
+            // Exposed neck
+            const neck = makeVoxel(0.24, 0.10, 0.24, 0, 1.07, 0, skinMat);
+            group.add(neck);
+
+            // Head base block
+            const head = makeVoxel(0.54, 0.52, 0.48, 0, 1.34, 0, skinMat);
             group.add(head);
 
-            const eyeL = new THREE.Mesh(boxGeo, eyeMat);
-            eyeL.scale.set(0.08, 0.12, 0.05);
-            eyeL.position.set(-0.14, 1.4, 0.28);
-            group.add(eyeL);
+            // Voxel ears
+            const earL = makeVoxel(0.06, 0.14, 0.12, -0.285, 1.34, 0, skinMat);
+            group.add(earL);
+            const earR = makeVoxel(0.06, 0.14, 0.12, 0.285, 1.34, 0, skinMat);
+            group.add(earR);
 
-            const eyeR = eyeL.clone();
-            eyeR.position.x = 0.14;
+            // Dark blocky eyebrows
+            const browL = makeVoxel(0.11, 0.04, 0.02, -0.13, 1.47, 0.245, hairMat);
+            group.add(browL);
+            const browR = makeVoxel(0.11, 0.04, 0.02, 0.13, 1.47, 0.245, hairMat);
+            group.add(browR);
+
+            // Eyes
+            const eyeL = makeVoxel(0.08, 0.11, 0.02, -0.13, 1.38, 0.245, eyeMat);
+            group.add(eyeL);
+            const eyeR = makeVoxel(0.08, 0.11, 0.02, 0.13, 1.38, 0.245, eyeMat);
             group.add(eyeR);
 
-            const hairTop = new THREE.Mesh(boxGeo, hairMat);
-            hairTop.scale.set(0.57, 0.12, 0.57);
-            hairTop.position.set(0, 1.62, -0.02);
-            group.add(hairTop);
+            // Subtle nose
+            const nose = makeVoxel(0.06, 0.05, 0.03, 0, 1.31, 0.25, skinShadowMat);
+            group.add(nose);
 
-            const capCrown = new THREE.Mesh(boxGeo, hatMat);
-            capCrown.scale.set(0.58, 0.18, 0.58);
-            capCrown.position.set(0, 1.68, -0.02);
-            capCrown.castShadow = true;
-            group.add(capCrown);
+            // Friendly smile
+            const mouth = makeVoxel(0.12, 0.04, 0.02, 0, 1.21, 0.245, mouthMat);
+            group.add(mouth);
+            const mouthL = makeVoxel(0.03, 0.03, 0.02, -0.06, 1.23, 0.245, mouthMat);
+            group.add(mouthL);
+            const mouthR = makeVoxel(0.03, 0.03, 0.02, 0.06, 1.23, 0.245, mouthMat);
+            group.add(mouthR);
 
-            const capBrim = new THREE.Mesh(boxGeo, hatMat);
-            capBrim.scale.set(0.62, 0.05, 0.28);
-            capBrim.position.set(0, 1.62, 0.28);
-            capBrim.castShadow = true;
-            group.add(capBrim);
+            // --- DARK STYLED HAIR (Stepped Voxel Pompadour / Quiff) ---
+            // Back of head
+            const hairBack = makeVoxel(0.56, 0.48, 0.12, 0, 1.38, -0.21, hairMat);
+            group.add(hairBack);
 
+            // Sides of head
+            const hairSideL = makeVoxel(0.08, 0.38, 0.44, -0.25, 1.44, -0.04, hairMat);
+            group.add(hairSideL);
+            const hairSideR = makeVoxel(0.08, 0.38, 0.44, 0.25, 1.44, -0.04, hairMat);
+            group.add(hairSideR);
+
+            // Sideburns in front of ears
+            const sideburnL = makeVoxel(0.06, 0.16, 0.08, -0.26, 1.27, 0.08, hairMat);
+            group.add(sideburnL);
+            const sideburnR = makeVoxel(0.06, 0.16, 0.08, 0.26, 1.27, 0.08, hairMat);
+            group.add(sideburnR);
+
+            // Top base hair layer
+            const hairBase = makeVoxel(0.56, 0.10, 0.50, 0, 1.63, -0.01, hairMat);
+            group.add(hairBase);
+
+            // Stepped styled quiff / pomp (rising towards front-right crest)
+            const hairQuiffLow = makeVoxel(0.18, 0.08, 0.36, -0.14, 1.68, -0.04, hairMat);
+            group.add(hairQuiffLow);
+            const hairQuiffMid = makeVoxel(0.20, 0.14, 0.40, 0.01, 1.72, 0.01, hairMat);
+            group.add(hairQuiffMid);
+            const hairQuiffHigh = makeVoxel(0.18, 0.18, 0.36, 0.13, 1.76, 0.06, hairMat);
+            group.add(hairQuiffHigh);
+            const hairFrontFringe = makeVoxel(0.30, 0.10, 0.10, 0.05, 1.68, 0.22, hairMat);
+            group.add(hairFrontFringe);
+
+            // --- ARMS (Olive-green sleeves + skin forearms/hands) ---
+            // Left Arm
             const armL = new THREE.Group();
-            const sleeveL = new THREE.Mesh(boxGeo, jacketMat);
-            sleeveL.scale.set(0.2, 0.35, 0.2);
-            sleeveL.position.y = -0.175;
-            sleeveL.castShadow = true;
+            const sleeveL = makeVoxel(0.22, 0.22, 0.22, 0, -0.10, 0, tshirtMat);
             armL.add(sleeveL);
-
-            const handL = new THREE.Mesh(boxGeo, skinMat);
-            handL.scale.set(0.18, 0.3, 0.18);
-            handL.position.y = -0.45;
-            handL.castShadow = true;
+            const sleeveCuffL = makeVoxel(0.23, 0.035, 0.23, 0, -0.20, 0, tshirtTrimMat);
+            armL.add(sleeveCuffL);
+            const forearmL = makeVoxel(0.18, 0.22, 0.18, 0, -0.32, 0, skinMat);
+            armL.add(forearmL);
+            const handL = makeVoxel(0.18, 0.13, 0.18, 0, -0.47, 0, skinMat);
             armL.add(handL);
+            const thumbL = makeVoxel(0.05, 0.07, 0.06, 0.08, -0.45, 0.04, skinMat);
+            armL.add(thumbL);
 
-            armL.position.set(-0.48, 1.0, 0);
+            armL.position.set(-0.46, 0.98, 0);
             group.add(armL);
 
-            const armR = armL.clone();
-            armR.position.x = 0.48;
+            // Right Arm
+            const armR = new THREE.Group();
+            const sleeveR = makeVoxel(0.22, 0.22, 0.22, 0, -0.10, 0, tshirtMat);
+            armR.add(sleeveR);
+            const sleeveCuffR = makeVoxel(0.23, 0.035, 0.23, 0, -0.20, 0, tshirtTrimMat);
+            armR.add(sleeveCuffR);
+            const forearmR = makeVoxel(0.18, 0.22, 0.18, 0, -0.32, 0, skinMat);
+            armR.add(forearmR);
+            const handR = makeVoxel(0.18, 0.13, 0.18, 0, -0.47, 0, skinMat);
+            armR.add(handR);
+            const thumbR = makeVoxel(0.05, 0.07, 0.06, -0.08, -0.45, 0.04, skinMat);
+            armR.add(thumbR);
+
+            armR.position.set(0.46, 0.98, 0);
             group.add(armR);
 
+            // --- LEGS (Khaki shorts + bare knees + Reddish-brown boots) ---
+            // Left Leg
             const legL = new THREE.Group();
-            const shortL = new THREE.Mesh(boxGeo, shortsMat);
-            shortL.scale.set(0.24, 0.25, 0.24);
-            shortL.position.y = -0.125;
-            shortL.castShadow = true;
+            const shortL = makeVoxel(0.24, 0.18, 0.25, 0, -0.08, 0, shortsMat);
             legL.add(shortL);
+            const shortPocketL = makeVoxel(0.03, 0.12, 0.14, -0.125, -0.09, 0, shortsPocketMat);
+            legL.add(shortPocketL);
+            const shortCuffL = makeVoxel(0.26, 0.055, 0.27, 0, -0.165, 0, shortsPocketMat);
+            legL.add(shortCuffL);
+            const kneeL = makeVoxel(0.18, 0.08, 0.18, 0, -0.22, 0, skinMat);
+            legL.add(kneeL);
 
-            const bootL = new THREE.Mesh(boxGeo, bootMat);
-            bootL.scale.set(0.22, 0.25, 0.28);
-            bootL.position.set(0, -0.325, 0.02);
-            bootL.castShadow = true;
+            // Reddish-brown boot
+            const bootL = makeVoxel(0.22, 0.12, 0.22, 0, -0.31, 0.01, bootMat);
             legL.add(bootL);
+            const bootToeL = makeVoxel(0.22, 0.09, 0.26, 0, -0.37, 0.04, bootMat);
+            legL.add(bootToeL);
+            const bootSoleL = makeVoxel(0.23, 0.045, 0.28, 0, -0.425, 0.04, bootSoleMat);
+            legL.add(bootSoleL);
+            const bootLacesL = makeVoxel(0.10, 0.07, 0.02, 0, -0.32, 0.122, bootSoleMat);
+            legL.add(bootLacesL);
 
             legL.position.set(-0.18, 0.35, 0);
             group.add(legL);
 
-            const legR = legL.clone();
-            legR.position.x = 0.18;
+            // Right Leg
+            const legR = new THREE.Group();
+            const shortR = makeVoxel(0.24, 0.18, 0.25, 0, -0.08, 0, shortsMat);
+            legR.add(shortR);
+            const shortPocketR = makeVoxel(0.03, 0.12, 0.14, 0.125, -0.09, 0, shortsPocketMat);
+            legR.add(shortPocketR);
+            const shortCuffR = makeVoxel(0.26, 0.055, 0.27, 0, -0.165, 0, shortsPocketMat);
+            legR.add(shortCuffR);
+            const kneeR = makeVoxel(0.18, 0.08, 0.18, 0, -0.22, 0, skinMat);
+            legR.add(kneeR);
+
+            // Reddish-brown boot
+            const bootR = makeVoxel(0.22, 0.12, 0.22, 0, -0.31, 0.01, bootMat);
+            legR.add(bootR);
+            const bootToeR = makeVoxel(0.22, 0.09, 0.26, 0, -0.37, 0.04, bootMat);
+            legR.add(bootToeR);
+            const bootSoleR = makeVoxel(0.23, 0.045, 0.28, 0, -0.425, 0.04, bootSoleMat);
+            legR.add(bootSoleR);
+            const bootLacesR = makeVoxel(0.10, 0.07, 0.02, 0, -0.32, 0.122, bootSoleMat);
+            legR.add(bootLacesR);
+
+            legR.position.set(0.18, 0.35, 0);
             group.add(legR);
 
             group.userData = { armL, armR, legL, legR };
