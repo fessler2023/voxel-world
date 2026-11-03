@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-03T21:45:03.354227+00:00",
-  "count": 6,
+  "updated_at": "2026-11-03T22:53:52.753978+00:00",
+  "count": 8,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -92,6 +92,36 @@
       },
       "file": "assets/creatures/mud_pig_bf41.json",
       "created_at": "2026-11-03T21:45:03.354184+00:00"
+    },
+    {
+      "id": "mud_pig_dfd3",
+      "name": "Pink Truffle Pig",
+      "category": "wildlife",
+      "movementStyle": "walking",
+      "scale": 0.85,
+      "voxel_count": 33,
+      "dimensions": {
+        "width": 3,
+        "height": 5,
+        "depth": 6
+      },
+      "file": "assets/creatures/mud_pig_dfd3.json",
+      "created_at": "2026-11-03T22:47:27.684390+00:00"
+    },
+    {
+      "id": "sky_drake_d2d1",
+      "name": "Verdant Sky Drake",
+      "category": "boss",
+      "movementStyle": "hover",
+      "scale": 1.2,
+      "voxel_count": 37,
+      "dimensions": {
+        "width": 7,
+        "height": 7,
+        "depth": 4
+      },
+      "file": "assets/creatures/sky_drake_d2d1.json",
+      "created_at": "2026-11-03T22:53:52.753879+00:00"
     }
   ]
 }

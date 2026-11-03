@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 """
-creature_gen.py - Autonomous Voxel Creature Factory for Three.js Voxel Game.
+creature_gen.py - Autonomous Voxel Creature Factory
 
 Features:
-- Connects to local Ollama instance (default: http://localhost:11434)
-- Prompts LLM for unique voxel creatures (wildlife, monsters, bosses)
-- Enforces strict JSON output with no markdown code blocks
-- Suffix Protection: Appends random 4-character hex suffix (_a7f2) to id and filename
+- Connects directly to local AI workstation (http://192.168.12.253:11434/v1/chat/completions) using qwen3:14b
+- Structured JSON schema enforcement with strict response_format
+- Suffix Protection: Automatically appends 4-character hex suffix (_a7f2) to prevent file overwriting
 - Centering & Grounding Safety Guard: Forces all coordinates centered at x=0, z=0, base at y=0
-- Performance Lag Safety Guard: Limits voxel density and optimizes geometry schema
-- Manifest Builder: Maintains assets/creatures/manifest.json for fast client-side loading
-- Robust Error Handling: Safe procedural fallback if Ollama is offline or returns invalid JSON
+- Performance Lag Safeguard: Clamps voxel counts and enforces low-draw-call geometry
+- Manifest Builder: Automatically creates and updates assets/creatures/manifest.json
+- Autonomous Interval Loop: Continuously cycles at configurable intervals (matching agent.py)
+- Robust Error Handling: Safe procedural fallback if workstation is offline or unreachable
+- Git Synchronization: Commits and pushes new creatures to GitHub automatically
 """
 
 import os
@@ -23,42 +24,74 @@ import argparse
 from datetime import datetime, timezone
 import requests
 
-# --- CONFIGURATION ---
-OLLAMA_HOST = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
-OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.2")
+# --- CONFIGURATION MATCHING AGENT.PY ---
+WORKSTATION_URL = os.environ.get("WORKSTATION_URL", "http://192.168.12.253:11434/v1/chat/completions")
+MODEL_NAME = os.environ.get("MODEL_NAME", "qwen3:14b")
 CREATURES_DIR = os.path.join("assets", "creatures")
 MANIFEST_PATH = os.path.join(CREATURES_DIR, "manifest.json")
-MAX_VOXELS = 180  # Performance safeguard against high-poly lag
+INTERVAL_SECONDS = 3600               # 1 hour between creature creation cycles (matching agent.py)
+MAX_VOXELS = 180                      # Performance safeguard against high-poly lag
 
 # Ensure output directory exists
 os.makedirs(CREATURES_DIR, exist_ok=True)
 
+SYSTEM_PROMPT = """You are a procedural 3D voxel character artist and DUNGEON MASTER for a retro voxel adventure game featuring 'Little Doug'.
+You design unique voxel creatures (wildlife, monsters, or bosses) in STRICT JSON format matching the schema.
 
-CREATURE_PROMPT_TEMPLATE = """You are an expert voxel 3D artist creating retro low-poly voxel characters.
-Generate a creative, detailed voxel creature in STRICT JSON format with NO markdown wrapping (no ```json code blocks, just raw JSON).
-
-Creature category to invent: {category_theme}
-
-JSON Output Schema:
-{{
-  "id": "lowercase_creature_name_without_suffix",
-  "name": "Display Name",
-  "category": "wildlife" | "monster" | "boss",
-  "description": "Short 1-sentence description of behavior or lore",
-  "movementStyle": "walking" | "hover" | "stationary",
-  "scale": 0.8,
-  "voxels": [
-    {{"x": 0, "y": 0, "z": 0, "color": "#HEXVAL", "part": "leg_fl"}},
-    ...
-  ]
-}}
-
-CRITICAL DESIGN RULES:
+Rules:
 1. CENTERING RULE: All voxel coordinates MUST be horizontally centered around x=0 and z=0.
-2. GROUNDING RULE: The lowest voxels (feet, belly, or base) MUST rest strictly at y=0. Do NOT use negative y values.
-3. Keep the total number of voxels between 35 and 90 for optimal real-time browser performance.
-4. Colors MUST be valid 6-character hex strings (e.g. #3b82f6, #10b981, #f59e0b).
-5. Output ONLY the raw JSON object. Do not include introductory text, explanations, or markdown code fences."""
+2. GROUNDING RULE: The lowest voxels (feet, belly, or base) MUST rest strictly at y=0 (minimum y must be 0, never negative).
+3. PERFORMANCE: Keep total number of voxels between 35 and 90 for 60 FPS real-time browser performance.
+4. COLORS: All voxel colors MUST be valid 6-character hex color codes (e.g., #3b82f6, #10b981, #f59e0b).
+5. Output strictly raw JSON conforming to the schema."""
+
+CREATURE_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "id": {
+            "type": "string",
+            "description": "Short lowercase creature name identifier (without suffix), e.g., 'meadow_fox' or 'stone_golem'"
+        },
+        "name": {
+            "type": "string",
+            "description": "Readable display name of the creature"
+        },
+        "category": {
+            "type": "string",
+            "description": "Creature classification: wildlife, monster, or boss"
+        },
+        "description": {
+            "type": "string",
+            "description": "Short 1-sentence Dungeon Master lore description of behavior or habitat"
+        },
+        "movementStyle": {
+            "type": "string",
+            "description": "Animation movement style: 'walking' for ground wildlife/monsters, 'hover' for flying/aerial mobs, or 'stationary'"
+        },
+        "scale": {
+            "type": "number",
+            "description": "Rendering scale factor (typically 0.7 to 1.3)"
+        },
+        "voxels": {
+            "type": "array",
+            "description": "List of voxel blocks defining the creature model (35 to 90 voxels)",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "x": {"type": "integer", "description": "Horizontal X coordinate centered at 0"},
+                    "y": {"type": "integer", "description": "Vertical Y coordinate starting at 0 (feet/base)"},
+                    "z": {"type": "integer", "description": "Horizontal Z coordinate centered at 0"},
+                    "color": {"type": "string", "description": "Hex color string (e.g. #3b82f6)"},
+                    "part": {"type": "string", "description": "Body part name like head, leg, body, wing"}
+                },
+                "required": ["x", "y", "z", "color"],
+                "additionalProperties": False
+            }
+        }
+    },
+    "required": ["id", "name", "category", "description", "movementStyle", "voxels"],
+    "additionalProperties": False
+}
 
 
 def generate_suffix() -> str:
@@ -75,7 +108,6 @@ def enforce_centering_and_grounding(voxels: list) -> list:
     if not voxels:
         return []
 
-    # Filter out malformed entries
     valid_voxels = []
     for v in voxels:
         if isinstance(v, dict) and "x" in v and "y" in v and "z" in v:
@@ -194,7 +226,7 @@ def update_manifest(creature_meta: dict, file_rel_path: str) -> dict:
 def generate_fallback_creature(category: str = None) -> dict:
     """
     Procedural Fallback Generator:
-    Guarantees the script never crashes even if Ollama is unreachable.
+    Guarantees the script never crashes even if workstation is unreachable.
     Creates well-proportioned, beautifully textured retro voxel models.
     """
     themes = ["wildlife_dog", "wildlife_pig", "monster_golem", "boss_drake"]
@@ -363,88 +395,117 @@ def generate_fallback_creature(category: str = None) -> dict:
     }
 
 
-def query_ollama(prompt: str) -> dict:
+def ask_workstation_for_creature(theme_prompt: str):
     """
-    Connects to Ollama instance at OLLAMA_HOST.
-    Enforces format: 'json' with strict JSON extraction.
+    Connects to the local AI workstation matching agent.py:
+    URL: http://192.168.12.253:11434/v1/chat/completions
+    Model: qwen3:14b
     """
-    url = f"{OLLAMA_HOST.rstrip('/')}/api/generate"
+    user_prompt = (
+        f"Design a unique voxel creature for an outdoor wilderness world.\n"
+        f"Category theme: {theme_prompt}\n\n"
+        f"CRITICAL DESIGN CONSTRAINTS:\n"
+        f"1. CENTERING: All voxel coordinates MUST be horizontally centered around x=0 and z=0.\n"
+        f"2. GROUNDING: The feet, belly, or base of the creature MUST sit strictly at y=0. Never use negative y.\n"
+        f"3. PERFORMANCE: Provide between 35 and 90 voxels for smooth 60 FPS real-time rendering.\n"
+        f"4. PALETTE: Use vibrant, tasteful retro hex colors matching the creature's lore.\n"
+        f"5. OUTPUT: Return strictly the raw JSON matching the schema."
+    )
+
     payload = {
-        "model": OLLAMA_MODEL,
-        "prompt": prompt,
-        "stream": False,
-        "format": "json",
-        "options": {
-            "temperature": 0.75,
-            "top_p": 0.9
+        "model": MODEL_NAME,
+        "messages": [
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": user_prompt}
+        ],
+        "temperature": 0.8,
+        "format": CREATURE_SCHEMA,
+        "response_format": {
+            "type": "json_schema",
+            "json_schema": {
+                "name": "creature_data_schema",
+                "strict": True,
+                "schema": CREATURE_SCHEMA
+            }
         }
     }
 
-    print(f"[CreatureGen] Contacting Ollama ({OLLAMA_HOST}) with model '{OLLAMA_MODEL}'...")
-    response = requests.post(url, json=payload, timeout=20)
-    response.raise_for_status()
+    for attempt in range(3):
+        try:
+            print(f"[Creature Factory] Contacting AI workstation at {WORKSTATION_URL} (Attempt {attempt+1}/3)...")
+            response = requests.post(WORKSTATION_URL, json=payload, timeout=1800)
+            response.raise_for_status()
+            content = response.json()["choices"][0]["message"]["content"]
 
-    raw_response = response.json().get("response", "")
-    content = raw_response.strip()
+            if "```json" in content:
+                content = content.split("```json")[1].split("```")[0].strip()
+            elif "```" in content:
+                content = content.split("```")[1].split("```")[0].strip()
 
-    # Safety: Strip any markdown code backticks if the model ignored system instructions
-    if "```json" in content:
-        content = content.split("```json")[1].split("```")[0].strip()
-    elif "```" in content:
-        content = content.split("```")[1].split("```")[0].strip()
+            creature_dict = json.loads(content)
 
-    parsed = json.loads(content)
-    if not isinstance(parsed, dict) or "voxels" not in parsed:
-        raise ValueError("Model output did not conform to creature voxel schema")
+            # Defensive validation
+            if not isinstance(creature_dict, dict):
+                raise ValueError("Payload is not a valid JSON object")
+            if "voxels" not in creature_dict or not isinstance(creature_dict["voxels"], list):
+                raise ValueError("Creature missing required 'voxels' array")
+            if len(creature_dict["voxels"]) < 8:
+                raise ValueError("Creature model has insufficient voxel density")
 
-    return parsed
+            return creature_dict
+
+        except Exception as e:
+            print(f"[Warning] Workstation generation attempt failed: {e}")
+            time.sleep(5)
+
+    return None
 
 
-def generate_creature(theme: str = None) -> tuple:
+def run_generation_cycle(theme: str = None, push_git: bool = True) -> tuple:
     """
-    Main Autonomous Creature Generation Pipeline.
-    Returns: (creature_data: dict, file_path: str)
+    Executes a single autonomous creature generation cycle:
+    1. Selects or takes a theme
+    2. Queries workstation (or triggers safe procedural fallback)
+    3. Normalizes centering and grounding
+    4. Applies random suffix protection
+    5. Saves file to assets/creatures/[id]_[suffix].json
+    6. Updates manifest.json
+    7. Commits and pushes to GitHub
     """
     categories = [
-        "Small friendly wildlife (e.g., foxes, badgers, mountain goats, wild boars, river otters)",
-        "Spooky outdoor monsters (e.g., moss skeletons, rock stalkers, swamp wraiths, mushroom creepers)",
-        "Epic world boss or rare guardian (e.g., elder storm drake, crystal colossus, ancient treant)"
+        "Small friendly wildlife (e.g. woodland dog, pine fox, alpine badger, meadow pig, river beaver, horned hare)",
+        "Mysterious wilderness monster (e.g. ancient moss golem, bone scavenger, stone crawler, lichen spider, root horror)",
+        "Legendary outdoor boss or guardian (e.g. celestial sky drake, glacial frost dragon, basalt colossus, elder forest stag)"
     ]
     chosen_theme = theme or random.choice(categories)
-    creature_data = None
 
-    try:
-        prompt = CREATURE_PROMPT_TEMPLATE.format(category_theme=chosen_theme)
-        raw_creature = query_ollama(prompt)
+    print(f"\n[Creature Factory] Starting creature generation cycle...")
+    print(f"[Creature Factory] Target Theme: {chosen_theme}")
 
-        # Generate random 4-character hex suffix to prevent file collisions
-        suffix = generate_suffix()
-        base_id = str(raw_creature.get("id", "creature")).lower().replace(" ", "_")
-        # Strip existing suffix if model hallucinated one
+    raw_data = ask_workstation_for_creature(chosen_theme)
+    suffix = generate_suffix()
+
+    if raw_data:
+        base_id = str(raw_data.get("id", "creature")).lower().replace(" ", "_")
         clean_id = base_id.split("_")[0] if len(base_id) > 12 else base_id
         final_id = f"{clean_id}_{suffix}"
 
-        # Apply strict centering and grounding guard
-        sanitized_voxels = enforce_centering_and_grounding(raw_creature.get("voxels", []))
-        if len(sanitized_voxels) < 8:
-            raise ValueError("Generated creature has insufficient voxels, using procedural generator")
-
+        sanitized_voxels = enforce_centering_and_grounding(raw_data.get("voxels", []))
         creature_data = {
             "id": final_id,
-            "name": str(raw_creature.get("name", "Voxel Wonder")).strip(),
-            "category": str(raw_creature.get("category", "wildlife")).lower(),
-            "description": str(raw_creature.get("description", "A mysterious inhabitant of the voxel wilderness.")).strip(),
-            "movementStyle": str(raw_creature.get("movementStyle", "walking")).lower(),
-            "scale": float(raw_creature.get("scale", 1.0)),
+            "name": str(raw_data.get("name", "Voxel Wonder")).strip(),
+            "category": str(raw_data.get("category", "wildlife")).lower(),
+            "description": str(raw_data.get("description", "A mysterious inhabitant of the voxel wilderness.")).strip(),
+            "movementStyle": str(raw_data.get("movementStyle", "walking")).lower(),
+            "scale": float(raw_data.get("scale", 1.0)),
             "dimensions": calculate_dimensions(sanitized_voxels),
             "voxels": sanitized_voxels
         }
-        print(f"[CreatureGen] Successfully generated LLM creature: '{creature_data['name']}' ({final_id})")
-
-    except Exception as e:
-        print(f"[CreatureGen] Notice: Ollama unreachable or invalid response ({e}). Activating safe fallback...")
+        print(f"[Creature Factory] Successfully generated from workstation: '{creature_data['name']}' ({final_id})")
+    else:
+        print("[Creature Factory] Notice: Workstation unavailable after retries. Generating safe procedural fallback...")
         creature_data = generate_fallback_creature(chosen_theme)
-        print(f"[CreatureGen] Created procedural fallback creature: '{creature_data['name']}' ({creature_data['id']})")
+        print(f"[Creature Factory] Created procedural fallback creature: '{creature_data['name']}' ({creature_data['id']})")
 
     # Save to assets/creatures/[id].json with suffix protection
     filename = f"{creature_data['id']}.json"
@@ -457,23 +518,61 @@ def generate_creature(theme: str = None) -> tuple:
     rel_path = os.path.join("assets", "creatures", filename).replace("\\", "/")
     update_manifest(creature_data, rel_path)
 
-    print(f"[CreatureGen] Saved: {file_path}")
-    print(f"[CreatureGen] Manifest updated at: {MANIFEST_PATH}")
+    print(f"[Creature Factory] Saved: {file_path}")
+    print(f"[Creature Factory] Manifest updated at: {MANIFEST_PATH}")
+
+    # Synchronize to Git (matching agent.py)
+    if push_git:
+        try:
+            c_name = creature_data.get("name", "Creature")
+            print("[Creature Factory] Committing and pushing to GitHub...")
+            os.system("git add assets/creatures/")
+            os.system(f'git commit -m "Auto-generated autonomous creature [{c_name}] with manifest update"')
+            os.system("git pull --rebase origin main")
+            os.system("git push origin main")
+            print("[Creature Factory] Creature successfully pushed to GitHub & Live Site!")
+        except Exception as e:
+            print(f"[Creature Factory] Git sync note: {e}")
+
     return creature_data, file_path
+
+
+# Alias for backward compatibility with external imports
+def generate_creature(theme: str = None) -> tuple:
+    return run_generation_cycle(theme=theme, push_git=False)
 
 
 def main():
     parser = argparse.ArgumentParser(description="Autonomous Voxel Creature Factory")
-    parser.add_argument("--count", type=int, default=1, help="Number of creatures to generate")
-    parser.add_argument("--theme", type=str, default=None, help="Theme or category prompt")
+    parser.add_argument("--once", action="store_true", help="Run a single generation cycle and exit")
+    parser.add_argument("--count", type=int, default=1, help="Number of creatures to generate (when using --once)")
+    parser.add_argument("--theme", type=str, default=None, help="Specific creature theme or category prompt")
+    parser.add_argument("--interval", type=int, default=INTERVAL_SECONDS, help="Seconds between autonomous generation cycles (default: 3600)")
+    parser.add_argument("--no-git", action="store_true", help="Skip git add/commit/push during execution")
     args = parser.parse_args()
 
+    interval = args.interval
+    push_git = not args.no_git
+
     print("==================================================")
-    print(" Voxel Creature Factory - Autonomous Pipeline     ")
+    print(" Voxel Creature Factory - Autonomous Agent Online ")
     print("==================================================")
-    for i in range(args.count):
-        print(f"\n--- Generating Creature {i+1}/{args.count} ---")
-        generate_creature(args.theme)
+    print(f"Target Workstation: {WORKSTATION_URL}")
+    print(f"Model: {MODEL_NAME}")
+    print(f"Interval: {interval} seconds ({interval / 60:.1f} minutes)")
+    print("==================================================")
+
+    if args.once:
+        for i in range(args.count):
+            print(f"\n--- Generating Creature {i+1}/{args.count} ---")
+            run_generation_cycle(theme=args.theme, push_git=push_git)
+        return
+
+    # Continuous autonomous interval loop matching agent.py
+    while True:
+        run_generation_cycle(theme=args.theme, push_git=push_git)
+        print(f"\nSleeping for {interval / 60:.1f} minutes before next creature generation cycle...\n")
+        time.sleep(interval)
 
 
 if __name__ == "__main__":
