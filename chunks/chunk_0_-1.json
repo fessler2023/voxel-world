@@ -393,5 +393,17 @@
   "chunk_coordinate": [
     0,
     -1
+  ],
+  "creatures": [
+    {
+      "id": "mud_pig_bf41",
+      "name": "Pink Truffle Pig",
+      "category": "wildlife",
+      "file": "assets/creatures/mud_pig_bf41.json",
+      "x": 1.89,
+      "z": 3.23,
+      "movementStyle": "walking",
+      "scale": 0.85
+    }
   ]
 }

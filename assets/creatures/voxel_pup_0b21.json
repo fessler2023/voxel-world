@@ -1,0 +1,323 @@
+{
+  "id": "voxel_pup_0b21",
+  "name": "Scruffy Voxel Pup",
+  "category": "wildlife",
+  "description": "A loyal blocky canine always eager to accompany Little Doug on explorations.",
+  "movementStyle": "walking",
+  "scale": 0.8,
+  "dimensions": {
+    "width": 3,
+    "height": 6,
+    "depth": 7
+  },
+  "voxels": [
+    {
+      "x": -1,
+      "y": 0,
+      "z": -1,
+      "color": "#a16207",
+      "part": "leg"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -1,
+      "color": "#a16207",
+      "part": "leg"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 2,
+      "color": "#a16207",
+      "part": "leg"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 2,
+      "color": "#a16207",
+      "part": "leg"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": -1,
+      "color": "#a16207",
+      "part": "leg"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -1,
+      "color": "#a16207",
+      "part": "leg"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 2,
+      "color": "#a16207",
+      "part": "leg"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 2,
+      "color": "#a16207",
+      "part": "leg"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": -1,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -1,
+      "color": "#fef08a",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -1,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#fef08a",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 1,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#fef08a",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 1,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 2,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 2,
+      "color": "#fef08a",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 2,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": -1,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -1,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": -1,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 0,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 0,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 0,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 1,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 1,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 1,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 2,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 2,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 2,
+      "color": "#a16207",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": -2,
+      "color": "#a16207",
+      "part": "head"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -2,
+      "color": "#a16207",
+      "part": "head"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": -2,
+      "color": "#a16207",
+      "part": "head"
+    },
+    {
+      "x": -1,
+      "y": 4,
+      "z": -2,
+      "color": "#a16207",
+      "part": "head"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": -2,
+      "color": "#a16207",
+      "part": "head"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": -2,
+      "color": "#a16207",
+      "part": "head"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -3,
+      "color": "#fef08a",
+      "part": "snout"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": -3,
+      "color": "#0f172a",
+      "part": "nose"
+    },
+    {
+      "x": -1,
+      "y": 5,
+      "z": -2,
+      "color": "#a16207",
+      "part": "ear"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": -2,
+      "color": "#a16207",
+      "part": "ear"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 3,
+      "color": "#a16207",
+      "part": "tail"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 3,
+      "color": "#fef08a",
+      "part": "tail"
+    }
+  ]
+}

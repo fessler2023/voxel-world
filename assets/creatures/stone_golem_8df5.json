@@ -1,0 +1,155 @@
+{
+  "id": "stone_golem_8df5",
+  "name": "Ancient Moss Golem",
+  "category": "monster",
+  "description": "A lumbering sentinel carved of ancient granite and awakened by mystical ores.",
+  "movementStyle": "walking",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 5,
+    "height": 6,
+    "depth": 2
+  },
+  "voxels": [
+    {
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "color": "#64748b",
+      "part": "leg"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 0,
+      "color": "#64748b",
+      "part": "leg"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "color": "#64748b",
+      "part": "leg"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "color": "#64748b",
+      "part": "leg"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#64748b",
+      "part": "torso"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#16a34a",
+      "part": "torso"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#64748b",
+      "part": "torso"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 0,
+      "color": "#64748b",
+      "part": "torso"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 0,
+      "color": "#16a34a",
+      "part": "torso"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 0,
+      "color": "#64748b",
+      "part": "torso"
+    },
+    {
+      "x": -1,
+      "y": 4,
+      "z": 0,
+      "color": "#64748b",
+      "part": "torso"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 0,
+      "color": "#16a34a",
+      "part": "torso"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": 0,
+      "color": "#64748b",
+      "part": "torso"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 1,
+      "color": "#38bdf8",
+      "part": "core"
+    },
+    {
+      "x": -2,
+      "y": 3,
+      "z": 0,
+      "color": "#64748b",
+      "part": "arm"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": 0,
+      "color": "#64748b",
+      "part": "arm"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": 0,
+      "color": "#64748b",
+      "part": "arm"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 0,
+      "color": "#64748b",
+      "part": "arm"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 0,
+      "color": "#64748b",
+      "part": "head"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 1,
+      "color": "#38bdf8",
+      "part": "eye"
+    }
+  ]
+}

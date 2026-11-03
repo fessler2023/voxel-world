@@ -1,6 +1,7 @@
 import os
 import json
 import time
+import random
 import requests
 
 # --- CONFIGURATION ---
@@ -8,6 +9,8 @@ WORKSTATION_URL = "http://192.168.12.253:11434/v1/chat/completions"
 MODEL_NAME = "qwen3:14b"
 STATE_FILE = "world_state.json"
 CHUNKS_DIR = "chunks"
+CREATURES_DIR = os.path.join("assets", "creatures")
+CREATURES_MANIFEST = os.path.join(CREATURES_DIR, "manifest.json")
 MAX_BOUNDARY = 8                     # Max grid radius
 INTERVAL_SECONDS = 3600              # 1 hour between expansion cycles
 
@@ -96,11 +99,104 @@ CHUNK_SCHEMA = {
                 "required": ["name", "x", "y", "points", "lore"],
                 "additionalProperties": False
             }
+        },
+        "creatures": {
+            "type": "array",
+            "description": "Autonomous voxel creatures inhabiting this chunk.",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "id": {"type": "string"},
+                    "name": {"type": "string"},
+                    "file": {"type": "string"},
+                    "x": {"type": "number"},
+                    "z": {"type": "number"},
+                    "movementStyle": {"type": "string"},
+                    "scale": {"type": "number"}
+                },
+                "required": ["id", "name", "file", "x", "z", "movementStyle"],
+                "additionalProperties": False
+            }
         }
     },
     "required": ["biome_type", "elevation_grid", "flora", "specimens"],
     "additionalProperties": False
 }
+
+
+def get_random_creature_spawn(biome_type=None, seed_coord=None):
+    """
+    Creature Pipeline Utility:
+    Reads assets/creatures/manifest.json (with fallback to directory scan if missing),
+    selects an appropriate creature, and returns safe spawn metadata for chunk injection.
+    """
+    creature_pool = []
+
+    # 1. Primary: Try reading from manifest.json
+    if os.path.exists(CREATURES_MANIFEST):
+        try:
+            with open(CREATURES_MANIFEST, "r", encoding="utf-8") as f:
+                manifest_data = json.load(f)
+                if isinstance(manifest_data.get("creatures"), list) and manifest_data["creatures"]:
+                    creature_pool = manifest_data["creatures"]
+        except Exception as e:
+            print(f"[Agent] Warning: Failed reading creature manifest: {e}")
+
+    # 2. Secondary Fallback: Scan directory if manifest is missing or empty
+    if not creature_pool and os.path.exists(CREATURES_DIR):
+        print("[Agent] Notice: Manifest unavailable, scanning assets/creatures directly...")
+        try:
+            for fname in os.listdir(CREATURES_DIR):
+                if fname.endswith(".json") and fname != "manifest.json":
+                    fpath = os.path.join(CREATURES_DIR, fname)
+                    try:
+                        with open(fpath, "r", encoding="utf-8") as f:
+                            cdata = json.load(f)
+                            if "id" in cdata and "voxels" in cdata:
+                                creature_pool.append({
+                                    "id": cdata["id"],
+                                    "name": cdata.get("name", "Voxel Creature"),
+                                    "category": cdata.get("category", "wildlife"),
+                                    "movementStyle": cdata.get("movementStyle", "walking"),
+                                    "scale": cdata.get("scale", 1.0),
+                                    "file": os.path.join("assets", "creatures", fname).replace("\\", "/")
+                                })
+                    except Exception:
+                        pass
+        except Exception as e:
+            print(f"[Agent] Warning scanning creatures folder: {e}")
+
+    if not creature_pool:
+        return None
+
+    # Biome affinity filter: try matching categories if possible
+    biome = (biome_type or "").lower()
+    candidate_pool = creature_pool
+    if any(k in biome for k in ["mountain", "cliff", "ridge", "volcanic"]):
+        filtered = [c for c in creature_pool if c.get("category") in ("monster", "boss")]
+        if filtered:
+            candidate_pool = filtered
+    elif any(k in biome for k in ["meadow", "river", "lake", "forest"]):
+        filtered = [c for c in creature_pool if c.get("category") == "wildlife"]
+        if filtered:
+            candidate_pool = filtered
+
+    chosen = random.choice(candidate_pool)
+
+    # Spawn within safe inner chunk bounds (-5.0 to 5.0)
+    spawn_x = round(random.uniform(-5.0, 5.0), 2)
+    spawn_z = round(random.uniform(-5.0, 5.0), 2)
+
+    return {
+        "id": chosen["id"],
+        "name": chosen.get("name", "Voxel Creature"),
+        "category": chosen.get("category", "wildlife"),
+        "file": chosen.get("file", f"assets/creatures/{chosen['id']}.json").replace("\\", "/"),
+        "x": spawn_x,
+        "z": spawn_z,
+        "movementStyle": chosen.get("movementStyle", "walking"),
+        "scale": float(chosen.get("scale", 1.0))
+    }
 
 
 def load_state():
@@ -241,6 +337,13 @@ def run_expansion_cycle():
 
     if chunk_data:
         chunk_data["chunk_coordinate"] = [x, y]
+        # Safely inject autonomous creature spawn into chunk payload
+        if "creatures" not in chunk_data or not chunk_data["creatures"]:
+            spawn = get_random_creature_spawn(chunk_data.get("biome_type"), target_coord)
+            chunk_data["creatures"] = [spawn] if spawn else []
+            if spawn:
+                print(f"[Pi Agent] Spawned autonomous creature: '{spawn['name']}' ({spawn['id']}) at [{spawn['x']}, {spawn['z']}]")
+
         filename = os.path.join(CHUNKS_DIR, f"chunk_{x}_{y}.json")
         with open(filename, "w") as f:
             json.dump(chunk_data, f, indent=2)

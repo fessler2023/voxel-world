@@ -242,6 +242,7 @@
         <div style="margin-bottom: 6px;"><span class="pulse"></span> <strong style="color: #4ade80;">Voxel Engine Active</strong></div>
         <div class="stat-row"><span>Active Chunks:</span><span id="diag-chunks" style="color: #38bdf8;">0</span></div>
         <div class="stat-row"><span>Active Specimens:</span><span id="diag-specs" style="color: #38bdf8;">0</span></div>
+        <div class="stat-row"><span>Creatures:</span><span id="diag-creatures" style="color: #4ade80;">0</span></div>
         <div class="stat-row"><span>Memory Heap:</span><span id="diag-mem" style="color: #22c55e;">--</span></div>
     </div>
 
@@ -287,6 +288,7 @@
                         activeChunks: activeChunkMeshes.size,
                         loadedChunksCache: loadedChunks.size,
                         activeSpecimens: activeSpecimens.length,
+                        activeCreatures: typeof activeCreatures !== 'undefined' ? activeCreatures.length : 0,
                         memoryHeapMB: performance.memory ? Math.round(performance.memory.usedJSHeapSize / 1048576) : "N/A",
                         playerCoords: [Math.floor((dougGroup.position.x + 8) / 16), Math.floor((dougGroup.position.z + 8) / 16)],
                         recentLogs: this.logs.slice(-20)
@@ -487,6 +489,8 @@
         const loadedChunks = new Map();
         const activeChunkMeshes = new Map();
         const activeSpecimens = [];
+        const activeCreatures = [];
+        const creatureCache = new Map();
         let score = 0;
         let currentChunk = [999, 999];
         let toastTimeout = null;
@@ -612,6 +616,99 @@
             }
         }
 
+        // --- AUTONOMOUS VOXEL CREATURE PIPELINE ---
+        async function loadCreatureDefinition(filePath) {
+            if (creatureCache.has(filePath)) {
+                return creatureCache.get(filePath);
+            }
+            try {
+                const response = await fetch(filePath);
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                creatureCache.set(filePath, data);
+                return data;
+            } catch (err) {
+                Diagnostics.record("WARN", "CreatureEngine", `Failed loading creature ${filePath}: ${err}`);
+                return null;
+            }
+        }
+
+        function buildCreatureMesh(creatureData) {
+            const group = new THREE.Group();
+            const scale = (creatureData.scale || 1.0) * 0.45;
+            const voxels = creatureData.voxels || [];
+
+            // Performance guard: Merge geometries by color hex to minimize draw calls
+            const geometriesByColor = {};
+            const unitBox = new THREE.BoxGeometry(1, 1, 1);
+
+            voxels.forEach(v => {
+                const colorHex = (v.color || "#888888").toLowerCase();
+                const geom = unitBox.clone();
+                // Base at y=0, center at x=0, z=0
+                geom.translate(v.x, v.y + 0.5, v.z);
+
+                if (!geometriesByColor[colorHex]) geometriesByColor[colorHex] = [];
+                geometriesByColor[colorHex].push(geom);
+            });
+
+            for (const colorHex in geometriesByColor) {
+                const mergedGeom = mergeGeometries(geometriesByColor[colorHex]);
+                if (mergedGeom) {
+                    const mat = new THREE.MeshStandardMaterial({
+                        color: new THREE.Color(colorHex),
+                        roughness: 0.65,
+                        metalness: 0.15
+                    });
+                    const mesh = new THREE.Mesh(mergedGeom, mat);
+                    mesh.castShadow = true;
+                    mesh.receiveShadow = true;
+                    group.add(mesh);
+                }
+            }
+
+            unitBox.dispose();
+            group.scale.set(scale, scale, scale);
+            return group;
+        }
+
+        async function spawnCreatureInChunk(cx, cz, spawnMeta, chunkGroup, chunkKey) {
+            if (!spawnMeta || !spawnMeta.file) return;
+            const creatureData = await loadCreatureDefinition(spawnMeta.file);
+            if (!creatureData) return;
+
+            // Ensure chunk wasn't culled during async fetch
+            if (!activeChunkMeshes.has(chunkKey)) return;
+
+            const creatureMesh = buildCreatureMesh(creatureData);
+            const worldX = (cx * 16) + spawnMeta.x;
+            const worldZ = (cz * 16) + spawnMeta.z;
+            const groundH = getTerrainHeight(worldX, worldZ);
+
+            const isHover = (creatureData.movementStyle === "hover");
+            const initialY = groundH + (isHover ? 1.4 : 0.0);
+
+            creatureMesh.position.set(spawnMeta.x, initialY, spawnMeta.z);
+            const initialRotY = Math.random() * Math.PI * 2;
+            creatureMesh.rotation.y = initialRotY;
+
+            creatureMesh.userData = {
+                id: creatureData.id,
+                name: creatureData.name,
+                category: creatureData.category,
+                movementStyle: creatureData.movementStyle || "walking",
+                chunkKey: chunkKey,
+                baseY: initialY,
+                baseRotY: initialRotY,
+                phase: Math.random() * Math.PI * 2,
+                greeted: false
+            };
+
+            chunkGroup.add(creatureMesh);
+            activeCreatures.push(creatureMesh);
+            Diagnostics.record("INFO", "CreatureEngine", `Spawned '${creatureData.name}' (${creatureData.id}) in chunk [${cx}, ${cz}]`);
+        }
+
         // --- MERGED TEXTURED VOXEL CHUNK RENDERER ---
         function renderChunk(cx, cz, chunkData) {
             const key = `${cx},${cz}`;
@@ -680,6 +777,13 @@
                 });
             }
 
+            // Autonomous Creature Spawning
+            if (chunkData.creatures && Array.isArray(chunkData.creatures)) {
+                chunkData.creatures.forEach(spawnMeta => {
+                    spawnCreatureInChunk(cx, cz, spawnMeta, chunkGroup, key);
+                });
+            }
+
             worldGroup.add(chunkGroup);
             activeChunkMeshes.set(key, chunkGroup);
             Diagnostics.record("INFO", "ChunkEngine", `Rendered textured chunk with flora [${cx}, ${cz}]`);
@@ -698,6 +802,14 @@
                     });
                     for (let i = activeSpecimens.length - 1; i >= 0; i--) {
                         if (activeSpecimens[i].userData.chunkKey === key) activeSpecimens.splice(i, 1);
+                    }
+                    for (let i = activeCreatures.length - 1; i >= 0; i--) {
+                        if (activeCreatures[i].userData.chunkKey === key) {
+                            activeCreatures[i].traverse((child) => {
+                                if (child.isMesh && child.geometry) child.geometry.dispose();
+                            });
+                            activeCreatures.splice(i, 1);
+                        }
                     }
                     activeChunkMeshes.delete(key);
                     loadedChunks.delete(key);
@@ -1128,8 +1240,37 @@
                 }
             });
 
+            // --- LIGHTWEIGHT CREATURE ANIMATION LOOP ---
+            const creatureTime = Date.now() * 0.003;
+            activeCreatures.forEach(c => {
+                const u = c.userData;
+                if (u.movementStyle === 'hover') {
+                    // Gentle aerial hover + subtle banking (for sky drakes and flying mobs)
+                    c.position.y = u.baseY + Math.sin(creatureTime * 1.5 + u.phase) * 0.35;
+                    c.rotation.z = Math.sin(creatureTime * 1.2 + u.phase) * 0.08;
+                    c.rotation.x = Math.cos(creatureTime * 1.2 + u.phase) * 0.05;
+                } else if (u.movementStyle === 'walking') {
+                    // Left-to-right shuffle & rhythmic bounce (for dogs, pigs, golems)
+                    c.position.y = u.baseY + Math.abs(Math.sin(creatureTime * 2.8 + u.phase)) * 0.12;
+                    c.rotation.z = Math.sin(creatureTime * 2.8 + u.phase) * 0.08;
+                    c.rotation.y = u.baseRotY + Math.sin(creatureTime * 0.8 + u.phase) * 0.35;
+                } else {
+                    c.position.y = u.baseY + Math.sin(creatureTime * 0.9 + u.phase) * 0.04;
+                }
+
+                // Greeting interaction if player approaches creature
+                const creatureWorldPos = new THREE.Vector3();
+                c.getWorldPosition(creatureWorldPos);
+                if (!u.greeted && dougGroup.position.distanceTo(creatureWorldPos) < 2.0) {
+                    u.greeted = true;
+                    showToast(`🐾 Encountered: ${u.name}`, `A curious ${u.category} roaming the ${document.getElementById('biome-name').innerText}.`);
+                }
+            });
+
             document.getElementById('diag-chunks').innerText = activeChunkMeshes.size;
             document.getElementById('diag-specs').innerText = activeSpecimens.length;
+            const diagCreatures = document.getElementById('diag-creatures');
+            if (diagCreatures) diagCreatures.innerText = activeCreatures.length;
             if (performance.memory) {
                 document.getElementById('diag-mem').innerText = Math.round(performance.memory.usedJSHeapSize / 1048576) + " MB";
             }

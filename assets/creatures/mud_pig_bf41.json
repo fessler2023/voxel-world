@@ -1,0 +1,246 @@
+{
+  "id": "mud_pig_bf41",
+  "name": "Pink Truffle Pig",
+  "category": "wildlife",
+  "description": "A cheerful pink pig searching the damp forest soil for delicious truffles.",
+  "movementStyle": "walking",
+  "scale": 0.85,
+  "dimensions": {
+    "width": 3,
+    "height": 5,
+    "depth": 6
+  },
+  "voxels": [
+    {
+      "x": -1,
+      "y": 0,
+      "z": -1,
+      "color": "#475569",
+      "part": "hoof"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -1,
+      "color": "#f472b6",
+      "part": "leg"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 1,
+      "color": "#475569",
+      "part": "hoof"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 1,
+      "color": "#f472b6",
+      "part": "leg"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": -1,
+      "color": "#475569",
+      "part": "hoof"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -1,
+      "color": "#f472b6",
+      "part": "leg"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 1,
+      "color": "#475569",
+      "part": "hoof"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "color": "#f472b6",
+      "part": "leg"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": -1,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -1,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -1,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 1,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 1,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": -1,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -1,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": -1,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 0,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 0,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 0,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 1,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 1,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 1,
+      "color": "#f472b6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": -2,
+      "color": "#f472b6",
+      "part": "head"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -2,
+      "color": "#f472b6",
+      "part": "head"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": -2,
+      "color": "#f472b6",
+      "part": "head"
+    },
+    {
+      "x": -1,
+      "y": 4,
+      "z": -2,
+      "color": "#0f172a",
+      "part": "eye"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": -2,
+      "color": "#0f172a",
+      "part": "eye"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -3,
+      "color": "#fbcfe8",
+      "part": "snout"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 2,
+      "color": "#f472b6",
+      "part": "tail"
+    }
+  ]
+}
