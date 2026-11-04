@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-04T15:46:41.937993+00:00",
-  "count": 10,
+  "updated_at": "2026-11-04T16:48:40.672221+00:00",
+  "count": 11,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -152,6 +152,21 @@
       },
       "file": "assets/creatures/moss_warden_cf5a.json",
       "created_at": "2026-11-04T15:46:41.937870+00:00"
+    },
+    {
+      "id": "root_horror_3706",
+      "name": "Root Horror",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "slithering",
+      "scale": 1.0,
+      "voxel_count": 39,
+      "dimensions": {
+        "width": 5,
+        "height": 7,
+        "depth": 7
+      },
+      "file": "assets/creatures/root_horror_3706.json",
+      "created_at": "2026-11-04T16:48:40.672130+00:00"
     }
   ]
 }
