@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-04T16:48:40.672221+00:00",
-  "count": 11,
+  "updated_at": "2026-11-04T17:55:26.000922+00:00",
+  "count": 12,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -167,6 +167,21 @@
       },
       "file": "assets/creatures/root_horror_3706.json",
       "created_at": "2026-11-04T16:48:40.672130+00:00"
+    },
+    {
+      "id": "lunar_1882",
+      "name": "Lunar Grove Sentinel",
+      "category": "legendary outdoor boss",
+      "movementStyle": "lumbering",
+      "scale": 1.0,
+      "voxel_count": 56,
+      "dimensions": {
+        "width": 5,
+        "height": 6,
+        "depth": 5
+      },
+      "file": "assets/creatures/lunar_1882.json",
+      "created_at": "2026-11-04T17:55:26.000852+00:00"
     }
   ]
 }
