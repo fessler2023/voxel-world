@@ -1,0 +1,316 @@
+{
+  "id": "root_horror_cd3a",
+  "name": "Root Horror",
+  "category": "mysterious wilderness monster",
+  "description": "A writhing mass of tangled roots and glowing fungi that lurks in ancient forests, feeding on decaying matter and leaving trails of bioluminescent spores.",
+  "movementStyle": "amorphous undulating",
+  "scale": 1.5,
+  "dimensions": {
+    "width": 5,
+    "height": 5,
+    "depth": 5
+  },
+  "voxels": [
+    {
+      "x": -2,
+      "y": 4,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 3,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 3,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": -2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": -2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": -2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": -1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": -1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": 1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": -1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": -1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": -1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": -1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "color": "#6b7280",
+      "part": "body"
+    }
+  ]
+}
