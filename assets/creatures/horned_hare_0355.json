@@ -1,0 +1,351 @@
+{
+  "id": "horned_hare_0355",
+  "name": "Alpine Horned Hare",
+  "category": "small_friendly_wildlife",
+  "description": "A timid herbivore with spiraled horns and a fluffy coat, found in high-altitude meadows.",
+  "movementStyle": "bounding",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 5,
+    "height": 6,
+    "depth": 7
+  },
+  "voxels": [
+    {
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 0,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": -1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -2,
+      "color": "#4caf50",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -1,
+      "color": "#4caf50",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 0,
+      "color": "#4caf50",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 1,
+      "color": "#4caf50",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 2,
+      "color": "#4caf50",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 0,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 0,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -2,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -2,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 2,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 2,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 4,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": -2,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 2,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -2,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 2,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -2,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 2,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -3,
+      "color": "#4caf50",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 3,
+      "color": "#4caf50",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": -1,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 1,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": -1,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 1,
+      "color": "#8b5e3e",
+      "part": "body"
+    }
+  ]
+}
