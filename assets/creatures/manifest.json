@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-04T22:10:38.512309+00:00",
-  "count": 16,
+  "updated_at": "2026-11-04T23:13:34.350546+00:00",
+  "count": 17,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -242,6 +242,21 @@
       },
       "file": "assets/creatures/root_horror_cd3a.json",
       "created_at": "2026-11-04T22:10:38.512215+00:00"
+    },
+    {
+      "id": "pine_fox_001_b1e1",
+      "name": "Pine Fox",
+      "category": "small friendly wildlife",
+      "movementStyle": "cautious, quick paws",
+      "scale": 1.0,
+      "voxel_count": 43,
+      "dimensions": {
+        "width": 5,
+        "height": 6,
+        "depth": 4
+      },
+      "file": "assets/creatures/pine_fox_001_b1e1.json",
+      "created_at": "2026-11-04T23:13:34.350477+00:00"
     }
   ]
 }
