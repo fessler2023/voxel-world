@@ -1,0 +1,288 @@
+{
+  "id": "elder_72fa",
+  "name": "Elder Stone Sentinel",
+  "category": "legendary outdoor boss",
+  "description": "A towering stone guardian covered in luminous moss, its massive form radiates ancient power. Its cracked basalt body is encrusted with glowing emerald moss, and its eyes blaze with celestial light.",
+  "movementStyle": "slow, deliberate ground tremors",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 5,
+    "height": 3,
+    "depth": 5
+  },
+  "voxels": [
+    {
+      "x": -2,
+      "y": 0,
+      "z": -2,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 0,
+      "z": -1,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 0,
+      "z": 0,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 0,
+      "z": 1,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 0,
+      "z": 2,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": -2,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": -1,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 1,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 2,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": -2,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": -1,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 1,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 2,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": -2,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": -1,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 1,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 2,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": -2,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": -1,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 0,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 1,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 2,
+      "color": "#4f46e5",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -1,
+      "color": "#9ca3af",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 0,
+      "color": "#9ca3af",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 1,
+      "color": "#9ca3af",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -1,
+      "color": "#9ca3af",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "color": "#9ca3af",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "color": "#9ca3af",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -1,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#f59e0b",
+      "part": "body"
+    }
+  ]
+}
