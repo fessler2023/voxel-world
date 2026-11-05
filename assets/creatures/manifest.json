@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-05T11:59:47.934208+00:00",
-  "count": 29,
+  "updated_at": "2026-11-05T13:04:58.525657+00:00",
+  "count": 30,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -437,6 +437,21 @@
       },
       "file": "assets/creatures/elder_5c69.json",
       "created_at": "2026-11-05T11:59:47.934140+00:00"
+    },
+    {
+      "id": "meadow_pig_0d0e",
+      "name": "Meadow Puff",
+      "category": "small friendly wildlife",
+      "movementStyle": "galloping",
+      "scale": 1.0,
+      "voxel_count": 24,
+      "dimensions": {
+        "width": 3,
+        "height": 2,
+        "depth": 5
+      },
+      "file": "assets/creatures/meadow_pig_0d0e.json",
+      "created_at": "2026-11-05T13:04:58.525588+00:00"
     }
   ]
 }
