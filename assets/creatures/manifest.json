@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-05T20:38:10.437128+00:00",
-  "count": 37,
+  "updated_at": "2026-11-05T21:44:56.726962+00:00",
+  "count": 38,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -557,6 +557,21 @@
       },
       "file": "assets/creatures/elder_694f.json",
       "created_at": "2026-11-05T20:38:10.437060+00:00"
+    },
+    {
+      "id": "celestial_d242",
+      "name": "Celestial Grove Sentinel",
+      "category": "legendary outdoor boss",
+      "movementStyle": "slow, deliberate stomping with aura pulses",
+      "scale": 1.0,
+      "voxel_count": 35,
+      "dimensions": {
+        "width": 5,
+        "height": 7,
+        "depth": 3
+      },
+      "file": "assets/creatures/celestial_d242.json",
+      "created_at": "2026-11-05T21:44:56.726892+00:00"
     }
   ]
 }
