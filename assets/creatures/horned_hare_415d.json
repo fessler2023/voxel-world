@@ -1,0 +1,309 @@
+{
+  "id": "horned_hare_415d",
+  "name": "Alpine Horned Hare",
+  "category": "small_friendly_wildlife",
+  "description": "A fluffy, horned hare with glowing amber eyes, native to high mountain meadows. Its spiral horns help it sense predators in the snow.",
+  "movementStyle": "graceful_hops",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 5,
+    "height": 6,
+    "depth": 5
+  },
+  "voxels": [
+    {
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -1,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 1,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -1,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -1,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": -2,
+      "color": "#a0522d",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": -1,
+      "color": "#a0522d",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -2,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -2,
+      "color": "#a0522d",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -1,
+      "color": "#a0522d",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 0,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": -1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 0,
+      "color": "#ffd700",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": -1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 4,
+      "z": -1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": -1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": -1,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 5,
+      "z": 0,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 0,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": 0,
+      "color": "#d2b48c",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 2,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 2,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 2,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 2,
+      "color": "#8b5e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 2,
+      "color": "#8b5e3e",
+      "part": "body"
+    }
+  ]
+}
