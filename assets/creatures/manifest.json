@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-05T19:28:45.151528+00:00",
-  "count": 36,
+  "updated_at": "2026-11-05T20:38:10.437128+00:00",
+  "count": 37,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -542,6 +542,21 @@
       },
       "file": "assets/creatures/celestial_3248.json",
       "created_at": "2026-11-05T19:28:45.151486+00:00"
+    },
+    {
+      "id": "elder_694f",
+      "name": "Elder Woodguard",
+      "category": "legendary outdoor boss",
+      "movementStyle": "steady, deliberate stomping",
+      "scale": 1.0,
+      "voxel_count": 26,
+      "dimensions": {
+        "width": 3,
+        "height": 6,
+        "depth": 3
+      },
+      "file": "assets/creatures/elder_694f.json",
+      "created_at": "2026-11-05T20:38:10.437060+00:00"
     }
   ]
 }
