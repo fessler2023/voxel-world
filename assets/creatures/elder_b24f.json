@@ -1,0 +1,323 @@
+{
+  "id": "elder_b24f",
+  "name": "Elder Stone Stag",
+  "category": "legendary outdoor guardian",
+  "description": "A primordial stone guardian of ancient forests, its body fused with living moss and antlered with crystalline growths.",
+  "movementStyle": "static guardian with slow ground tremors",
+  "scale": 1.5,
+  "dimensions": {
+    "width": 5,
+    "height": 11,
+    "depth": 3
+  },
+  "voxels": [
+    {
+      "x": -2,
+      "y": 0,
+      "z": -1,
+      "color": "#2d2d2d",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": -1,
+      "color": "#2d2d2d",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -1,
+      "color": "#2d2d2d",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -1,
+      "color": "#2d2d2d",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 3,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 4,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 5,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 5,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 1,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 6,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 6,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "z": 1,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 7,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 8,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 8,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 8,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 8,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 8,
+      "z": 1,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 9,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 9,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 9,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 10,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 10,
+      "z": -1,
+      "color": "#3f3f3f",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 10,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 10,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 10,
+      "z": 1,
+      "color": "#f59e0b",
+      "part": "body"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-05T07:47:21.053548+00:00",
-  "count": 25,
+  "updated_at": "2026-11-05T08:49:37.636674+00:00",
+  "count": 26,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -377,6 +377,21 @@
       },
       "file": "assets/creatures/pine_fox_001_49a5.json",
       "created_at": "2026-11-05T07:47:21.053478+00:00"
+    },
+    {
+      "id": "elder_b24f",
+      "name": "Elder Stone Stag",
+      "category": "legendary outdoor guardian",
+      "movementStyle": "static guardian with slow ground tremors",
+      "scale": 1.5,
+      "voxel_count": 44,
+      "dimensions": {
+        "width": 5,
+        "height": 11,
+        "depth": 3
+      },
+      "file": "assets/creatures/elder_b24f.json",
+      "created_at": "2026-11-05T08:49:37.636604+00:00"
     }
   ]
 }
