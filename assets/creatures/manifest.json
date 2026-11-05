@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-05T10:53:46.462482+00:00",
-  "count": 28,
+  "updated_at": "2026-11-05T11:59:47.934208+00:00",
+  "count": 29,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -422,6 +422,21 @@
       },
       "file": "assets/creatures/elder_593f.json",
       "created_at": "2026-11-05T10:53:46.462414+00:00"
+    },
+    {
+      "id": "elder_5c69",
+      "name": "Elder Grove Warden",
+      "category": "legendary outdoor boss",
+      "movementStyle": "static guardian with slow root-based animations",
+      "scale": 1.0,
+      "voxel_count": 36,
+      "dimensions": {
+        "width": 5,
+        "height": 6,
+        "depth": 5
+      },
+      "file": "assets/creatures/elder_5c69.json",
+      "created_at": "2026-11-05T11:59:47.934140+00:00"
     }
   ]
 }
