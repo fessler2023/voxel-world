@@ -1,0 +1,316 @@
+{
+  "id": "luminous_35df",
+  "name": "Luminous Moss Golem",
+  "category": "mysterious_wilderness_monster",
+  "description": "A towering moss-covered stone creature with glowing bioluminescent veins, lurking in ancient forests. Its body pulses with a faint blue light, making it nearly invisible among the undergrowth.",
+  "movementStyle": "slow_undulating",
+  "scale": 1.5,
+  "dimensions": {
+    "width": 5,
+    "height": 7,
+    "depth": 4
+  },
+  "voxels": [
+    {
+      "x": -2,
+      "y": 0,
+      "z": 2,
+      "color": "#4ade80",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 2,
+      "color": "#4ade80",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 2,
+      "color": "#4ade80",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 2,
+      "color": "#4ade80",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 2,
+      "color": "#4ade80",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 2,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 2,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 2,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 2,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 2,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 2,
+      "color": "#14b8a6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 2,
+      "color": "#0d9979",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 2,
+      "color": "#14b8a6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 1,
+      "color": "#14b8a6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#0d9979",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 1,
+      "color": "#14b8a6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 2,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 2,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 1,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 0,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 0,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 0,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 4,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 4,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 1,
+      "color": "#059669",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 5,
+      "z": 0,
+      "color": "#14b8a6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 5,
+      "z": 0,
+      "color": "#14b8a6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 0,
+      "color": "#0d9979",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": 0,
+      "color": "#14b8a6",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "z": 0,
+      "color": "#14b8a6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 5,
+      "z": 1,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 1,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": 1,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 6,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 6,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "z": -1,
+      "color": "#059669",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 6,
+      "z": 0,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "z": 0,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "z": 0,
+      "color": "#3b82f6",
+      "part": "body"
+    }
+  ]
+}
