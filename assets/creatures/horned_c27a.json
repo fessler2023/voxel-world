@@ -1,0 +1,253 @@
+{
+  "id": "horned_c27a",
+  "name": "Horned Hare",
+  "category": "small friendly wildlife",
+  "description": "A fluffy, curious creature with a pair of glowing horns and a bushy tail, found in meadows and forests. Its bright eyes and gentle demeanor make it a beloved sight for travelers.",
+  "movementStyle": "bouncy hops with occasional pauses to nibble on grass",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 5,
+    "height": 4,
+    "depth": 6
+  },
+  "voxels": [
+    {
+      "x": -1,
+      "y": 0,
+      "z": 1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": -1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": -1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 0,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 0,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 0,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": -1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": -1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": -1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 0,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 0,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 0,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 2,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 2,
+      "color": "#ffffff",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 2,
+      "color": "#ffffff",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 2,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 3,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -2,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -2,
+      "color": "#22c55e",
+      "part": "body"
+    }
+  ]
+}
