@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-05T00:22:35.312852+00:00",
-  "count": 18,
+  "updated_at": "2026-11-05T01:26:55.058923+00:00",
+  "count": 19,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -272,6 +272,21 @@
       },
       "file": "assets/creatures/horned_hare_3921.json",
       "created_at": "2026-11-05T00:22:35.312810+00:00"
+    },
+    {
+      "id": "elder_2966",
+      "name": "Elder Forest Stag",
+      "category": "legendary outdoor boss",
+      "movementStyle": "graceful bounding",
+      "scale": 1.0,
+      "voxel_count": 37,
+      "dimensions": {
+        "width": 5,
+        "height": 6,
+        "depth": 3
+      },
+      "file": "assets/creatures/elder_2966.json",
+      "created_at": "2026-11-05T01:26:55.058856+00:00"
     }
   ]
 }
