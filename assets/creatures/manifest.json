@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-05T09:51:42.390487+00:00",
-  "count": 27,
+  "updated_at": "2026-11-05T10:53:46.462482+00:00",
+  "count": 28,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -407,6 +407,21 @@
       },
       "file": "assets/creatures/root_horror_0a15.json",
       "created_at": "2026-11-05T09:51:42.390420+00:00"
+    },
+    {
+      "id": "elder_593f",
+      "name": "Elder Oak Guardian",
+      "category": "legendary outdoor boss",
+      "movementStyle": "slow, deliberate stomps with tremors radiating from its feet",
+      "scale": 1.0,
+      "voxel_count": 38,
+      "dimensions": {
+        "width": 5,
+        "height": 6,
+        "depth": 6
+      },
+      "file": "assets/creatures/elder_593f.json",
+      "created_at": "2026-11-05T10:53:46.462414+00:00"
     }
   ]
 }
