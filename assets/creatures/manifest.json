@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-06T09:39:45.418136+00:00",
-  "count": 49,
+  "updated_at": "2026-11-06T10:42:01.389580+00:00",
+  "count": 50,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -737,6 +737,21 @@
       },
       "file": "assets/creatures/horned_hare_eb47.json",
       "created_at": "2026-11-06T09:39:45.418067+00:00"
+    },
+    {
+      "id": "root_horror_f0bd",
+      "name": "Mossbound Wight",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "roots pulse slowly, body sways with wind",
+      "scale": 1.0,
+      "voxel_count": 37,
+      "dimensions": {
+        "width": 5,
+        "height": 4,
+        "depth": 5
+      },
+      "file": "assets/creatures/root_horror_f0bd.json",
+      "created_at": "2026-11-06T10:42:01.389510+00:00"
     }
   ]
 }
