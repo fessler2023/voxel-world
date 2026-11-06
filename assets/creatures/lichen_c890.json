@@ -1,0 +1,260 @@
+{
+  "id": "lichen_c890",
+  "name": "Lichen Spider",
+  "category": "mysterious_wilderness_monster",
+  "description": "A bioluminescent arachnid woven from ancient lichen and petrified wood, its legs dripping with moss and glowing faintly in the dark.",
+  "movementStyle": "slow_undulating",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 5,
+    "height": 3,
+    "depth": 5
+  },
+  "voxels": [
+    {
+      "x": -2,
+      "y": 1,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 0,
+      "z": 1,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": -1,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -1,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 0,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -1,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 0,
+      "z": -1,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 1,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -1,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 1,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -1,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 2,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": -2,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 0,
+      "z": -2,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 2,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 2,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -2,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 2,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -2,
+      "color": "#8b5cf6",
+      "part": "body"
+    }
+  ]
+}
