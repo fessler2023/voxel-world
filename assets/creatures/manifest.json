@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-06T19:29:30.182138+00:00",
-  "count": 58,
+  "updated_at": "2026-11-06T20:40:47.890498+00:00",
+  "count": 59,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -872,6 +872,21 @@
       },
       "file": "assets/creatures/meadow_8665.json",
       "created_at": "2026-11-06T19:29:30.182094+00:00"
+    },
+    {
+      "id": "elder_9f9f",
+      "name": "Elder Stone Sentinel",
+      "category": "legendary outdoor boss",
+      "movementStyle": "static guardian",
+      "scale": 1.0,
+      "voxel_count": 75,
+      "dimensions": {
+        "width": 7,
+        "height": 8,
+        "depth": 5
+      },
+      "file": "assets/creatures/elder_9f9f.json",
+      "created_at": "2026-11-06T20:40:47.890454+00:00"
     }
   ]
 }

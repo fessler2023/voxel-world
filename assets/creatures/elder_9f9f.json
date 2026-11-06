@@ -1,0 +1,540 @@
+{
+  "id": "elder_9f9f",
+  "name": "Elder Stone Sentinel",
+  "category": "legendary outdoor boss",
+  "description": "A towering stone guardian with glowing eyes and moss-covered body, standing vigilant over the ancient forest",
+  "movementStyle": "static guardian",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 7,
+    "height": 8,
+    "depth": 5
+  },
+  "voxels": [
+    {
+      "x": -2,
+      "y": 0,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 0,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 0,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 3,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 4,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 4,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 4,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -3,
+      "y": 3,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -3,
+      "y": 4,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -3,
+      "y": 5,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 5,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 5,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 5,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 6,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 6,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 6,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "z": -1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "z": 1,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 7,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "z": 0,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "z": -2,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "z": 2,
+      "color": "#2d3742",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 7,
+      "z": 0,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "z": 0,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": -3,
+      "y": 3,
+      "z": 1,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": -3,
+      "y": 4,
+      "z": 1,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": -3,
+      "y": 5,
+      "z": 1,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "z": 1,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "z": 1,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "z": 1,
+      "color": "#f59e0b",
+      "part": "body"
+    }
+  ]
+}
