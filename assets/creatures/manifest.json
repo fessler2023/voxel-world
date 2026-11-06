@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-06T11:45:09.164566+00:00",
-  "count": 51,
+  "updated_at": "2026-11-06T12:50:19.993673+00:00",
+  "count": 52,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -767,6 +767,21 @@
       },
       "file": "assets/creatures/horned_hare_0323.json",
       "created_at": "2026-11-06T11:45:09.164498+00:00"
+    },
+    {
+      "id": "lichen_38c7",
+      "name": "Lichen Spider",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "slow, deliberate crawling",
+      "scale": 1.0,
+      "voxel_count": 30,
+      "dimensions": {
+        "width": 5,
+        "height": 4,
+        "depth": 5
+      },
+      "file": "assets/creatures/lichen_38c7.json",
+      "created_at": "2026-11-06T12:50:19.993605+00:00"
     }
   ]
 }

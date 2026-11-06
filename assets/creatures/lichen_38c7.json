@@ -1,0 +1,225 @@
+{
+  "id": "lichen_38c7",
+  "name": "Lichen Spider",
+  "category": "mysterious wilderness monster",
+  "description": "A gelatinous, moss-covered arachnid that lurks in ancient forests, its bioluminescent lichen patterns shifting to confuse prey.",
+  "movementStyle": "slow, deliberate crawling",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 5,
+    "height": 4,
+    "depth": 5
+  },
+  "voxels": [
+    {
+      "x": -1,
+      "y": 2,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": -1,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 0,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 1,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -1,
+      "color": "#16a341",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 0,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 1,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": -1,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 0,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 1,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 0,
+      "z": 0,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 0,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": 0,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 0,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 0,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 0,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": -2,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -2,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -2,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 2,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 2,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 2,
+      "color": "#f59e0b",
+      "part": "body"
+    }
+  ]
+}
