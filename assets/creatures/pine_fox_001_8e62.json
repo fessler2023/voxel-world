@@ -1,0 +1,218 @@
+{
+  "id": "pine_fox_001_8e62",
+  "name": "Pine Fox",
+  "category": "small friendly wildlife",
+  "description": "A fluffy red fox with a white-tipped tail, found in pine forests. Alert and curious, it has a playful demeanor.",
+  "movementStyle": "fast and agile, with quick directional changes.",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 5,
+    "height": 3,
+    "depth": 3
+  },
+  "voxels": [
+    {
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 1,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": -1,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 0,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -1,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 0,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 0,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 0,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 1,
+      "color": "#b91c1c",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": -1,
+      "color": "#b91c1c",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 0,
+      "z": 0,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 0,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": 0,
+      "color": "#e53e3e",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 1,
+      "color": "#b91c1c",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": -1,
+      "color": "#b91c1c",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 1,
+      "color": "#b91c1c",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": -1,
+      "color": "#b91c1c",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": 1,
+      "color": "#b91c1c",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": -1,
+      "color": "#b91c1c",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 1,
+      "color": "#d97706",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": -1,
+      "color": "#d97706",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 1,
+      "color": "#d97706",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": -1,
+      "color": "#d97706",
+      "part": "body"
+    }
+  ]
+}
