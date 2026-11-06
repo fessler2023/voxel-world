@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-06T01:02:35.555833+00:00",
-  "count": 41,
+  "updated_at": "2026-11-06T02:06:06.314343+00:00",
+  "count": 42,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -617,6 +617,21 @@
       },
       "file": "assets/creatures/root_horror_b66f.json",
       "created_at": "2026-11-06T01:02:35.555763+00:00"
+    },
+    {
+      "id": "horned_hare_bd2c",
+      "name": "Horned Hare",
+      "category": "small friendly wildlife",
+      "movementStyle": "bouncy hops",
+      "scale": 1.0,
+      "voxel_count": 39,
+      "dimensions": {
+        "width": 3,
+        "height": 6,
+        "depth": 4
+      },
+      "file": "assets/creatures/horned_hare_bd2c.json",
+      "created_at": "2026-11-06T02:06:06.314273+00:00"
     }
   ]
 }
