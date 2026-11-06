@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-06T17:10:12.622285+00:00",
-  "count": 56,
+  "updated_at": "2026-11-06T18:19:53.250891+00:00",
+  "count": 57,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -842,6 +842,21 @@
       },
       "file": "assets/creatures/elder_6d45.json",
       "created_at": "2026-11-06T17:10:12.622215+00:00"
+    },
+    {
+      "id": "root_horror_4192",
+      "name": "Mossbound Warden",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "slow, deliberate shuffling",
+      "scale": 1.0,
+      "voxel_count": 46,
+      "dimensions": {
+        "width": 5,
+        "height": 6,
+        "depth": 5
+      },
+      "file": "assets/creatures/root_horror_4192.json",
+      "created_at": "2026-11-06T18:19:53.250849+00:00"
     }
   ]
 }
