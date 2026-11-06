@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-06T06:28:56.172395+00:00",
-  "count": 46,
+  "updated_at": "2026-11-06T07:30:55.486150+00:00",
+  "count": 47,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -692,6 +692,21 @@
       },
       "file": "assets/creatures/horned_03c5.json",
       "created_at": "2026-11-06T06:28:56.172326+00:00"
+    },
+    {
+      "id": "horned_hare_d2c4",
+      "name": "Horned Hare",
+      "category": "small_wildlife",
+      "movementStyle": "graceful leaps",
+      "scale": 1.0,
+      "voxel_count": 40,
+      "dimensions": {
+        "width": 5,
+        "height": 6,
+        "depth": 3
+      },
+      "file": "assets/creatures/horned_hare_d2c4.json",
+      "created_at": "2026-11-06T07:30:55.486079+00:00"
     }
   ]
 }
