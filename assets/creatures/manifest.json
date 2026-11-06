@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-06T02:06:06.314343+00:00",
-  "count": 42,
+  "updated_at": "2026-11-06T03:14:44.694465+00:00",
+  "count": 43,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -632,6 +632,21 @@
       },
       "file": "assets/creatures/horned_hare_bd2c.json",
       "created_at": "2026-11-06T02:06:06.314273+00:00"
+    },
+    {
+      "id": "1_c39d",
+      "name": "Meadow Pig",
+      "category": "small friendly wildlife",
+      "movementStyle": "grazing",
+      "scale": 1.0,
+      "voxel_count": 32,
+      "dimensions": {
+        "width": 5,
+        "height": 4,
+        "depth": 3
+      },
+      "file": "assets/creatures/1_c39d.json",
+      "created_at": "2026-11-06T03:14:44.694394+00:00"
     }
   ]
 }
