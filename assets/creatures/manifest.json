@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-07T17:28:51.184005+00:00",
-  "count": 78,
+  "updated_at": "2026-11-07T18:34:12.532090+00:00",
+  "count": 79,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1172,6 +1172,21 @@
       },
       "file": "assets/creatures/pine_fox_057d.json",
       "created_at": "2026-11-07T17:28:51.183938+00:00"
+    },
+    {
+      "id": "meadow_0b8a",
+      "name": "Meadow Muffin",
+      "category": "small_friendly_wildlife",
+      "movementStyle": "giggling_hop",
+      "scale": 1.0,
+      "voxel_count": 28,
+      "dimensions": {
+        "width": 3,
+        "height": 4,
+        "depth": 3
+      },
+      "file": "assets/creatures/meadow_0b8a.json",
+      "created_at": "2026-11-07T18:34:12.532020+00:00"
     }
   ]
 }
