@@ -1,15 +1,17 @@
 import os
 import json
 import time
+import math
 import random
 import requests
 
 # --- CONFIGURATION ---
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 WORKSTATION_URL = "http://192.168.12.253:11434/v1/chat/completions"
 MODEL_NAME = "qwen3:14b"
-STATE_FILE = "world_state.json"
-CHUNKS_DIR = "chunks"
-CREATURES_DIR = os.path.join("assets", "creatures")
+STATE_FILE = os.path.join(BASE_DIR, "world_state.json")
+CHUNKS_DIR = os.path.join(BASE_DIR, "chunks")
+CREATURES_DIR = os.path.join(BASE_DIR, "assets", "creatures")
 CREATURES_MANIFEST = os.path.join(CREATURES_DIR, "manifest.json")
 MAX_BOUNDARY = 8                     # Max grid radius
 INTERVAL_SECONDS = 3600              # 1 hour between expansion cycles
@@ -124,15 +126,16 @@ CHUNK_SCHEMA = {
 }
 
 
-def get_random_creature_spawn(biome_type=None, seed_coord=None):
+def get_random_creature_spawn(biome_type=None, seed_coord=None, existing_entities=None):
     """
     Creature Pipeline Utility:
     Reads assets/creatures/manifest.json (with fallback to directory scan if missing),
-    selects an appropriate creature, and returns safe spawn metadata for chunk injection.
+    randomly selects from ALL available creature types in the manifest,
+    and returns safe chunk-local spawn coordinates with entity cap and anti-stacking checks.
     """
     creature_pool = []
 
-    # 1. Primary: Try reading from manifest.json
+    # 1. Primary: Try reading full manifest.json
     if os.path.exists(CREATURES_MANIFEST):
         try:
             with open(CREATURES_MANIFEST, "r", encoding="utf-8") as f:
@@ -169,23 +172,48 @@ def get_random_creature_spawn(biome_type=None, seed_coord=None):
     if not creature_pool:
         return None
 
-    # Biome affinity filter: try matching categories if possible
-    biome = (biome_type or "").lower()
-    candidate_pool = creature_pool
-    if any(k in biome for k in ["mountain", "cliff", "ridge", "volcanic"]):
-        filtered = [c for c in creature_pool if c.get("category") in ("monster", "boss")]
-        if filtered:
-            candidate_pool = filtered
-    elif any(k in biome for k in ["meadow", "river", "lake", "forest"]):
-        filtered = [c for c in creature_pool if c.get("category") == "wildlife"]
-        if filtered:
-            candidate_pool = filtered
+    # Manifest Randomization: Pick randomly from ALL creature types across the entire manifest
+    chosen = random.choice(creature_pool)
 
-    chosen = random.choice(candidate_pool)
+    # Chunk-Based Distribution: Randomize x/z coordinates within chunk's local grid boundaries [-5.5, 5.5]
+    # Collect existing entity coordinates to prevent stacking
+    existing_coords = []
+    if existing_entities:
+        for ent in existing_entities:
+            if isinstance(ent, dict):
+                ex = ent.get("x")
+                ez = ent.get("z", ent.get("y"))  # specimens use 'y' as 2D ground depth
+                if ex is not None and ez is not None:
+                    existing_coords.append((float(ex), float(ez)))
 
-    # Spawn within safe inner chunk bounds (-5.0 to 5.0)
-    spawn_x = round(random.uniform(-5.0, 5.0), 2)
-    spawn_z = round(random.uniform(-5.0, 5.0), 2)
+    # Anti-Stacking & Entity Cap Check: Ensure creature does not stack on (0,0) or existing entities
+    spawn_x = 0.0
+    spawn_z = 0.0
+    MIN_SEPARATION = 2.5
+    for _ in range(12):
+        cand_x = round(random.uniform(-5.5, 5.5), 2)
+        cand_z = round(random.uniform(-5.5, 5.5), 2)
+
+        # Never place dead-center on chunk origin / basecamp (0,0)
+        if abs(cand_x) < 1.5 and abs(cand_z) < 1.5:
+            cand_x = round(random.choice([-1, 1]) * random.uniform(2.0, 5.5), 2)
+            cand_z = round(random.choice([-1, 1]) * random.uniform(2.0, 5.5), 2)
+
+        # Check collision against existing entities in this chunk
+        collides = False
+        for ex, ez in existing_coords:
+            if math.hypot(cand_x - ex, cand_z - ez) < MIN_SEPARATION:
+                collides = True
+                break
+
+        if not collides:
+            spawn_x = cand_x
+            spawn_z = cand_z
+            break
+    else:
+        # Fallback separated coordinate
+        spawn_x = round(random.choice([-3.5, 3.5]) + random.uniform(-0.5, 0.5), 2)
+        spawn_z = round(random.choice([-3.5, 3.5]) + random.uniform(-0.5, 0.5), 2)
 
     return {
         "id": chosen["id"],
@@ -337,12 +365,20 @@ def run_expansion_cycle():
 
     if chunk_data:
         chunk_data["chunk_coordinate"] = [x, y]
-        # Safely inject autonomous creature spawn into chunk payload
+        # Chunk-Based Distribution: Roll for random chance to spawn a creature in this chunk
+        # Never spawn creatures directly at basecamp chunk [0, 0]
+        CREATURE_SPAWN_CHANCE = 0.50 if not (x == 0 and y == 0) else 0.0
         if "creatures" not in chunk_data or not chunk_data["creatures"]:
-            spawn = get_random_creature_spawn(chunk_data.get("biome_type"), target_coord)
-            chunk_data["creatures"] = [spawn] if spawn else []
-            if spawn:
-                print(f"[Pi Agent] Spawned autonomous creature: '{spawn['name']}' ({spawn['id']}) at [{spawn['x']}, {spawn['z']}]")
+            if (x == 0 and y == 0):
+                chunk_data["creatures"] = []
+            elif random.random() < CREATURE_SPAWN_CHANCE:
+                existing_items = (chunk_data.get("specimens", []) or []) + (chunk_data.get("flora", []) or [])
+                spawn = get_random_creature_spawn(chunk_data.get("biome_type"), target_coord, existing_items)
+                chunk_data["creatures"] = [spawn] if spawn else []
+                if spawn:
+                    print(f"[Pi Agent] Spawned autonomous creature: '{spawn['name']}' ({spawn['id']}) in chunk [{x}, {y}] at [{spawn['x']}, {spawn['z']}]")
+            else:
+                chunk_data["creatures"] = []
 
         filename = os.path.join(CHUNKS_DIR, f"chunk_{x}_{y}.json")
         with open(filename, "w") as f:

@@ -491,9 +491,108 @@
         const activeSpecimens = [];
         const activeCreatures = [];
         const creatureCache = new Map();
+        let creatureManifest = [];
+        let manifestLoaded = false;
         let score = 0;
         let currentChunk = [999, 999];
         let toastTimeout = null;
+
+        // --- MANIFEST-BASED CREATURE PIPELINE ---
+        async function loadCreatureManifest() {
+            try {
+                const response = await fetch('assets/creatures/manifest.json');
+                if (response.ok) {
+                    const data = await response.json();
+                    if (Array.isArray(data)) {
+                        creatureManifest = data;
+                    } else if (data && Array.isArray(data.creatures)) {
+                        creatureManifest = data.creatures;
+                    }
+                    manifestLoaded = true;
+                    Diagnostics.record("INFO", "CreatureEngine", `Loaded manifest with ${creatureManifest.length} creature definitions`);
+
+                    // Retroactively populate creatures for any active chunks that loaded prior to manifest resolution
+                    activeChunkMeshes.forEach((group, key) => {
+                        const [ccx, ccz] = key.split(',').map(Number);
+                        const cData = loadedChunks.get(key);
+                        if (cData && (!cData.creatures || cData.creatures.length === 0)) {
+                            const autoSpawn = getClientCreatureSpawn(ccx, ccz, cData);
+                            if (autoSpawn) {
+                                cData.creatures = [autoSpawn];
+                                spawnCreatureInChunk(ccx, ccz, autoSpawn, group, key);
+                            }
+                        }
+                    });
+                }
+            } catch (err) {
+                Diagnostics.record("WARN", "CreatureEngine", `Could not load creature manifest: ${err}`);
+            }
+        }
+        loadCreatureManifest();
+
+        function getClientCreatureSpawn(cx, cz, chunkData) {
+            // Never spawn creatures right at basecamp starting spawn point (0, 0)
+            if (cx === 0 && cz === 0) return null;
+            if (!creatureManifest || creatureManifest.length === 0) return null;
+
+            // Deterministic pseudo-random seed per chunk coordinate
+            const seed = Math.sin(cx * 127.1 + cz * 311.7) * 43758.5453;
+            const roll = Math.abs(seed - Math.floor(seed));
+
+            // Chunk-Based Distribution: 50% spawn chance per chunk
+            if (roll > 0.50) return null;
+
+            // Manifest Randomization: Select uniformly from ALL available creature types across the entire manifest
+            const creatureIdx = Math.floor(Math.abs(Math.sin(cx * 269.5 + cz * 183.3) * 43758.5453) * creatureManifest.length) % creatureManifest.length;
+            const chosen = creatureManifest[creatureIdx];
+            if (!chosen) return null;
+
+            // Collect existing entity coordinates (specimens) in this chunk to prevent stacking
+            const existingCoords = [];
+            if (chunkData && Array.isArray(chunkData.specimens)) {
+                chunkData.specimens.forEach(s => existingCoords.push({ x: s.x, z: s.y }));
+            }
+
+            // Chunk-Based Distribution: Randomize x/z coordinate within chunk local grid boundaries [-5.5, 5.5]
+            let candX = 0, candZ = 0;
+            const MIN_SEPARATION = 2.5;
+
+            for (let attempt = 0; attempt < 12; attempt++) {
+                const randX = Math.abs(Math.sin(cx * 419.2 + cz * 371.9 + attempt * 17.3) * 43758.5453);
+                const randZ = Math.abs(Math.cos(cx * 647.4 + cz * 911.3 + attempt * 31.7) * 43758.5453);
+                candX = (randX % 1.0) * 11.0 - 5.5;
+                candZ = (randZ % 1.0) * 11.0 - 5.5;
+
+                // Anti-stacking: Avoid (0, 0) chunk center
+                if (Math.hypot(candX, candZ) < 1.8) {
+                    candX = candX >= 0 ? 3.2 : -3.2;
+                    candZ = candZ >= 0 ? 3.2 : -3.2;
+                }
+
+                // Check distance against existing entities in chunk
+                let collides = false;
+                for (const ex of existingCoords) {
+                    if (Math.hypot(candX - ex.x, candZ - ex.z) < MIN_SEPARATION) {
+                        collides = true;
+                        break;
+                    }
+                }
+
+                if (!collides) break;
+            }
+
+            const cleanFile = chosen.file ? chosen.file.replace(/\\/g, '/') : `assets/creatures/${chosen.id}.json`;
+            return {
+                id: chosen.id,
+                name: chosen.name || "Voxel Creature",
+                category: chosen.category || "wildlife",
+                file: cleanFile,
+                x: Math.round(candX * 100) / 100,
+                z: Math.round(candZ * 100) / 100,
+                movementStyle: chosen.movementStyle || "walking",
+                scale: typeof chosen.scale === 'number' ? chosen.scale : 1.0
+            };
+        }
 
         function getProceduralBiome(cx, cz) {
             const biomes = ["lush_riverbank", "snowy_mountain", "desert_dunes", "slate_ridge", "flower_meadow"];
@@ -674,21 +773,78 @@
 
         async function spawnCreatureInChunk(cx, cz, spawnMeta, chunkGroup, chunkKey) {
             if (!spawnMeta || !spawnMeta.file) return;
+
+            // Entity Cap: Enforce maximum of 2 creatures per chunk
+            const existingInChunk = activeCreatures.filter(c => c.userData && c.userData.chunkKey === chunkKey);
+            if (existingInChunk.length >= 2) return;
+
+            // Anti-Stacking & Basecamp Guard: Prevent multiple entities from occupying the same coordinates
+            let posX = typeof spawnMeta.x === 'number' ? spawnMeta.x : 0;
+            let posZ = typeof spawnMeta.z === 'number' ? spawnMeta.z : 0;
+            let worldX = (cx * 16) + posX;
+            let worldZ = (cz * 16) + posZ;
+
+            // Never allow entities to stack on player basecamp spawn origin (0, 0)
+            if (Math.hypot(worldX, worldZ) < 2.5) {
+                posX = (posX >= 0 ? 3.2 : -3.2);
+                posZ = (posZ >= 0 ? 3.2 : -3.2);
+                worldX = (cx * 16) + posX;
+                worldZ = (cz * 16) + posZ;
+            }
+
+            // Coordinate Collision & Anti-Stacking Check:
+            // Verify candidate coordinate does not collide with existing active creatures or specimens
+            const MIN_SEPARATION = 2.5;
+            for (let attempt = 0; attempt < 8; attempt++) {
+                let collides = false;
+                for (const existing of activeCreatures) {
+                    const exPos = new THREE.Vector3();
+                    existing.getWorldPosition(exPos);
+                    if (Math.hypot(worldX - exPos.x, worldZ - exPos.z) < MIN_SEPARATION) {
+                        collides = true;
+                        break;
+                    }
+                }
+                if (!collides) {
+                    for (const spec of activeSpecimens) {
+                        const spPos = new THREE.Vector3();
+                        spec.getWorldPosition(spPos);
+                        if (Math.hypot(worldX - spPos.x, worldZ - spPos.z) < MIN_SEPARATION) {
+                            collides = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (collides) {
+                    // Nudge offset safely within local grid boundaries [-5.5, 5.5]
+                    posX = Math.max(-5.5, Math.min(5.5, posX + (attempt % 2 === 0 ? 2.5 : -2.5)));
+                    posZ = Math.max(-5.5, Math.min(5.5, posZ + (attempt % 3 === 0 ? 2.5 : -2.5)));
+                    worldX = (cx * 16) + posX;
+                    worldZ = (cz * 16) + posZ;
+                } else {
+                    break;
+                }
+            }
+
             const creatureData = await loadCreatureDefinition(spawnMeta.file);
             if (!creatureData) return;
 
             // Ensure chunk wasn't culled during async fetch
             if (!activeChunkMeshes.has(chunkKey)) return;
 
+            // Double check entity cap post async fetch
+            const currentInChunk = activeCreatures.filter(c => c.userData && c.userData.chunkKey === chunkKey);
+            if (currentInChunk.length >= 2) return;
+
             const creatureMesh = buildCreatureMesh(creatureData);
-            const worldX = (cx * 16) + spawnMeta.x;
-            const worldZ = (cz * 16) + spawnMeta.z;
             const groundH = getTerrainHeight(worldX, worldZ);
 
-            const isHover = (creatureData.movementStyle === "hover");
+            const mStyle = (creatureData.movementStyle || spawnMeta.movementStyle || "").toLowerCase();
+            const isHover = (mStyle.includes("hover") || mStyle.includes("glide") || mStyle.includes("flying"));
             const initialY = groundH + (isHover ? 1.4 : 0.0);
 
-            creatureMesh.position.set(spawnMeta.x, initialY, spawnMeta.z);
+            creatureMesh.position.set(posX, initialY, posZ);
             const initialRotY = Math.random() * Math.PI * 2;
             creatureMesh.rotation.y = initialRotY;
 
@@ -696,7 +852,7 @@
                 id: creatureData.id,
                 name: creatureData.name,
                 category: creatureData.category,
-                movementStyle: creatureData.movementStyle || "walking",
+                movementStyle: creatureData.movementStyle || spawnMeta.movementStyle || "walking",
                 chunkKey: chunkKey,
                 baseY: initialY,
                 baseRotY: initialRotY,
@@ -706,7 +862,7 @@
 
             chunkGroup.add(creatureMesh);
             activeCreatures.push(creatureMesh);
-            Diagnostics.record("INFO", "CreatureEngine", `Spawned '${creatureData.name}' (${creatureData.id}) in chunk [${cx}, ${cz}]`);
+            Diagnostics.record("INFO", "CreatureEngine", `Spawned '${creatureData.name}' (${creatureData.id}) in chunk [${cx}, ${cz}] at [${posX.toFixed(1)}, ${posZ.toFixed(1)}]`);
         }
 
         // --- MERGED TEXTURED VOXEL CHUNK RENDERER ---
@@ -777,9 +933,15 @@
                 });
             }
 
-            // Autonomous Creature Spawning
+            // Autonomous Creature Spawning with Chunk-Based Distribution & Entity Cap
+            if (!chunkData.creatures || !Array.isArray(chunkData.creatures)) {
+                const autoSpawn = getClientCreatureSpawn(cx, cz, chunkData);
+                chunkData.creatures = autoSpawn ? [autoSpawn] : [];
+            }
+
             if (chunkData.creatures && Array.isArray(chunkData.creatures)) {
-                chunkData.creatures.forEach(spawnMeta => {
+                // Strictly enforce entity cap of max 2 creatures per chunk
+                chunkData.creatures.slice(0, 2).forEach(spawnMeta => {
                     spawnCreatureInChunk(cx, cz, spawnMeta, chunkGroup, key);
                 });
             }
@@ -1244,13 +1406,14 @@
             const creatureTime = Date.now() * 0.003;
             activeCreatures.forEach(c => {
                 const u = c.userData;
-                if (u.movementStyle === 'hover') {
+                const style = (u.movementStyle || '').toLowerCase();
+                if (style.includes('hover') || style.includes('glide') || style.includes('flying')) {
                     // Gentle aerial hover + subtle banking (for sky drakes and flying mobs)
                     c.position.y = u.baseY + Math.sin(creatureTime * 1.5 + u.phase) * 0.35;
                     c.rotation.z = Math.sin(creatureTime * 1.2 + u.phase) * 0.08;
                     c.rotation.x = Math.cos(creatureTime * 1.2 + u.phase) * 0.05;
-                } else if (u.movementStyle === 'walking') {
-                    // Left-to-right shuffle & rhythmic bounce (for dogs, pigs, golems)
+                } else if (style.includes('walking') || style.includes('hop') || style.includes('bound') || style.includes('gallop') || style.includes('lumber') || style.includes('prowl') || style.includes('shuffle') || style.includes('slither') || style.includes('bouncy')) {
+                    // Left-to-right shuffle & rhythmic bounce (for dogs, pigs, golems, hares, foxes)
                     c.position.y = u.baseY + Math.abs(Math.sin(creatureTime * 2.8 + u.phase)) * 0.12;
                     c.rotation.z = Math.sin(creatureTime * 2.8 + u.phase) * 0.08;
                     c.rotation.y = u.baseRotY + Math.sin(creatureTime * 0.8 + u.phase) * 0.35;
@@ -1263,7 +1426,7 @@
                 c.getWorldPosition(creatureWorldPos);
                 if (!u.greeted && dougGroup.position.distanceTo(creatureWorldPos) < 2.0) {
                     u.greeted = true;
-                    showToast(`🐾 Encountered: ${u.name}`, `A curious ${u.category} roaming the ${document.getElementById('biome-name').innerText}.`);
+                    showToast(`🐾 Encountered: ${u.name}`, `A curious ${u.category || 'creature'} roaming the ${document.getElementById('biome-name').innerText}.`);
                 }
             });
 
