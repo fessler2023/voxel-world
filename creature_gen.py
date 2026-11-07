@@ -30,20 +30,71 @@ MODEL_NAME = os.environ.get("MODEL_NAME", "qwen3:14b")
 CREATURES_DIR = os.path.join("assets", "creatures")
 MANIFEST_PATH = os.path.join(CREATURES_DIR, "manifest.json")
 INTERVAL_SECONDS = 3600               # 1 hour between creature creation cycles (matching agent.py)
-MAX_VOXELS = 180                      # Performance safeguard against high-poly lag
+MAX_VOXELS = 260                      # Performance safeguard accommodating articulated voxel creatures
 
 # Ensure output directory exists
 os.makedirs(CREATURES_DIR, exist_ok=True)
 
 SYSTEM_PROMPT = """You are a procedural 3D voxel character artist and DUNGEON MASTER for a retro voxel adventure game featuring 'Little Doug'.
-You design unique voxel creatures (wildlife, monsters, or bosses) in STRICT JSON format matching the schema.
+You design articulated, high-resolution voxel creatures (wildlife, monsters, or bosses) in STRICT JSON format matching the schema.
 
-Rules:
-1. CENTERING RULE: All voxel coordinates MUST be horizontally centered around x=0 and z=0.
-2. GROUNDING RULE: The lowest voxels (feet, belly, or base) MUST rest strictly at y=0 (minimum y must be 0, never negative).
-3. PERFORMANCE: Keep total number of voxels between 35 and 90 for 60 FPS real-time browser performance.
-4. COLORS: All voxel colors MUST be valid 6-character hex color codes (e.g., #3b82f6, #10b981, #f59e0b).
-5. Output strictly raw JSON conforming to the schema."""
+Mandatory Design & Structural Rules:
+1. MANDATORY MINIMUM SCALE & SUB-ASSEMBLIES:
+   - Total height MUST be at least 10 to 16 voxels high/wide to match our player model's resolution.
+   - Creatures MUST be built in distinct anatomical layers:
+     * HEAD: Box layer with 1-voxel contrasting accents for eyes, snout/beak, or mouth.
+     * TORSO/BODY: Central core grid (at least 4x4x6 voxels).
+     * LIMBS/BASE: Distinct 4-corner leg or base structures (at least 2x2x4 voxels each).
+
+2. CONTRASTING COLOR PALETTES:
+   - Require at least 3 distinct hex colors per creature:
+     * Main Body Color (base fur, scales, stone, or hide)
+     * Secondary Accent (belly, saddle, stripes, or underbelly)
+     * High-Contrast Accent (eyes, feet, claws, snout, or beak)
+   - All colors MUST be valid 6-character hex color codes (e.g., #3b82f6, #10b981, #f59e0b).
+
+3. CENTERING & GROUNDING RULES:
+   - CENTERING RULE: All voxel coordinates MUST be horizontally centered around x=0 and z=0.
+   - GROUNDING RULE: The lowest voxels (feet, belly, or base) MUST rest strictly at y=0 (minimum y must be 0, never negative).
+
+4. FEW-SHOT REFERENCE TEMPLATE:
+Example of a structured voxel quadrupeds (like a Pig/Dog):
+Voxels must define distinct body parts relative to local center (0,0,0):
+- Legs: (x=-2, y=0, z=-2), (x=2, y=0, z=-2), (x=-2, y=0, z=2), (x=2, y=0, z=2)
+- Torso: Grid spanning x=-2 to 2, y=3 to 6, z=-3 to 3
+- Head: Grid spanning x=-2 to 2, y=6 to 9, z=2 to 5
+- Eyes: Contrasting single voxels at x=-2, y=8, z=5 and x=2, y=8, z=5
+
+Example JSON structure:
+{
+  "id": "woodland_hound",
+  "name": "Woodland Hound",
+  "category": "wildlife",
+  "description": "An agile, loyal hound roaming the ancient forests with keen senses.",
+  "movementStyle": "walking",
+  "scale": 0.85,
+  "voxels": [
+    {"x": -2, "y": 0, "z": -2, "color": "#1e293b", "part": "leg"},
+    {"x": -2, "y": 1, "z": -2, "color": "#a16207", "part": "leg"},
+    {"x": -2, "y": 2, "z": -2, "color": "#a16207", "part": "leg"},
+    {"x": 2, "y": 0, "z": -2, "color": "#1e293b", "part": "leg"},
+    {"x": 2, "y": 1, "z": -2, "color": "#a16207", "part": "leg"},
+    {"x": 2, "y": 2, "z": -2, "color": "#a16207", "part": "leg"},
+    {"x": -2, "y": 0, "z": 2, "color": "#1e293b", "part": "leg"},
+    {"x": -2, "y": 1, "z": 2, "color": "#a16207", "part": "leg"},
+    {"x": -2, "y": 2, "z": 2, "color": "#a16207", "part": "leg"},
+    {"x": 2, "y": 0, "z": 2, "color": "#1e293b", "part": "leg"},
+    {"x": 2, "y": 1, "z": 2, "color": "#a16207", "part": "leg"},
+    {"x": 2, "y": 2, "z": 2, "color": "#a16207", "part": "leg"},
+    {"x": -2, "y": 3, "z": -3, "color": "#fef08a", "part": "belly"},
+    {"x": 2, "y": 3, "z": -3, "color": "#fef08a", "part": "belly"},
+    {"x": -2, "y": 8, "z": 5, "color": "#0f172a", "part": "eye"},
+    {"x": 2, "y": 8, "z": 5, "color": "#0f172a", "part": "eye"}
+  ]
+}
+
+5. OUTPUT FORMAT:
+Output strictly raw JSON conforming to the schema, with no markdown fences or outside commentary."""
 
 CREATURE_SCHEMA = {
     "type": "object",
@@ -74,7 +125,7 @@ CREATURE_SCHEMA = {
         },
         "voxels": {
             "type": "array",
-            "description": "List of voxel blocks defining the creature model (35 to 90 voxels)",
+            "description": "List of voxel blocks defining the articulated creature model (height 10 to 16 voxels, 3+ contrasting hex colors)",
             "items": {
                 "type": "object",
                 "properties": {
@@ -82,7 +133,7 @@ CREATURE_SCHEMA = {
                     "y": {"type": "integer", "description": "Vertical Y coordinate starting at 0 (feet/base)"},
                     "z": {"type": "integer", "description": "Horizontal Z coordinate centered at 0"},
                     "color": {"type": "string", "description": "Hex color string (e.g. #3b82f6)"},
-                    "part": {"type": "string", "description": "Body part name like head, leg, body, wing"}
+                    "part": {"type": "string", "description": "Body part name like head, leg, body, torso, eye, snout, wing"}
                 },
                 "required": ["x", "y", "z", "color"],
                 "additionalProperties": False
@@ -251,135 +302,206 @@ def generate_fallback_creature(category: str = None) -> dict:
         creature_id = f"voxel_pup_{suffix}"
         name = "Scruffy Voxel Pup"
         cat = "wildlife"
-        desc = "A loyal blocky canine always eager to accompany Little Doug on explorations."
+        desc = "A loyal, articulated blocky canine with keen ears and sturdy paws to accompany Little Doug."
         move_style = "walking"
-        scale = 0.8
-        fur = "#a16207"
-        snout = "#fef08a"
-        nose = "#0f172a"
+        scale = 0.85
+        fur = "#a16207"      # Main Body Color
+        snout_col = "#fef08a" # Secondary Accent (belly & snout)
+        dark = "#0f172a"     # High-Contrast Accent (eyes, nose, paw pads)
         collar = "#ef4444"
 
-        # 4 Legs (y=0 to y=1)
-        for lx in [-1, 1]:
-            for lz in [-1, 2]:
-                voxels.append({"x": lx, "y": 0, "z": lz, "color": fur, "part": "leg"})
-                voxels.append({"x": lx, "y": 1, "z": lz, "color": fur, "part": "leg"})
-        # Body (y=2 to y=3, z=-1 to 2)
-        for by in [2, 3]:
-            for bz in range(-1, 3):
-                voxels.append({"x": -1, "y": by, "z": bz, "color": fur, "part": "body"})
-                voxels.append({"x": 0, "y": by, "z": bz, "color": snout if by == 2 else fur, "part": "body"})
-                voxels.append({"x": 1, "y": by, "z": bz, "color": fur, "part": "body"})
-        # Collar
-        voxels.append({"x": 0, "y": 3, "z": -1, "color": collar, "part": "collar"})
-        # Head (y=3 to y=4, z=-2 to -1)
-        for hy in [3, 4]:
-            for hx in [-1, 0, 1]:
-                voxels.append({"x": hx, "y": hy, "z": -2, "color": fur, "part": "head"})
+        # 1. LIMBS/BASE: Distinct 4-corner leg structures (2x2x4 voxels each, y=0 to 3)
+        for lx in [-2, 1]:
+            for lz in [-3, 2]:
+                for dx in range(2):
+                    for dz in range(2):
+                        for y in range(4):
+                            c = dark if y == 0 else fur
+                            voxels.append({"x": lx + dx, "y": y, "z": lz + dz, "color": c, "part": "leg"})
+
+        # 2. TORSO/BODY: Central core grid (at least 4x4x6 voxels, y=4 to 7, z=-3 to 2)
+        for x in range(-2, 2):
+            for y in range(4, 8):
+                for z in range(-3, 3):
+                    c = snout_col if (y == 4 or z == -3) else fur
+                    voxels.append({"x": x, "y": y, "z": z, "color": c, "part": "torso"})
+
+        # Collar trim
+        for x in range(-2, 2):
+            voxels.append({"x": x, "y": 7, "z": 2, "color": collar, "part": "collar"})
+
+        # 3. HEAD: Box layer (4x4x4, y=7 to 10, z=2 to 5)
+        for x in range(-2, 2):
+            for y in range(7, 11):
+                for z in range(2, 6):
+                    voxels.append({"x": x, "y": y, "z": z, "color": fur, "part": "head"})
+
         # Snout & Nose
-        voxels.append({"x": 0, "y": 3, "z": -3, "color": snout, "part": "snout"})
-        voxels.append({"x": 0, "y": 4, "z": -3, "color": nose, "part": "nose"})
-        # Ears (y=5)
-        voxels.append({"x": -1, "y": 5, "z": -2, "color": fur, "part": "ear"})
-        voxels.append({"x": 1, "y": 5, "z": -2, "color": fur, "part": "ear"})
-        # Tail (y=3 to 4, z=3)
-        voxels.append({"x": 0, "y": 3, "z": 3, "color": fur, "part": "tail"})
-        voxels.append({"x": 0, "y": 4, "z": 3, "color": snout, "part": "tail"})
+        for dx in range(2):
+            for dy in range(2):
+                c = dark if dy == 1 else snout_col
+                voxels.append({"x": -1 + dx, "y": 8 + dy, "z": 6, "color": c, "part": "snout"})
+
+        # Eyes: 1-voxel contrasting accents
+        voxels.append({"x": -2, "y": 9, "z": 5, "color": dark, "part": "eye"})
+        voxels.append({"x": 1, "y": 9, "z": 5, "color": dark, "part": "eye"})
+
+        # Ears (y=11)
+        voxels.append({"x": -2, "y": 11, "z": 3, "color": fur, "part": "ear"})
+        voxels.append({"x": 1, "y": 11, "z": 3, "color": fur, "part": "ear"})
+
+        # Tail (y=5 to 8, z=-4)
+        voxels.append({"x": 0, "y": 5, "z": -4, "color": fur, "part": "tail"})
+        voxels.append({"x": 0, "y": 6, "z": -4, "color": fur, "part": "tail"})
+        voxels.append({"x": 0, "y": 7, "z": -4, "color": snout_col, "part": "tail"})
 
     elif selected_theme == "boss_drake":
         creature_id = f"sky_drake_{suffix}"
         name = "Verdant Sky Drake"
         cat = "boss"
-        desc = "A rare miniature celestial dragon hovering over ancient ridges."
+        desc = "A magnificent articulated emerald dragon with swept horns and soaring wings."
         move_style = "hover"
-        scale = 1.2
-        scale_color = "#15803d"
-        belly = "#86efac"
-        eye = "#facc15"
+        scale = 1.15
+        scale_color = "#15803d"  # Main Body Color
+        belly = "#86efac"        # Secondary Accent
+        gold = "#facc15"         # High-Contrast Accent (eyes, horns, talons)
         wing_color = "#22c55e"
 
-        # Feet / Base (hovering posture, base touches y=0)
-        for fx in [-1, 1]:
-            voxels.append({"x": fx, "y": 0, "z": 0, "color": scale_color, "part": "claw"})
-            voxels.append({"x": fx, "y": 1, "z": 0, "color": scale_color, "part": "claw"})
-        # Torso
-        for ty in [2, 3, 4]:
-            for tz in [-1, 0, 1]:
-                voxels.append({"x": 0, "y": ty, "z": tz, "color": scale_color, "part": "body"})
-                voxels.append({"x": 0, "y": ty, "z": tz - 1, "color": belly, "part": "belly"})
-        # Wings spread horizontally
-        for wx in [-3, -2, 2, 3]:
-            for wz in [0, 1]:
-                voxels.append({"x": wx, "y": 3, "z": wz, "color": wing_color, "part": "wing"})
-                voxels.append({"x": wx, "y": 4, "z": wz, "color": wing_color, "part": "wing"})
-        # Head & Horns
-        voxels.append({"x": 0, "y": 5, "z": -2, "color": scale_color, "part": "head"})
-        voxels.append({"x": -1, "y": 5, "z": -2, "color": eye, "part": "eye"})
-        voxels.append({"x": 1, "y": 5, "z": -2, "color": eye, "part": "eye"})
-        voxels.append({"x": -1, "y": 6, "z": -1, "color": "#fef08a", "part": "horn"})
-        voxels.append({"x": 1, "y": 6, "z": -1, "color": "#fef08a", "part": "horn"})
+        # 1. LIMBS/BASE: 4 distinct talons (2x2x3 each, y=0 to 2)
+        for fx in [-2, 1]:
+            for fz in [-2, 1]:
+                for dx in range(2):
+                    for dz in range(2):
+                        for y in range(3):
+                            c = gold if y == 0 else scale_color
+                            voxels.append({"x": fx + dx, "y": y, "z": fz + dz, "color": c, "part": "claw"})
+
+        # 2. TORSO/BODY: Central core grid (4x4x6, y=3 to 6, z=-3 to 2)
+        for x in range(-2, 2):
+            for y in range(3, 7):
+                for z in range(-3, 3):
+                    c = belly if y == 3 else scale_color
+                    voxels.append({"x": x, "y": y, "z": z, "color": c, "part": "torso"})
+
+        # Broad wings spread horizontally (width 12)
+        for wx in [-5, -4, -3, 2, 3, 4]:
+            for wz in [-1, 0, 1]:
+                for wy in [4, 5]:
+                    voxels.append({"x": wx, "y": wy, "z": wz, "color": wing_color, "part": "wing"})
+
+        # 3. HEAD: Box layer (4x4x4, y=7 to 10, z=2 to 5)
+        for x in range(-2, 2):
+            for y in range(7, 11):
+                for z in range(2, 6):
+                    voxels.append({"x": x, "y": y, "z": z, "color": scale_color, "part": "head"})
+
+        # Eyes: 1-voxel contrasting accents
+        voxels.append({"x": -2, "y": 9, "z": 5, "color": gold, "part": "eye"})
+        voxels.append({"x": 1, "y": 9, "z": 5, "color": gold, "part": "eye"})
+
+        # Swept-back Horns (y=11)
+        voxels.append({"x": -2, "y": 11, "z": 3, "color": gold, "part": "horn"})
+        voxels.append({"x": 1, "y": 11, "z": 3, "color": gold, "part": "horn"})
 
     elif selected_theme == "wildlife_pig":
         creature_id = f"mud_pig_{suffix}"
         name = "Pink Truffle Pig"
         cat = "wildlife"
-        desc = "A cheerful pink pig searching the damp forest soil for delicious truffles."
+        desc = "A sturdy, fully articulated pink truffle pig with stout legs and a keen snout."
         move_style = "walking"
         scale = 0.85
-        pink = "#f472b6"
-        snout = "#fbcfe8"
-        hoof = "#475569"
-        eye = "#0f172a"
+        pink = "#f472b6"       # Main Body Color
+        snout_pink = "#fbcfe8" # Secondary Accent (belly & snout)
+        dark = "#1e293b"       # High-Contrast Accent (eyes & hooves)
 
-        # 4 Stumpy Legs (y=0 to y=1)
-        for lx in [-1, 1]:
-            for lz in [-1, 1]:
-                voxels.append({"x": lx, "y": 0, "z": lz, "color": hoof, "part": "hoof"})
-                voxels.append({"x": lx, "y": 1, "z": lz, "color": pink, "part": "leg"})
-        # Chubby Body (y=2 to y=3, z=-1 to 1)
-        for by in [2, 3]:
-            for bz in [-1, 0, 1]:
-                for bx in [-1, 0, 1]:
-                    voxels.append({"x": bx, "y": by, "z": bz, "color": pink, "part": "body"})
-        # Head (y=3, z=-2)
-        for hx in [-1, 0, 1]:
-            voxels.append({"x": hx, "y": 3, "z": -2, "color": pink, "part": "head"})
-        voxels.append({"x": -1, "y": 4, "z": -2, "color": eye, "part": "eye"})
-        voxels.append({"x": 1, "y": 4, "z": -2, "color": eye, "part": "eye"})
-        # Cute Snout (y=2, z=-3)
-        voxels.append({"x": 0, "y": 2, "z": -3, "color": snout, "part": "snout"})
-        # Curly Tail (y=3, z=2)
-        voxels.append({"x": 0, "y": 3, "z": 2, "color": pink, "part": "tail"})
+        # 1. LIMBS/BASE: Distinct 4-corner leg structures (2x2x4 each, y=0 to 3)
+        for lx in [-2, 1]:
+            for lz in [-3, 2]:
+                for dx in range(2):
+                    for dz in range(2):
+                        for y in range(4):
+                            c = dark if y == 0 else pink
+                            voxels.append({"x": lx + dx, "y": y, "z": lz + dz, "color": c, "part": "hoof" if y == 0 else "leg"})
+
+        # 2. TORSO/BODY: Central core grid (4x4x6, y=4 to 7, z=-3 to 2)
+        for x in range(-2, 2):
+            for y in range(4, 8):
+                for z in range(-3, 3):
+                    c = snout_pink if y == 4 else pink
+                    voxels.append({"x": x, "y": y, "z": z, "color": c, "part": "torso"})
+
+        # 3. HEAD: Box layer (4x4x4, y=6 to 9, z=2 to 5)
+        for x in range(-2, 2):
+            for y in range(6, 10):
+                for z in range(2, 6):
+                    voxels.append({"x": x, "y": y, "z": z, "color": pink, "part": "head"})
+
+        # Snout (2x2 contrasting accent)
+        for dx in range(2):
+            for dy in range(2):
+                voxels.append({"x": -1 + dx, "y": 7 + dy, "z": 6, "color": snout_pink, "part": "snout"})
+
+        # Eyes: 1-voxel contrasting accents
+        voxels.append({"x": -2, "y": 8, "z": 5, "color": dark, "part": "eye"})
+        voxels.append({"x": 1, "y": 8, "z": 5, "color": dark, "part": "eye"})
+
+        # Ears (y=10)
+        voxels.append({"x": -2, "y": 10, "z": 3, "color": pink, "part": "ear"})
+        voxels.append({"x": 1, "y": 10, "z": 3, "color": pink, "part": "ear"})
+
+        # Tail
+        voxels.append({"x": 0, "y": 6, "z": -4, "color": pink, "part": "tail"})
+        voxels.append({"x": 0, "y": 7, "z": -4, "color": pink, "part": "tail"})
 
     else:  # monster_golem
         creature_id = f"stone_golem_{suffix}"
         name = "Ancient Moss Golem"
         cat = "monster"
-        desc = "A lumbering sentinel carved of ancient granite and awakened by mystical ores."
+        desc = "A colossal articulated sentinel carved of ancient granite, overgrown with moss and animated by rune light."
         move_style = "walking"
-        scale = 1.0
-        stone = "#64748b"
-        moss = "#16a34a"
-        core = "#38bdf8"
+        scale = 1.05
+        stone = "#64748b"  # Main Body Color
+        moss = "#16a34a"   # Secondary Accent
+        core = "#06b6d4"   # High-Contrast Accent (glowing eyes & rune core)
 
-        # Legs (y=0 to y=1)
-        for lx in [-1, 1]:
-            voxels.append({"x": lx, "y": 0, "z": 0, "color": stone, "part": "leg"})
-            voxels.append({"x": lx, "y": 1, "z": 0, "color": stone, "part": "leg"})
-        # Massive Torso (y=2 to 4)
-        for ty in [2, 3, 4]:
-            for tx in [-1, 0, 1]:
-                voxels.append({"x": tx, "y": ty, "z": 0, "color": stone if tx != 0 else moss, "part": "torso"})
-        # Glowing Rune Core
-        voxels.append({"x": 0, "y": 3, "z": 1, "color": core, "part": "core"})
-        # Arms
-        voxels.append({"x": -2, "y": 3, "z": 0, "color": stone, "part": "arm"})
-        voxels.append({"x": -2, "y": 2, "z": 0, "color": stone, "part": "arm"})
-        voxels.append({"x": 2, "y": 3, "z": 0, "color": stone, "part": "arm"})
-        voxels.append({"x": 2, "y": 2, "z": 0, "color": stone, "part": "arm"})
-        # Head (y=5)
-        voxels.append({"x": 0, "y": 5, "z": 0, "color": stone, "part": "head"})
-        voxels.append({"x": 0, "y": 5, "z": 1, "color": core, "part": "eye"})
+        # 1. LIMBS/BASE: Distinct 4-corner base pillars (2x2x4 each, y=0 to 3)
+        for lx in [-2, 1]:
+            for lz in [-2, 1]:
+                for dx in range(2):
+                    for dz in range(2):
+                        for y in range(4):
+                            c = moss if (y == 1 and (dx + dz) % 2 == 0) else stone
+                            voxels.append({"x": lx + dx, "y": y, "z": lz + dz, "color": c, "part": "leg"})
+
+        # 2. TORSO/BODY: Central core grid (4x4x6, y=4 to 7, z=-3 to 2)
+        for x in range(-2, 2):
+            for y in range(4, 8):
+                for z in range(-3, 3):
+                    c = moss if (x + y + z) % 3 == 0 else stone
+                    voxels.append({"x": x, "y": y, "z": z, "color": c, "part": "torso"})
+
+        # Glowing Rune Core in chest
+        voxels.append({"x": -1, "y": 5, "z": 3, "color": core, "part": "core"})
+        voxels.append({"x": 0, "y": 5, "z": 3, "color": core, "part": "core"})
+
+        # Arms hanging from shoulders
+        for ay in range(4, 8):
+            voxels.append({"x": -3, "y": ay, "z": 0, "color": stone, "part": "arm"})
+            voxels.append({"x": 2, "y": ay, "z": 0, "color": stone, "part": "arm"})
+
+        # 3. HEAD: Box layer (4x4x4, y=8 to 11, z=0 to 3)
+        for x in range(-2, 2):
+            for y in range(8, 12):
+                for z in range(0, 4):
+                    voxels.append({"x": x, "y": y, "z": z, "color": stone, "part": "head"})
+
+        # Eyes: 1-voxel contrasting accents
+        voxels.append({"x": -2, "y": 10, "z": 3, "color": core, "part": "eye"})
+        voxels.append({"x": 1, "y": 10, "z": 3, "color": core, "part": "eye"})
+
+        # Moss crown crest (y=12)
+        voxels.append({"x": -1, "y": 12, "z": 1, "color": moss, "part": "crest"})
+        voxels.append({"x": 0, "y": 12, "z": 1, "color": moss, "part": "crest"})
 
     sanitized_voxels = enforce_centering_and_grounding(voxels)
 
@@ -402,14 +524,26 @@ def ask_workstation_for_creature(theme_prompt: str):
     Model: qwen3:14b
     """
     user_prompt = (
-        f"Design a unique voxel creature for an outdoor wilderness world.\n"
+        f"Design an articulated, high-detail voxel creature matching the scale and fidelity of Little Doug.\n"
         f"Category theme: {theme_prompt}\n\n"
-        f"CRITICAL DESIGN CONSTRAINTS:\n"
-        f"1. CENTERING: All voxel coordinates MUST be horizontally centered around x=0 and z=0.\n"
-        f"2. GROUNDING: The feet, belly, or base of the creature MUST sit strictly at y=0. Never use negative y.\n"
-        f"3. PERFORMANCE: Provide between 35 and 90 voxels for smooth 60 FPS real-time rendering.\n"
-        f"4. PALETTE: Use vibrant, tasteful retro hex colors matching the creature's lore.\n"
-        f"5. OUTPUT: Return strictly the raw JSON matching the schema."
+        f"MANDATORY STRUCTURAL & PALETTE RULES:\n"
+        f"1. MANDATORY MINIMUM SCALE & SUB-ASSEMBLIES:\n"
+        f"   - Total height MUST be at least 10 to 16 voxels high/wide.\n"
+        f"   - Creatures MUST be built in distinct anatomical layers:\n"
+        f"     * HEAD: Box layer with 1-voxel contrasting accents for eyes, snout/beak, or mouth.\n"
+        f"     * TORSO/BODY: Central core grid (at least 4x4x6 voxels).\n"
+        f"     * LIMBS/BASE: Distinct 4-corner leg or base structures (at least 2x2x4 voxels each).\n"
+        f"2. CONTRASTING COLOR PALETTES:\n"
+        f"   - Require at least 3 distinct hex colors per creature: Main Body Color, Secondary Accent (belly/saddle/stripes), and High-Contrast Accent (eyes/feet/claws).\n"
+        f"3. FEW-SHOT REFERENCE TEMPLATE:\n"
+        f"   Example of a structured voxel quadrupeds (like a Pig/Dog):\n"
+        f"   Voxels must define distinct body parts relative to local center (0,0,0):\n"
+        f"   - Legs: (x=-2, y=0, z=-2), (x=2, y=0, z=-2), (x=-2, y=0, z=2), (x=2, y=0, z=2)\n"
+        f"   - Torso: Grid spanning x=-2 to 2, y=3 to 6, z=-3 to 3\n"
+        f"   - Head: Grid spanning x=-2 to 2, y=6 to 9, z=2 to 5\n"
+        f"   - Eyes: Contrasting single voxels at x=-2, y=8, z=5 and x=2, y=8, z=5\n"
+        f"4. CENTERING & GROUNDING: All voxel coordinates MUST be horizontally centered around x=0, z=0. Lowest voxels sit strictly at y=0 (never negative y).\n"
+        f"5. OUTPUT: Output strictly raw JSON conforming to the schema."
     )
 
     payload = {
@@ -449,7 +583,7 @@ def ask_workstation_for_creature(theme_prompt: str):
                 raise ValueError("Payload is not a valid JSON object")
             if "voxels" not in creature_dict or not isinstance(creature_dict["voxels"], list):
                 raise ValueError("Creature missing required 'voxels' array")
-            if len(creature_dict["voxels"]) < 8:
+            if len(creature_dict["voxels"]) < 16:
                 raise ValueError("Creature model has insufficient voxel density")
 
             return creature_dict

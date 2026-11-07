@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-07T20:43:52.552657+00:00",
-  "count": 81,
+  "updated_at": "2026-11-07T20:45:41.758180+00:00",
+  "count": 82,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1217,6 +1217,21 @@
       },
       "file": "assets/creatures/sylvan_754a.json",
       "created_at": "2026-11-07T20:43:52.552572+00:00"
+    },
+    {
+      "id": "stone_golem_d940",
+      "name": "Ancient Moss Golem",
+      "category": "monster",
+      "movementStyle": "walking",
+      "scale": 1.05,
+      "voxel_count": 236,
+      "dimensions": {
+        "width": 6,
+        "height": 13,
+        "depth": 7
+      },
+      "file": "assets/creatures/stone_golem_d940.json",
+      "created_at": "2026-11-07T20:45:41.758123+00:00"
     }
   ]
 }
