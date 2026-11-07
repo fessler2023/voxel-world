@@ -1,0 +1,295 @@
+{
+  "id": "root_fb07",
+  "name": "Root Horror",
+  "category": "mysterious wilderness monster",
+  "description": "A twisted amalgamation of ancient roots and moss-covered bone, this creature lurks beneath the forest floor, its gnarled form oozing bioluminescent lichen.",
+  "movementStyle": "lurching",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 5,
+    "height": 6,
+    "depth": 5
+  },
+  "voxels": [
+    {
+      "x": -2,
+      "y": 0,
+      "z": 0,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 0,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -1,
+      "color": "#6b21a8",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -1,
+      "color": "#6b21a8",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -1,
+      "color": "#6b21a8",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "color": "#6b21a8",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -1,
+      "color": "#6b21a8",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#6b21a8",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -1,
+      "color": "#6b21a8",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 1,
+      "color": "#6b21a8",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 0,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 4,
+      "z": -1,
+      "color": "#6b21a8",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": -1,
+      "color": "#6b21a8",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 4,
+      "z": 1,
+      "color": "#6b21a8",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": 1,
+      "color": "#6b21a8",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 0,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 1,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 1,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": -1,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": -1,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 1,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 1,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": -1,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -1,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": -2,
+      "color": "#6b21a8",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 2,
+      "color": "#6b21a8",
+      "part": "body"
+    }
+  ]
+}
