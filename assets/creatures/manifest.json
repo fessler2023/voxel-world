@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-07T07:37:32.314418+00:00",
-  "count": 69,
+  "updated_at": "2026-11-07T08:39:48.870651+00:00",
+  "count": 70,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1037,6 +1037,21 @@
       },
       "file": "assets/creatures/elder_fabe.json",
       "created_at": "2026-11-07T07:37:32.314347+00:00"
+    },
+    {
+      "id": "elder_3ba2",
+      "name": "Elder Sylvan Guardian",
+      "category": "legendary outdoor boss",
+      "movementStyle": "slow deliberate stomps with antlers swaying",
+      "scale": 1.0,
+      "voxel_count": 43,
+      "dimensions": {
+        "width": 5,
+        "height": 4,
+        "depth": 4
+      },
+      "file": "assets/creatures/elder_3ba2.json",
+      "created_at": "2026-11-07T08:39:48.870578+00:00"
     }
   ]
 }
