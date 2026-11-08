@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-08T17:35:35.236357+00:00",
-  "count": 101,
+  "updated_at": "2026-11-08T18:47:04.848311+00:00",
+  "count": 102,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1517,6 +1517,21 @@
       },
       "file": "assets/creatures/mossbone_10f2.json",
       "created_at": "2026-11-08T17:35:35.236282+00:00"
+    },
+    {
+      "id": "lichen_0e11",
+      "name": "Lichen Spider",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "slow, deliberate, camouflaged",
+      "scale": 1.0,
+      "voxel_count": 47,
+      "dimensions": {
+        "width": 5,
+        "height": 4,
+        "depth": 5
+      },
+      "file": "assets/creatures/lichen_0e11.json",
+      "created_at": "2026-11-08T18:47:04.848234+00:00"
     }
   ]
 }

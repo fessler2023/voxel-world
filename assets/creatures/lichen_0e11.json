@@ -1,0 +1,344 @@
+{
+  "id": "lichen_0e11",
+  "name": "Lichen Spider",
+  "category": "mysterious wilderness monster",
+  "description": "A moss-covered arachnid with glowing lichen eyes, lurking in ancient forests. Its body is a blend of stone and organic growths.",
+  "movementStyle": "slow, deliberate, camouflaged",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 5,
+    "height": 4,
+    "depth": 5
+  },
+  "voxels": [
+    {
+      "x": -2,
+      "y": 0,
+      "z": 0,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 0,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -1,
+      "color": "#34d399",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -1,
+      "color": "#34d399",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -1,
+      "color": "#34d399",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 0,
+      "color": "#34d399",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "color": "#34d399",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "color": "#34d399",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 1,
+      "color": "#34d399",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "color": "#34d399",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "color": "#34d399",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": -2,
+      "color": "#f97316",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": -1,
+      "color": "#f97316",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 0,
+      "color": "#f97316",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": -2,
+      "color": "#f97316",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": -1,
+      "color": "#f97316",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 0,
+      "color": "#f97316",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": -2,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": -2,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": 2,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 2,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": -1,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -1,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -1,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 1,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 1,
+      "color": "#1f2937",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": -1,
+      "color": "#34d399",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": -2,
+      "color": "#34d399",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -2,
+      "color": "#34d399",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": -1,
+      "color": "#34d399",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 3,
+      "z": -2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 3,
+      "z": -1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 3,
+      "z": 0,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 3,
+      "z": 1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 3,
+      "z": 2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": -2,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": -1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": 0,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": 1,
+      "color": "#6b7280",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": 2,
+      "color": "#6b7280",
+      "part": "body"
+    }
+  ]
+}
