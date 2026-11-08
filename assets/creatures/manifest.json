@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-08T05:22:06.409327+00:00",
-  "count": 90,
+  "updated_at": "2026-11-08T06:29:07.617760+00:00",
+  "count": 91,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1352,6 +1352,21 @@
       },
       "file": "assets/creatures/pine_fox_001_0aa7.json",
       "created_at": "2026-11-08T05:22:06.409277+00:00"
+    },
+    {
+      "id": "meadow_stag_71eb",
+      "name": "Meadow Stag",
+      "category": "small friendly wildlife",
+      "movementStyle": "graceful leaper",
+      "scale": 1.0,
+      "voxel_count": 27,
+      "dimensions": {
+        "width": 3,
+        "height": 5,
+        "depth": 3
+      },
+      "file": "assets/creatures/meadow_stag_71eb.json",
+      "created_at": "2026-11-08T06:29:07.617687+00:00"
     }
   ]
 }
