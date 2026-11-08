@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-08T04:14:28.892654+00:00",
-  "count": 89,
+  "updated_at": "2026-11-08T05:22:06.409327+00:00",
+  "count": 90,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1337,6 +1337,21 @@
       },
       "file": "assets/creatures/moss_e8d9.json",
       "created_at": "2026-11-08T04:14:28.892610+00:00"
+    },
+    {
+      "id": "pine_fox_001_0aa7",
+      "name": "Pine Fox",
+      "category": "small friendly wildlife",
+      "movementStyle": "graceful bounding",
+      "scale": 1.0,
+      "voxel_count": 51,
+      "dimensions": {
+        "width": 5,
+        "height": 4,
+        "depth": 3
+      },
+      "file": "assets/creatures/pine_fox_001_0aa7.json",
+      "created_at": "2026-11-08T05:22:06.409277+00:00"
     }
   ]
 }
