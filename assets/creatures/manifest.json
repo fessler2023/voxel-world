@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-08T22:15:17.952565+00:00",
-  "count": 105,
+  "updated_at": "2026-11-08T23:17:11.095654+00:00",
+  "count": 106,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1577,6 +1577,21 @@
       },
       "file": "assets/creatures/elder_6d0e.json",
       "created_at": "2026-11-08T22:15:17.952518+00:00"
+    },
+    {
+      "id": "elder_fa8b",
+      "name": "Elder Oak Sentinel",
+      "category": "legendary outdoor boss",
+      "movementStyle": "slow but unstoppable, charges with seismic tremors",
+      "scale": 1.5,
+      "voxel_count": 36,
+      "dimensions": {
+        "width": 5,
+        "height": 6,
+        "depth": 5
+      },
+      "file": "assets/creatures/elder_fa8b.json",
+      "created_at": "2026-11-08T23:17:11.095579+00:00"
     }
   ]
 }
