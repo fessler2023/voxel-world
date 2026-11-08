@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-08T20:57:09.176006+00:00",
-  "count": 104,
+  "updated_at": "2026-11-08T22:15:17.952565+00:00",
+  "count": 105,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1562,6 +1562,21 @@
       },
       "file": "assets/creatures/elder_463b.json",
       "created_at": "2026-11-08T20:57:09.175928+00:00"
+    },
+    {
+      "id": "elder_6d0e",
+      "name": "Elder Forest Stag",
+      "category": "legendary outdoor boss",
+      "movementStyle": "grazing",
+      "scale": 1.0,
+      "voxel_count": 39,
+      "dimensions": {
+        "width": 3,
+        "height": 7,
+        "depth": 5
+      },
+      "file": "assets/creatures/elder_6d0e.json",
+      "created_at": "2026-11-08T22:15:17.952518+00:00"
     }
   ]
 }
