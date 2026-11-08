@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-08T06:29:07.617760+00:00",
-  "count": 91,
+  "updated_at": "2026-11-08T07:30:55.168582+00:00",
+  "count": 92,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1367,6 +1367,21 @@
       },
       "file": "assets/creatures/meadow_stag_71eb.json",
       "created_at": "2026-11-08T06:29:07.617687+00:00"
+    },
+    {
+      "id": "mossroot_232c",
+      "name": "Mossroot Warden",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "slow ground tremor",
+      "scale": 1.0,
+      "voxel_count": 40,
+      "dimensions": {
+        "width": 5,
+        "height": 4,
+        "depth": 5
+      },
+      "file": "assets/creatures/mossroot_232c.json",
+      "created_at": "2026-11-08T07:30:55.168507+00:00"
     }
   ]
 }
