@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-08T16:28:48.607826+00:00",
-  "count": 100,
+  "updated_at": "2026-11-08T17:35:35.236357+00:00",
+  "count": 101,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1502,6 +1502,21 @@
       },
       "file": "assets/creatures/root_horror_6c6a.json",
       "created_at": "2026-11-08T16:28:48.607753+00:00"
+    },
+    {
+      "id": "mossbone_10f2",
+      "name": "Mossbone Stalker",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "slow\u530d\u5310",
+      "scale": 1.2,
+      "voxel_count": 46,
+      "dimensions": {
+        "width": 5,
+        "height": 3,
+        "depth": 5
+      },
+      "file": "assets/creatures/mossbone_10f2.json",
+      "created_at": "2026-11-08T17:35:35.236282+00:00"
     }
   ]
 }
