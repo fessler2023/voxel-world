@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-08T11:57:09.878808+00:00",
-  "count": 96,
+  "updated_at": "2026-11-08T13:02:08.914026+00:00",
+  "count": 97,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1442,6 +1442,21 @@
       },
       "file": "assets/creatures/mossroot_0545.json",
       "created_at": "2026-11-08T11:57:09.878733+00:00"
+    },
+    {
+      "id": "root_horror_a462",
+      "name": "Root Horror",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "slow, deliberate root-based movement with sudden lunges",
+      "scale": 1.0,
+      "voxel_count": 28,
+      "dimensions": {
+        "width": 5,
+        "height": 4,
+        "depth": 5
+      },
+      "file": "assets/creatures/root_horror_a462.json",
+      "created_at": "2026-11-08T13:02:08.913948+00:00"
     }
   ]
 }
