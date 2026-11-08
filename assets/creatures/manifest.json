@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-08T01:04:23.041842+00:00",
-  "count": 86,
+  "updated_at": "2026-11-08T02:08:39.044275+00:00",
+  "count": 87,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1292,6 +1292,21 @@
       },
       "file": "assets/creatures/elder_cc23.json",
       "created_at": "2026-11-08T01:04:23.041768+00:00"
+    },
+    {
+      "id": "elder_ed2b",
+      "name": "Elder Sylvan Guardian",
+      "category": "legendary outdoor boss",
+      "movementStyle": "steadfast, immovable",
+      "scale": 1.0,
+      "voxel_count": 59,
+      "dimensions": {
+        "width": 5,
+        "height": 6,
+        "depth": 5
+      },
+      "file": "assets/creatures/elder_ed2b.json",
+      "created_at": "2026-11-08T02:08:39.044204+00:00"
     }
   ]
 }
