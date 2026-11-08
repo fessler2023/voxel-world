@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-08T03:12:00.431862+00:00",
-  "count": 88,
+  "updated_at": "2026-11-08T04:14:28.892654+00:00",
+  "count": 89,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1322,6 +1322,21 @@
       },
       "file": "assets/creatures/lichen_58aa.json",
       "created_at": "2026-11-08T03:12:00.431789+00:00"
+    },
+    {
+      "id": "moss_e8d9",
+      "name": "Ancient Moss Golem",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "slow_undulating",
+      "scale": 1.5,
+      "voxel_count": 42,
+      "dimensions": {
+        "width": 5,
+        "height": 6,
+        "depth": 5
+      },
+      "file": "assets/creatures/moss_e8d9.json",
+      "created_at": "2026-11-08T04:14:28.892610+00:00"
     }
   ]
 }
