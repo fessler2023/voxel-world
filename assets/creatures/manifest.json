@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-08T08:32:49.627539+00:00",
-  "count": 93,
+  "updated_at": "2026-11-08T09:42:01.436388+00:00",
+  "count": 94,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1397,6 +1397,21 @@
       },
       "file": "assets/creatures/lichen_4ce2.json",
       "created_at": "2026-11-08T08:32:49.627463+00:00"
+    },
+    {
+      "id": "elder_689d",
+      "name": "Elder Moss Stag",
+      "category": "legendary outdoor boss",
+      "movementStyle": "slow, deliberate stomping with antlers swaying",
+      "scale": 1.0,
+      "voxel_count": 40,
+      "dimensions": {
+        "width": 5,
+        "height": 10,
+        "depth": 1
+      },
+      "file": "assets/creatures/elder_689d.json",
+      "created_at": "2026-11-08T09:42:01.436314+00:00"
     }
   ]
 }
