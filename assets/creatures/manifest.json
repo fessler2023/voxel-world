@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-09T18:43:56.744546+00:00",
-  "count": 124,
+  "updated_at": "2026-11-09T19:51:03.833784+00:00",
+  "count": 125,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1862,6 +1862,21 @@
       },
       "file": "assets/creatures/mossbound_f3d3.json",
       "created_at": "2026-11-09T18:43:56.744470+00:00"
+    },
+    {
+      "id": "luminous_5f99",
+      "name": "Luminous Grove Guardian",
+      "category": "legendary outdoor boss",
+      "movementStyle": "slow, deliberate stomping with branches swaying",
+      "scale": 1.5,
+      "voxel_count": 38,
+      "dimensions": {
+        "width": 5,
+        "height": 6,
+        "depth": 3
+      },
+      "file": "assets/creatures/luminous_5f99.json",
+      "created_at": "2026-11-09T19:51:03.833708+00:00"
     }
   ]
 }
