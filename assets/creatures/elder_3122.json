@@ -1,0 +1,274 @@
+{
+  "id": "elder_3122",
+  "name": "Elder Rootwarden",
+  "category": "legendary outdoor guardian",
+  "description": "A colossal forest guardian with bioluminescent antlers and moss-covered body, embodying the spirit of ancient woods.",
+  "movementStyle": "steady, deliberate stomps",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 5,
+    "height": 5,
+    "depth": 5
+  },
+  "voxels": [
+    {
+      "x": -2,
+      "y": 0,
+      "z": 2,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 2,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": 2,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 2,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 2,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 2,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 0,
+      "z": -2,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": -2,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": -2,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": -2,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": -2,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": -2,
+      "color": "#16a34a",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "color": "#059669",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "color": "#059669",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "color": "#059669",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 1,
+      "color": "#059669",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": -1,
+      "color": "#059669",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "color": "#059669",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "color": "#059669",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 0,
+      "color": "#059669",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "color": "#059669",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -1,
+      "color": "#059669",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 3,
+      "z": 0,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 4,
+      "z": 0,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "z": 0,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "z": 0,
+      "color": "#8b5cf6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    }
+  ]
+}
