@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-09T19:51:03.833784+00:00",
-  "count": 125,
+  "updated_at": "2026-11-09T21:00:17.954213+00:00",
+  "count": 126,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1877,6 +1877,21 @@
       },
       "file": "assets/creatures/luminous_5f99.json",
       "created_at": "2026-11-09T19:51:03.833708+00:00"
+    },
+    {
+      "id": "elder_cbe4",
+      "name": "Elder Forest Stag",
+      "category": "legendary outdoor guardian",
+      "movementStyle": "stoic sentinel",
+      "scale": 1.0,
+      "voxel_count": 39,
+      "dimensions": {
+        "width": 5,
+        "height": 5,
+        "depth": 5
+      },
+      "file": "assets/creatures/elder_cbe4.json",
+      "created_at": "2026-11-09T21:00:17.954137+00:00"
     }
   ]
 }
