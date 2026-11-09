@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-09T11:05:58.684726+00:00",
-  "count": 117,
+  "updated_at": "2026-11-09T12:12:04.904787+00:00",
+  "count": 118,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1757,6 +1757,21 @@
       },
       "file": "assets/creatures/lichen_afa6.json",
       "created_at": "2026-11-09T11:05:58.684649+00:00"
+    },
+    {
+      "id": "root_horror_e718",
+      "name": "Root Horror",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "roots pulse slowly, body sways with seismic tremors",
+      "scale": 1.5,
+      "voxel_count": 29,
+      "dimensions": {
+        "width": 5,
+        "height": 3,
+        "depth": 3
+      },
+      "file": "assets/creatures/root_horror_e718.json",
+      "created_at": "2026-11-09T12:12:04.904712+00:00"
     }
   ]
 }

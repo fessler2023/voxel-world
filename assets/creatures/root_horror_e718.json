@@ -1,0 +1,218 @@
+{
+  "id": "root_horror_e718",
+  "name": "Root Horror",
+  "category": "mysterious wilderness monster",
+  "description": "A gnarled moss-covered creature with tangled roots and glowing fungal eyes, emerging from ancient forest floors.",
+  "movementStyle": "roots pulse slowly, body sways with seismic tremors",
+  "scale": 1.5,
+  "dimensions": {
+    "width": 5,
+    "height": 3,
+    "depth": 3
+  },
+  "voxels": [
+    {
+      "x": -1,
+      "y": 0,
+      "z": -1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": -1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": -1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 0,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": -1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 1,
+      "color": "#166534",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 0,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 0,
+      "color": "#22c55e",
+      "part": "body"
+    }
+  ]
+}
