@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-09T17:38:08.290717+00:00",
-  "count": 123,
+  "updated_at": "2026-11-09T18:43:56.744546+00:00",
+  "count": 124,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1847,6 +1847,21 @@
       },
       "file": "assets/creatures/stellar_b3cf.json",
       "created_at": "2026-11-09T17:38:08.290668+00:00"
+    },
+    {
+      "id": "mossbound_f3d3",
+      "name": "Mossbound Wraith",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "slow, undulating drift",
+      "scale": 1.0,
+      "voxel_count": 40,
+      "dimensions": {
+        "width": 5,
+        "height": 5,
+        "depth": 5
+      },
+      "file": "assets/creatures/mossbound_f3d3.json",
+      "created_at": "2026-11-09T18:43:56.744470+00:00"
     }
   ]
 }
