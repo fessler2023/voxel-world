@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-08T23:17:11.095654+00:00",
-  "count": 106,
+  "updated_at": "2026-11-09T00:20:22.359513+00:00",
+  "count": 107,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1592,6 +1592,21 @@
       },
       "file": "assets/creatures/elder_fa8b.json",
       "created_at": "2026-11-08T23:17:11.095579+00:00"
+    },
+    {
+      "id": "celestial_788f",
+      "name": "Celestial Elder Stag",
+      "category": "legendary outdoor guardian",
+      "movementStyle": "graceful leaping",
+      "scale": 1.5,
+      "voxel_count": 56,
+      "dimensions": {
+        "width": 5,
+        "height": 8,
+        "depth": 5
+      },
+      "file": "assets/creatures/celestial_788f.json",
+      "created_at": "2026-11-09T00:20:22.359436+00:00"
     }
   ]
 }
