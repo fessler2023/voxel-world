@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-09T02:26:15.959386+00:00",
-  "count": 109,
+  "updated_at": "2026-11-09T03:28:31.300304+00:00",
+  "count": 110,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1637,6 +1637,21 @@
       },
       "file": "assets/creatures/root_horror_b054.json",
       "created_at": "2026-11-09T02:26:15.959337+00:00"
+    },
+    {
+      "id": "horned_hare_96ee",
+      "name": "Alpine Horned Hare",
+      "category": "small_friendly_wildlife",
+      "movementStyle": "sprightly_leaps",
+      "scale": 1.5,
+      "voxel_count": 38,
+      "dimensions": {
+        "width": 3,
+        "height": 4,
+        "depth": 5
+      },
+      "file": "assets/creatures/horned_hare_96ee.json",
+      "created_at": "2026-11-09T03:28:31.300258+00:00"
     }
   ]
 }
