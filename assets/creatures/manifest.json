@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-09T14:18:32.255474+00:00",
-  "count": 120,
+  "updated_at": "2026-11-09T15:23:10.583786+00:00",
+  "count": 121,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1802,6 +1802,21 @@
       },
       "file": "assets/creatures/lunar_134c.json",
       "created_at": "2026-11-09T14:18:32.255399+00:00"
+    },
+    {
+      "id": "elder_97eb",
+      "name": "Elder Oak Sentinel",
+      "category": "legendary outdoor guardian",
+      "movementStyle": "stationary guardian with slow root-based attacks",
+      "scale": 1.5,
+      "voxel_count": 55,
+      "dimensions": {
+        "width": 5,
+        "height": 11,
+        "depth": 5
+      },
+      "file": "assets/creatures/elder_97eb.json",
+      "created_at": "2026-11-09T15:23:10.583710+00:00"
     }
   ]
 }
