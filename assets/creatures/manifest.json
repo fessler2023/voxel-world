@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-09T12:12:04.904787+00:00",
-  "count": 118,
+  "updated_at": "2026-11-09T13:14:40.046290+00:00",
+  "count": 119,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1772,6 +1772,21 @@
       },
       "file": "assets/creatures/root_horror_e718.json",
       "created_at": "2026-11-09T12:12:04.904712+00:00"
+    },
+    {
+      "id": "lichen_9a58",
+      "name": "Lichen Warden",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "slow deliberate shuffling",
+      "scale": 1.0,
+      "voxel_count": 44,
+      "dimensions": {
+        "width": 3,
+        "height": 6,
+        "depth": 3
+      },
+      "file": "assets/creatures/lichen_9a58.json",
+      "created_at": "2026-11-09T13:14:40.046213+00:00"
     }
   ]
 }
