@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-09T10:02:44.413651+00:00",
-  "count": 116,
+  "updated_at": "2026-11-09T11:05:58.684726+00:00",
+  "count": 117,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1742,6 +1742,21 @@
       },
       "file": "assets/creatures/root_horror_aa40.json",
       "created_at": "2026-11-09T10:02:44.413575+00:00"
+    },
+    {
+      "id": "lichen_afa6",
+      "name": "Lichen Spider",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "slow deliberate stalk",
+      "scale": 1.0,
+      "voxel_count": 37,
+      "dimensions": {
+        "width": 5,
+        "height": 4,
+        "depth": 5
+      },
+      "file": "assets/creatures/lichen_afa6.json",
+      "created_at": "2026-11-09T11:05:58.684649+00:00"
     }
   ]
 }
