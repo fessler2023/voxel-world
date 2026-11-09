@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-09T21:00:17.954213+00:00",
-  "count": 126,
+  "updated_at": "2026-11-09T22:07:41.011050+00:00",
+  "count": 127,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1892,6 +1892,21 @@
       },
       "file": "assets/creatures/elder_cbe4.json",
       "created_at": "2026-11-09T21:00:17.954137+00:00"
+    },
+    {
+      "id": "elder_ff2d",
+      "name": "Elder Grove Sentinel",
+      "category": "legendary outdoor boss",
+      "movementStyle": "slow, deliberate stomping",
+      "scale": 1.0,
+      "voxel_count": 51,
+      "dimensions": {
+        "width": 5,
+        "height": 7,
+        "depth": 4
+      },
+      "file": "assets/creatures/elder_ff2d.json",
+      "created_at": "2026-11-09T22:07:41.010973+00:00"
     }
   ]
 }
