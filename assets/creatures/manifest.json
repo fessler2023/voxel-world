@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-09T05:37:39.874560+00:00",
-  "count": 112,
+  "updated_at": "2026-11-09T06:42:16.484237+00:00",
+  "count": 113,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1682,6 +1682,21 @@
       },
       "file": "assets/creatures/celestial_bf0e.json",
       "created_at": "2026-11-09T05:37:39.874487+00:00"
+    },
+    {
+      "id": "celestial_1f0c",
+      "name": "Celestial Guardian Stag",
+      "category": "legendary outdoor boss",
+      "movementStyle": "graceful leaping",
+      "scale": 1.0,
+      "voxel_count": 37,
+      "dimensions": {
+        "width": 5,
+        "height": 6,
+        "depth": 7
+      },
+      "file": "assets/creatures/celestial_1f0c.json",
+      "created_at": "2026-11-09T06:42:16.484161+00:00"
     }
   ]
 }

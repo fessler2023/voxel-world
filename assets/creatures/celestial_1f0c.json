@@ -1,0 +1,274 @@
+{
+  "id": "celestial_1f0c",
+  "name": "Celestial Guardian Stag",
+  "category": "legendary outdoor boss",
+  "description": "A majestic celestial stag guarding ancient forests, its antlers shimmer with stardust and its hooves leave glowing trails.",
+  "movementStyle": "graceful leaping",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 5,
+    "height": 6,
+    "depth": 7
+  },
+  "voxels": [
+    {
+      "x": -2,
+      "y": 0,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "z": 0,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": -1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": -2,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -2,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -2,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 2,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 2,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 2,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": -3,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -3,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": -3,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 3,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 3,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 3,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 0,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 0,
+      "color": "#ffffff",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 4,
+      "z": 0,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": 0,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 0,
+      "color": "#ffffff",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": -1,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": -1,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 2,
+      "z": 1,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "z": 1,
+      "color": "#f59e0b",
+      "part": "body"
+    }
+  ]
+}
