@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-10T20:04:19.481263+00:00",
-  "count": 147,
+  "updated_at": "2026-11-10T21:13:14.649645+00:00",
+  "count": 148,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -2207,6 +2207,21 @@
       },
       "file": "assets/creatures/pine_fox_4a1e.json",
       "created_at": "2026-11-10T20:04:19.481164+00:00"
+    },
+    {
+      "id": "lichenspider_27a5",
+      "name": "Lichen Spider",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "crawls on eight legs with a sinuous, deliberate gait",
+      "scale": 1.0,
+      "voxel_count": 20,
+      "dimensions": {
+        "width": 3,
+        "height": 3,
+        "depth": 3
+      },
+      "file": "assets/creatures/lichenspider_27a5.json",
+      "created_at": "2026-11-10T21:13:14.649573+00:00"
     }
   ]
 }
