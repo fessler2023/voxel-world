@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-09T23:16:39.460247+00:00",
-  "count": 128,
+  "updated_at": "2026-11-10T00:19:01.545546+00:00",
+  "count": 129,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1922,6 +1922,21 @@
       },
       "file": "assets/creatures/root_7421.json",
       "created_at": "2026-11-09T23:16:39.460171+00:00"
+    },
+    {
+      "id": "elder_a48b",
+      "name": "Elder Grove Sentinel",
+      "category": "legendary outdoor guardian",
+      "movementStyle": "slow, deliberate stomping",
+      "scale": 1.5,
+      "voxel_count": 44,
+      "dimensions": {
+        "width": 5,
+        "height": 6,
+        "depth": 5
+      },
+      "file": "assets/creatures/elder_a48b.json",
+      "created_at": "2026-11-10T00:19:01.545498+00:00"
     }
   ]
 }
