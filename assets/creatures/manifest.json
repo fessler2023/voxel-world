@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-10T05:48:38.721726+00:00",
-  "count": 134,
+  "updated_at": "2026-11-10T06:55:43.783670+00:00",
+  "count": 135,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -2012,6 +2012,21 @@
       },
       "file": "assets/creatures/moss_d78d.json",
       "created_at": "2026-11-10T05:48:38.721651+00:00"
+    },
+    {
+      "id": "elder_ccb9",
+      "name": "Elder Sylvan Guardian",
+      "category": "legendary outdoor boss",
+      "movementStyle": "slow, deliberate stomping with branches swaying",
+      "scale": 1.0,
+      "voxel_count": 45,
+      "dimensions": {
+        "width": 5,
+        "height": 7,
+        "depth": 5
+      },
+      "file": "assets/creatures/elder_ccb9.json",
+      "created_at": "2026-11-10T06:55:43.783593+00:00"
     }
   ]
 }
