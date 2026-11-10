@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-10T12:32:02.021543+00:00",
-  "count": 140,
+  "updated_at": "2026-11-10T13:35:04.596173+00:00",
+  "count": 141,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -2102,6 +2102,21 @@
       },
       "file": "assets/creatures/elder_5f15.json",
       "created_at": "2026-11-10T12:32:02.021466+00:00"
+    },
+    {
+      "id": "root_48bc",
+      "name": "Mossroot Warden",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "slow ambling",
+      "scale": 1.0,
+      "voxel_count": 40,
+      "dimensions": {
+        "width": 5,
+        "height": 8,
+        "depth": 3
+      },
+      "file": "assets/creatures/root_48bc.json",
+      "created_at": "2026-11-10T13:35:04.596096+00:00"
     }
   ]
 }
