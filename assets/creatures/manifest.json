@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-10T11:26:15.442533+00:00",
-  "count": 139,
+  "updated_at": "2026-11-10T12:32:02.021543+00:00",
+  "count": 140,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -2087,6 +2087,21 @@
       },
       "file": "assets/creatures/celestial_6f4c.json",
       "created_at": "2026-11-10T11:26:15.442458+00:00"
+    },
+    {
+      "id": "elder_5f15",
+      "name": "Elder Oak Sentinel",
+      "category": "legendary outdoor boss",
+      "movementStyle": "stationary guardian",
+      "scale": 1.0,
+      "voxel_count": 40,
+      "dimensions": {
+        "width": 5,
+        "height": 4,
+        "depth": 5
+      },
+      "file": "assets/creatures/elder_5f15.json",
+      "created_at": "2026-11-10T12:32:02.021466+00:00"
     }
   ]
 }
