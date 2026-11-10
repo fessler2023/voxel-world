@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-10T17:56:49.578831+00:00",
-  "count": 145,
+  "updated_at": "2026-11-10T19:02:02.334941+00:00",
+  "count": 146,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -2177,6 +2177,21 @@
       },
       "file": "assets/creatures/pine_fox_001_2251.json",
       "created_at": "2026-11-10T17:56:49.578757+00:00"
+    },
+    {
+      "id": "voxel_26ec",
+      "name": "Alpine Hare",
+      "category": "small friendly wildlife",
+      "movementStyle": "leaping",
+      "scale": 1.0,
+      "voxel_count": 37,
+      "dimensions": {
+        "width": 3,
+        "height": 5,
+        "depth": 5
+      },
+      "file": "assets/creatures/voxel_26ec.json",
+      "created_at": "2026-11-10T19:02:02.334865+00:00"
     }
   ]
 }

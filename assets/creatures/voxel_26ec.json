@@ -1,0 +1,274 @@
+{
+  "id": "voxel_26ec",
+  "name": "Alpine Hare",
+  "category": "small friendly wildlife",
+  "description": "A fluffy alpine hare with vibrant fur patterns and expressive eyes, perfectly adapted to mountainous terrain.",
+  "movementStyle": "leaping",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 3,
+    "height": 5,
+    "depth": 5
+  },
+  "voxels": [
+    {
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "color": "#8b5e31",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "color": "#8b5e31",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": -1,
+      "color": "#8b5e31",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": -1,
+      "color": "#8b5e31",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 0,
+      "color": "#8b5e31",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "color": "#8b5e31",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -1,
+      "color": "#8b5e31",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -1,
+      "color": "#8b5e31",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "color": "#8b5e31",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 1,
+      "color": "#8b5e31",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "color": "#8b5e31",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "color": "#8b5e31",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -1,
+      "color": "#8b5e31",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#8b5e31",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#3b82f6",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#d97706",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -1,
+      "color": "#d97706",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 1,
+      "color": "#d97706",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -1,
+      "color": "#d97706",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 1,
+      "color": "#facc12",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": -1,
+      "color": "#facc12",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": -1,
+      "color": "#facc12",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 1,
+      "color": "#facc12",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 2,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -2,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": -2,
+      "color": "#facc12",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": -2,
+      "color": "#facc12",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 2,
+      "color": "#d97706",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": -2,
+      "color": "#d97706",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 4,
+      "z": -2,
+      "color": "#facc12",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "z": -2,
+      "color": "#facc12",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 2,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -2,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 0,
+      "color": "#d97706",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 0,
+      "color": "#d97706",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 0,
+      "color": "#8b5e31",
+      "part": "body"
+    }
+  ]
+}
