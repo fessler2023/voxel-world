@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-10T02:32:03.112762+00:00",
-  "count": 131,
+  "updated_at": "2026-11-10T03:35:51.207055+00:00",
+  "count": 132,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -1967,6 +1967,21 @@
       },
       "file": "assets/creatures/root_horror_5ab5.json",
       "created_at": "2026-11-10T02:32:03.112685+00:00"
+    },
+    {
+      "id": "root_horror_3db6",
+      "name": "Root Horror",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "lurching crawl",
+      "scale": 1.2,
+      "voxel_count": 37,
+      "dimensions": {
+        "width": 5,
+        "height": 4,
+        "depth": 5
+      },
+      "file": "assets/creatures/root_horror_3db6.json",
+      "created_at": "2026-11-10T03:35:51.206978+00:00"
     }
   ]
 }
