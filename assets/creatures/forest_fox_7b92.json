@@ -1,0 +1,281 @@
+{
+  "id": "forest_fox_7b92",
+  "name": "Forest Fox",
+  "category": "small friendly wildlife",
+  "description": "A playful fox with a vibrant orange coat and a bushy tail, perfectly adapted to woodland environments.",
+  "movementStyle": "cautious runner",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 3,
+    "height": 4,
+    "depth": 7
+  },
+  "voxels": [
+    {
+      "x": -1,
+      "y": 0,
+      "z": -1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": -1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": -1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "color": "#ffffff",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "color": "#ffffff",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "color": "#ffffff",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 1,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -1,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -1,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -1,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 0,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 0,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 1,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": -1,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": -1,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": -1,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 1,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 1,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 2,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 2,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 2,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": -2,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": -2,
+      "color": "#ffa500",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -2,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 3,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 3,
+      "color": "#000000",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": -3,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": -3,
+      "color": "#8b4513",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -3,
+      "color": "#8b4513",
+      "part": "body"
+    }
+  ]
+}
