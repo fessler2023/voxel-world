@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-11T02:37:05.224605+00:00",
-  "count": 153,
+  "updated_at": "2026-11-11T03:42:08.337464+00:00",
+  "count": 154,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -2297,6 +2297,21 @@
       },
       "file": "assets/creatures/pine_fox_001_1c6e.json",
       "created_at": "2026-11-11T02:37:05.224527+00:00"
+    },
+    {
+      "id": "root_horror_f12f",
+      "name": "Root Horror",
+      "category": "mysterious wilderness monster",
+      "movementStyle": "lurching",
+      "scale": 1.5,
+      "voxel_count": 47,
+      "dimensions": {
+        "width": 5,
+        "height": 6,
+        "depth": 5
+      },
+      "file": "assets/creatures/root_horror_f12f.json",
+      "created_at": "2026-11-11T03:42:08.337388+00:00"
     }
   ]
 }
