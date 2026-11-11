@@ -1,7 +1,7 @@
 {
   "version": "1.0",
-  "updated_at": "2026-11-11T03:42:08.337464+00:00",
-  "count": 154,
+  "updated_at": "2026-11-11T04:44:46.024560+00:00",
+  "count": 155,
   "creatures": [
     {
       "id": "stone_golem_cb88",
@@ -2312,6 +2312,21 @@
       },
       "file": "assets/creatures/root_horror_f12f.json",
       "created_at": "2026-11-11T03:42:08.337388+00:00"
+    },
+    {
+      "id": "elder_7501",
+      "name": "Elder Forest Stag",
+      "category": "legendary outdoor guardian",
+      "movementStyle": "slow, deliberate stomping with glowing aura pulses",
+      "scale": 1.0,
+      "voxel_count": 44,
+      "dimensions": {
+        "width": 5,
+        "height": 6,
+        "depth": 5
+      },
+      "file": "assets/creatures/elder_7501.json",
+      "created_at": "2026-11-11T04:44:46.024481+00:00"
     }
   ]
 }
