@@ -1,0 +1,316 @@
+{
+  "id": "pine_fox_001_1c6e",
+  "name": "Pine Fox",
+  "category": "small_friendly_wildlife",
+  "description": "A fluffy woodland creature with a shimmering violet coat and a bushy tail. Its eyes glow with a soft green light, and it moves with playful agility through the forest underbrush.",
+  "movementStyle": "fast",
+  "scale": 1.0,
+  "dimensions": {
+    "width": 5,
+    "height": 6,
+    "depth": 5
+  },
+  "voxels": [
+    {
+      "x": -1,
+      "y": 1,
+      "z": 1,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": 1,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 1,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 1,
+      "color": "#fbbf24",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 1,
+      "color": "#fbbf24",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 1,
+      "color": "#fbbf24",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 1,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 1,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 1,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 1,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 1,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 0,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 0,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": 2,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": 2,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -1,
+      "color": "#a855f7",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -1,
+      "color": "#a855f7",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -1,
+      "color": "#a855f7",
+      "part": "body"
+    },
+    {
+      "x": -2,
+      "y": 1,
+      "z": 0,
+      "color": "#a855f7",
+      "part": "body"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "z": 0,
+      "color": "#a855f7",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 1,
+      "z": -2,
+      "color": "#a855f7",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "z": -2,
+      "color": "#a855f7",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "z": -2,
+      "color": "#a855f7",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 0,
+      "color": "#fbbf24",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 0,
+      "color": "#fbbf24",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 0,
+      "color": "#fbbf24",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 0,
+      "z": 2,
+      "color": "#fbbf24",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 0,
+      "z": 2,
+      "color": "#fbbf24",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "z": 2,
+      "color": "#fbbf24",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 0,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 0,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 0,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 2,
+      "z": 2,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "z": 2,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "z": 2,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 1,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 1,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 1,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "z": 0,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "z": 1,
+      "color": "#f59e0b",
+      "part": "body"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "z": 1,
+      "color": "#10b981",
+      "part": "body"
+    },
+    {
+      "x": -1,
+      "y": 3,
+      "z": 2,
+      "color": "#d946ef",
+      "part": "body"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "z": 2,
+      "color": "#d946ef",
+      "part": "body"
+    }
+  ]
+}
